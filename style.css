@@ -44,7 +44,9 @@ button {
   color: var(--text-main);
 }
 
-
+sup {
+  text-decoration: underline;
+}
 
 
 .navbar {
