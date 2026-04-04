@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/UrbanSyncStyle.Css"/>
 
+
+    <!-- this is temporary, I do intend to move it to the css file once we get that sorted :) -->
+    <style>
+        * {
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            display: flex;
+        }
+        
+        .JobList {
+            list-style-type: none;
+        }
+
+        .JobSection{
+            border: 2px solid black;
+            border-top-right-radius: 15%;
+            border-bottom-right-radius: 15%;
+            background-image: linear-gradient(to right, rgb(8, 53, 92), rgb(86, 139, 186));
+            min-height: 60px;
+            max-height: 100px;
+            max-width: 100%;
+            padding-bottom: 15;
+        }
+
+        #JobNav {
+            background-color: rgb(65, 87, 132);
+            width: 125px;
+            min-width: 30vw;
+            height: 100vh;
+        }
+
+        #JobNav h2 {
+            text-align: center;
+        }
+
+        main {
+            flex: 1;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    
+    <!-- Jobs navigation -->
+    <aside id="JobNav">
+        <h2>Jobs</h2>
+            <!-- Jobs will go here into the unordered list, when clicked it will display the relevent job into the contentMain -->
+            <ul>
+                <!-- JOB 1 -->
+                <li class="JobList">
+                    <a href="Jobs/job01.html" target="contentMain">
+                        <section class="JobSection">
+                            <p>this is job 1</p>
+
+                        </section>
+                    </a>
+                </li>
+
+                <!-- JOB 2 -->
+                <li class="JobList">
+                    <a href="Jobs/job02.html" target="contentMain">
+                        <section class="JobSection">
+                            <p>this is job 2</p>
+
+                        </section>
+                    </a>
+                </li>
+            </ul>
+    </aside>
+
+
+<main>
+    <iframe name="contentMain" src="Jobs/job01.html"></iframe>
+</main>
+    
+</body>
+</html>
