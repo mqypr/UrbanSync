@@ -2,157 +2,163 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="About page for UrbanSync group project">
+  <meta name="keywords" content="HTML5, CSS, About page, group project">
+  <meta name="author" content="UrbanSync">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - UrbanSync</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Embedded CSS example for about.html */
+    .about-intro {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <h1 style="letter-spacing: 1px;">UrbanSync</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jobs.html">Job Description</a></li>
+        <li><a href="apply.html">Apply</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
-  <h1>UrbanSync</h1>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="jobs.html">Job Description</a></li>
-      <li><a href="apply.html">Apply</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-</header>
+  <main>
+    <section class="about-intro">
+      <h2>Group Information</h2>
+      <ul>
+        <li><strong>Group Name:</strong> UrbanSync</li>
+        <li>
+          <strong>Class Day/Time:</strong>
+          <ul>
+            <li>Thursday</li>
+            <li>4:30 PM - 6:30 PM</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
-<main>
+    <section>
+      <h2>Group Members</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Favourite Snack</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MD Areen Chowdhury</td>
+            <td><span class="student-id">105693861</span></td>
+            <td>Dhaka, Bangladesh</td>
+            <td>BOH, Hospitality</td>
+            <td>Pizza slice</td>
+          </tr>
+          <tr>
+            <td>Reach Peng</td>
+            <td><span class="student-id">106382377</span></td>
+            <td>To be added</td>
+            <td>To be added</td>
+            <td>To be added</td>
+          </tr>
+          <tr>
+            <td>Liron Roshain Joanic Willathgamuwa</td>
+            <td><span class="student-id">105987496</span></td>
+            <td>To be added</td>
+            <td>To be added</td>
+            <td>To be added</td>
+          </tr>
+          <tr>
+            <td>Dylan Kelly</td>
+            <td><span class="student-id">105332711</span></td>
+            <td>To be added</td>
+            <td>To be added</td>
+            <td>To be added</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-  <!-- Group Info -->
-  <section>
-    <h2>Group Information</h2>
+    <section>
+      <h2>Member Contributions and Quotes</h2>
+      <dl>
+        <dt>MD Areen Chowdhury</dt>
+        <dd>Developed the About page.</dd>
+        <dd>Quote in first language: "Suuii"</dd>
+        <dd>English translation: "Suuii"</dd>
 
-    <ul>
-      <li><strong>Group Name:</strong> UrbanSync</li>
-      <li>
-        <strong>Class Schedule:</strong>
-        <ul>
-          <li>Day: Thursday</li>
-          <li>Time: 4:30 PM – 6:30 PM</li>
-        </ul>
-      </li>
-    </ul>
-  </section>
+        <dt>Reach Peng</dt>
+        <dd>Developed the Home page (index.html).</dd>
+        <dd>Quote in first language: To be added</dd>
+        <dd>English translation: To be added</dd>
 
-  <!-- Members Table -->
-  <section>
-    <h2>Group Members</h2>
+        <dt>Liron Roshain Joanic Willathgamuwa</dt>
+        <dd>Developed the Apply page (apply.html).</dd>
+        <dd>Quote in first language: To be added</dd>
+        <dd>English translation: To be added</dd>
 
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Student ID</th>
-          <th>Hometown</th>
-          <th>Job</th>
-          <th>Favourite Snack</th>
-        </tr>
-      </thead>
+        <dt>Dylan Kelly</dt>
+        <dd>Developed the Jobs page (jobs.html).</dd>
+        <dd>Quote in first language: To be added</dd>
+        <dd>English translation: To be added</dd>
+      </dl>
+    </section>
 
-      <tbody>
-        <tr>
-          <td>MD Areen Chowdhury</td>
-          <td>105693861</td>
-          <td>Dhaka, Bangladesh</td>
-          <td>BOH, Hospitality</td>
-          <td>Pizza slice</td>
-        </tr>
+    <section>
+      <h2>Fun Facts</h2>
 
-        <tr>
-          <td>Reach Peng</td>
-          <td>106382377</td>
-          <td>To be added</td>
-          <td>To be added</td>
-          <td>To be added</td>
-        </tr>
+      <article>
+        <h3>MD Areen Chowdhury</h3>
+        <p><strong>Hometown:</strong> Dhaka, Bangladesh</p>
+        <p><strong>Job:</strong> BOH, Hospitality</p>
+        <p><strong>Favourite Snack:</strong> Pizza slice</p>
+      </article>
 
-        <tr>
-          <td>Liron Roshain Joanic Willathgamuwa</td>
-          <td>105987496</td>
-          <td>To be added</td>
-          <td>To be added</td>
-          <td>To be added</td>
-        </tr>
+      <article>
+        <h3>Reach Peng</h3>
+        <p><strong>Hometown:</strong> To be added</p>
+        <p><strong>Job:</strong> To be added</p>
+        <p><strong>Favourite Snack:</strong> To be added</p>
+      </article>
 
-        <tr>
-          <td>Dylan Kelly</td>
-          <td>105332711</td>
-          <td>To be added</td>
-          <td>To be added</td>
-          <td>To be added</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+      <article>
+        <h3>Liron Roshain Joanic Willathgamuwa</h3>
+        <p><strong>Hometown:</strong> To be added</p>
+        <p><strong>Job:</strong> To be added</p>
+        <p><strong>Favourite Snack:</strong> To be added</p>
+      </article>
 
-  <!-- Contributions + Quotes -->
-  <section>
-    <h2>Member Contributions & Quotes</h2>
+      <article>
+        <h3>Dylan Kelly</h3>
+        <p><strong>Hometown:</strong> To be added</p>
+        <p><strong>Job:</strong> To be added</p>
+        <p><strong>Favourite Snack:</strong> To be added</p>
+      </article>
+    </section>
 
-    <dl>
-      <dt><strong>MD Areen Chowdhury</strong></dt>
-      <dd>Developed the About page.</dd>
-      <dd>Quote (Original): "Suuii"</dd>
-      <dd>English Translation: "Suuii"</dd>
+    <section>
+      <h2>Group Photo</h2>
+      <figure>
+        <img src="Group photo.jpg" alt="UrbanSync group photo with all team members">
+        <figcaption>Group photo UrbanSync</figcaption>
+      </figure>
+    </section>
+  </main>
 
-      <dt><strong>Reach Peng</strong></dt>
-      <dd>Developed the Home page (index.html).</dd>
-      <dd>Quote: To be added</dd>
-
-      <dt><strong>Liron Roshain Joanic Willathgamuwa</strong></dt>
-      <dd>Developed the Apply page.</dd>
-      <dd>Quote: To be added</dd>
-
-      <dt><strong>Dylan Kelly</strong></dt>
-      <dd>Developed the Jobs page.</dd>
-      <dd>Quote: To be added</dd>
-    </dl>
-  </section>
-
-  <!-- Fun Facts -->
-  <section>
-    <h2>Fun Facts</h2>
-
-    <article>
-      <h3>MD Areen Chowdhury</h3>
-      <p>From Dhaka, currently working in hospitality and enjoys pizza.</p>
-    </article>
-
-    <article>
-      <h3>Reach Peng</h3>
-      <p>Details will be added later.</p>
-    </article>
-
-    <article>
-      <h3>Liron Roshain Joanic Willathgamuwa</h3>
-      <p>Details will be added later.</p>
-    </article>
-
-    <article>
-      <h3>Dylan Kelly</h3>
-      <p>Details will be added later.</p>
-    </article>
-  </section>
-
-  <!-- Group Photo -->
-  <section>
-    <h2>Group Photo</h2>
-
-    <figure>
-      <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
-      <figcaption>Group photo UrbanSync</figcaption>
-    </figure>
-  </section>
-
-</main>
-
-<footer>
-  <p>&copy; 2026 UrbanSync | Smart City Consultancy Project</p>
-</footer>
-
+  <footer>
+    <p>&copy; 2026 UrbanSync | Smart City Consultancy Project</p>
+  </footer>
 </body>
 </html>
