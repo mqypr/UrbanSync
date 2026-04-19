@@ -3,9 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Frontend Web Developer</title>
+    <link rel="stylesheet" href="/UrbanSync/style.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 1rem;
+            background-color: #EDF4F6;
+        }
+
+        #JobArticle {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+        }
+
+        #JobTitle {
+            margin: 0 0 1.25rem 0;
+            padding: 1rem 1.25rem;
+            background-image: linear-gradient(to right, #2B617B, #3A8193);
+            border-radius: 0.75rem;
+            color: #EDF4F6;
+        }
+
+        #JobTitle h2,
+        #JobTitle h3,
+        #JobTitle p {
+            margin: 0 0 0.5rem 0;
+        }
+
+        #JobTitle p {
+            font-weight: bold;
+        }
+
+        #JobInfo {
+            padding: 0 0.5rem;
+            color: #17323f;
+        }
+
+        #JobInfo h2 {
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #2B617B;
+        }
+
+        #JobReportingLine,
+        #JobResponsobilities,
+        #JobPersonalRequirements {
+            margin: 0 0 1.25rem 0;
+            padding-left: 1.5rem;
+        }
+
+        #JobReportingLine li,
+        #JobResponsobilities li,
+        #JobPersonalRequirements li {
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+    </style>
 </head>
 <body>
-    <h1> Hello, this is job 1 </h1>
+    <article id="JobArticle">
+        <section id="JobTitle">
+            <h2>Frontend Web Developer</h2>
+            <h3>100533327</h3>
+            <p>$70,000 - $85,000</p>
+        </section>
+
+        <section id="JobInfo">
+            <h2>Frontend Web Developer</h2>
+
+            <h2>Key Reporting Line</h2>
+            <ol id="JobReportingLine">
+                <li>Engineering Manager</li>
+                <li>Technical Lead</li>
+                <li>Product Manager</li>
+            </ol>
+
+            <h2>Key Responsibilities</h2>
+            <ol id="JobResponsobilities">
+                <li>Building front end interfaces</li>
+                <li>Ensuring accessible and intuitive designs are implemented into the user experience</li>
+            </ol>
+
+            <h2>Personal Requirements</h2>
+            <ul id="JobPersonalRequirements">
+                <li>Effective communication for team collaboration</li>
+                <li>High adaptability to new technologies</li>
+                <li>A methodical approach to debugging and creating responsive, accessible websites</li>
+            </ul>
+
+        </section>
+    </article>
 </body>
 </html>
