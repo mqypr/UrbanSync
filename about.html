@@ -11,37 +11,53 @@
 
   <!-- Embedded CSS -->
   <style>
-    /* About page styling */
+    /* About Page Styling */
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+
     .about-container {
       max-width: 900px;
       margin: 20px auto;
       padding: 20px;
+      background-color: white;
+      border: 1px solid var(--tertiary);
+      border-radius: 8px;
     }
 
     .about-section {
       margin-bottom: 30px;
     }
 
-    /* Fix bullet points */
+    .about-section h2 {
+      margin-bottom: 10px;
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 5px;
+    }
+
+    /* Fix bullet list */
     .about-section ul {
       list-style-type: disc;
       margin-left: 20px;
     }
 
-    /* Table */
+    /* Table styling */
     .member-table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 10px;
     }
 
     .member-table th,
     .member-table td {
       border: 1px solid #ccc;
       padding: 10px;
+      font-size: 14px;
     }
 
     .member-table th {
-      background-color: #09637E;
+      background-color: #09637E; /* hex colour */
       color: white;
     }
 
@@ -54,8 +70,27 @@
     .student-id {
       background-color: #EBF4F6;
       border: 1px solid #088395;
-      padding: 4px;
+      padding: 4px 6px;
       border-radius: 4px;
+    }
+
+    /* Definition list */
+    dt {
+      font-weight: bold;
+      margin-top: 10px;
+      color: var(--primary);
+    }
+
+    dd {
+      margin-left: 20px;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    /* Caption */
+    caption {
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     /* Figure */
@@ -63,6 +98,7 @@
       border: 2px solid #088395;
       padding: 10px;
       text-align: center;
+      border-radius: 6px;
     }
 
     /* Accessibility */
@@ -74,21 +110,26 @@
 
 <body>
 
-<header>
-  <!-- Inline CSS -->
-  <h1 style="letter-spacing: 1px;">UrbanSync</h1>
-
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="jobs.html">Jobs</a></li>
-      <li><a href="apply.html">Apply</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
+<header class="navbar">
+  <div class="navbar-container">
+    <nav>
+      <ul class="navbar-link">
+        <li class="navbar-link-item"><a class="navbar-link-item-a" href="index.html">Home</a></li>
+        <li class="navbar-link-item"><a class="navbar-link-item-a" href="jobs.html">Jobs</a></li>
+        <li class="navbar-link-item"><a class="navbar-link-item-a" href="apply.html">Apply</a></li>
+        <li class="navbar-link-item"><a class="navbar-link-item-a" href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <main class="about-container">
+
+  <!-- Intro -->
+  <section class="about-section">
+    <h1 style="letter-spacing: 1px;">UrbanSync</h1>
+    <p>This page introduces the UrbanSync team and their contributions.</p>
+  </section>
 
   <!-- Group Info -->
   <section class="about-section">
@@ -96,7 +137,7 @@
     <ul>
       <li><strong>Group Name:</strong> UrbanSync</li>
       <li>
-        <strong>Class Time:</strong>
+        <strong>Class Day and Time:</strong>
         <ul>
           <li>Thursday</li>
           <li>4:30 PM - 6:30 PM</li>
@@ -154,7 +195,7 @@
 
   <!-- Contributions + Quotes -->
   <section class="about-section">
-    <h2>Contributions & Quotes</h2>
+    <h2>Member Contributions and Quotes</h2>
 
     <dl>
       <dt>MD Areen Chowdhury</dt>
@@ -164,12 +205,12 @@
 
       <dt>Reach Peng</dt>
       <dd>Developed index.html</dd>
-      <dd>Quote: "ជីវិតគឺល្អ" (Khmer)</dd>
+      <dd>Quote: "ជីវិតគឺល្អ"</dd>
       <dd>Translation: "Life is good"</dd>
 
       <dt>Liron Roshain Joanic Willathgamuwa</dt>
       <dd>Developed apply.html</dd>
-      <dd>Quote: "ජීවිතය ලස්සනයි" (Sinhala)</dd>
+      <dd>Quote: "ජීවිතය ලස්සනයි"</dd>
       <dd>Translation: "Life is beautiful"</dd>
 
       <dt>Dylan Kelly</dt>
@@ -179,17 +220,52 @@
     </dl>
   </section>
 
-  <!-- Fun Facts -->
+  <!-- Fun Facts TABLE (IMPORTANT FOR HD) -->
   <section class="about-section">
     <h2>Fun Facts</h2>
 
-    <p><strong>Areen:</strong> From Dhaka, works in hospitality, loves pizza.</p>
-    <p><strong>Reach:</strong> From Cambodia, works at Hungry Jack's, likes popcorn.</p>
-    <p><strong>Liron:</strong> From Sri Lanka, into cybersecurity, enjoys lasagna.</p>
-    <p><strong>Dylan:</strong> From Victoria, works as a farm hand, likes scones.</p>
+    <table class="member-table">
+      <caption>Group Member Fun Facts</caption>
+
+      <tr>
+        <th>Name</th>
+        <th>Hometown</th>
+        <th>Job</th>
+        <th>Favourite Snack</th>
+      </tr>
+
+      <tr>
+        <td>MD Areen Chowdhury</td>
+        <td>Dhaka, Bangladesh</td>
+        <td>BOH, Hospitality</td>
+        <td>Pizza slice</td>
+      </tr>
+
+      <tr>
+        <td>Reach Peng</td>
+        <td>Phnom Penh, Cambodia</td>
+        <td>Casual Worker, Hungry Jack's</td>
+        <td>Popcorn</td>
+      </tr>
+
+      <tr>
+        <td>Liron Roshain Joanic Willathgamuwa</td>
+        <td>Wattala, Sri Lanka</td>
+        <td>Cyber Security Specialist</td>
+        <td>Lasagna</td>
+      </tr>
+
+      <tr>
+        <td>Dylan Kelly</td>
+        <td>Watchupga, VIC, Australia</td>
+        <td>Farm Hand</td>
+        <td>Scones</td>
+      </tr>
+
+    </table>
   </section>
 
-  <!-- Group Photo -->
+  <!-- Photo -->
   <section class="about-section">
     <h2>Group Photo</h2>
 
@@ -202,7 +278,18 @@
 </main>
 
 <footer>
-  <p>&copy; 2026 UrbanSync</p>
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3 class="footer-column-title">UrbanSync</h3>
+      <p class="footer-column-item">Smart City Consultancy Project</p>
+    </div>
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Class</h3>
+      <p class="footer-column-item">Thursday</p>
+      <p class="footer-column-item">4:30 PM - 6:30 PM</p>
+    </div>
+  </div>
 </footer>
 
 </body>
