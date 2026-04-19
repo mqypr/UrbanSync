@@ -3,162 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="About page for UrbanSync group project">
-  <meta name="keywords" content="HTML5, CSS, About page, group project">
-  <meta name="author" content="UrbanSync">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - UrbanSync</title>
 
+  <!-- External CSS -->
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Embedded CSS -->
   <style>
-    /* Embedded CSS example for about.html */
-    .about-intro {
+    /* About page styling */
+    .about-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .about-section {
+      margin-bottom: 30px;
+    }
+
+    /* Fix bullet points */
+    .about-section ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+
+    /* Table */
+    .member-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .member-table th,
+    .member-table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .member-table th {
+      background-color: #09637E;
+      color: white;
+    }
+
+    /* Hover effect */
+    .member-table tr:hover {
+      background-color: #dff3f6;
+    }
+
+    /* Student ID */
+    .student-id {
+      background-color: #EBF4F6;
+      border: 1px solid #088395;
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    /* Figure */
+    figure {
+      border: 2px solid #088395;
+      padding: 10px;
       text-align: center;
+    }
+
+    /* Accessibility */
+    a:focus {
+      outline: 2px solid black;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1 style="letter-spacing: 1px;">UrbanSync</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="jobs.html">Job Description</a></li>
-        <li><a href="apply.html">Apply</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main>
-    <section class="about-intro">
-      <h2>Group Information</h2>
-      <ul>
-        <li><strong>Group Name:</strong> UrbanSync</li>
-        <li>
-          <strong>Class Day/Time:</strong>
-          <ul>
-            <li>Thursday</li>
-            <li>4:30 PM - 6:30 PM</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
+<header>
+  <!-- Inline CSS -->
+  <h1 style="letter-spacing: 1px;">UrbanSync</h1>
 
-    <section>
-      <h2>Group Members</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Student ID</th>
-            <th>Hometown</th>
-            <th>Job</th>
-            <th>Favourite Snack</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>MD Areen Chowdhury</td>
-            <td><span class="student-id">105693861</span></td>
-            <td>Dhaka, Bangladesh</td>
-            <td>BOH, Hospitality</td>
-            <td>Pizza slice</td>
-          </tr>
-          <tr>
-            <td>Reach Peng</td>
-            <td><span class="student-id">106382377</span></td>
-            <td>To be added</td>
-            <td>To be added</td>
-            <td>To be added</td>
-          </tr>
-          <tr>
-            <td>Liron Roshain Joanic Willathgamuwa</td>
-            <td><span class="student-id">105987496</span></td>
-            <td>To be added</td>
-            <td>To be added</td>
-            <td>To be added</td>
-          </tr>
-          <tr>
-            <td>Dylan Kelly</td>
-            <td><span class="student-id">105332711</span></td>
-            <td>To be added</td>
-            <td>To be added</td>
-            <td>To be added</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <section>
-      <h2>Member Contributions and Quotes</h2>
-      <dl>
-        <dt>MD Areen Chowdhury</dt>
-        <dd>Developed the About page.</dd>
-        <dd>Quote in first language: "Suuii"</dd>
-        <dd>English translation: "Suuii"</dd>
+<main class="about-container">
 
-        <dt>Reach Peng</dt>
-        <dd>Developed the Home page (index.html).</dd>
-        <dd>Quote in first language: To be added</dd>
-        <dd>English translation: To be added</dd>
+  <!-- Group Info -->
+  <section class="about-section">
+    <h2>Group Information</h2>
+    <ul>
+      <li><strong>Group Name:</strong> UrbanSync</li>
+      <li>
+        <strong>Class Time:</strong>
+        <ul>
+          <li>Thursday</li>
+          <li>4:30 PM - 6:30 PM</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
 
-        <dt>Liron Roshain Joanic Willathgamuwa</dt>
-        <dd>Developed the Apply page (apply.html).</dd>
-        <dd>Quote in first language: To be added</dd>
-        <dd>English translation: To be added</dd>
+  <!-- Members -->
+  <section class="about-section">
+    <h2>Group Members</h2>
 
-        <dt>Dylan Kelly</dt>
-        <dd>Developed the Jobs page (jobs.html).</dd>
-        <dd>Quote in first language: To be added</dd>
-        <dd>English translation: To be added</dd>
-      </dl>
-    </section>
+    <table class="member-table">
+      <tr>
+        <th>Name</th>
+        <th>Student ID</th>
+        <th>Hometown</th>
+        <th>Job</th>
+        <th>Snack</th>
+      </tr>
 
-    <section>
-      <h2>Fun Facts</h2>
+      <tr>
+        <td>MD Areen Chowdhury</td>
+        <td><span class="student-id">105693861</span></td>
+        <td>Dhaka, Bangladesh</td>
+        <td>BOH, Hospitality</td>
+        <td>Pizza slice</td>
+      </tr>
 
-      <article>
-        <h3>MD Areen Chowdhury</h3>
-        <p><strong>Hometown:</strong> Dhaka, Bangladesh</p>
-        <p><strong>Job:</strong> BOH, Hospitality</p>
-        <p><strong>Favourite Snack:</strong> Pizza slice</p>
-      </article>
+      <tr>
+        <td>Reach Peng</td>
+        <td><span class="student-id">106382377</span></td>
+        <td>Phnom Penh, Cambodia</td>
+        <td>Casual Worker, Hungry Jack's</td>
+        <td>Popcorn</td>
+      </tr>
 
-      <article>
-        <h3>Reach Peng</h3>
-        <p><strong>Hometown:</strong> To be added</p>
-        <p><strong>Job:</strong> To be added</p>
-        <p><strong>Favourite Snack:</strong> To be added</p>
-      </article>
+      <tr>
+        <td>Liron Roshain Joanic Willathgamuwa</td>
+        <td><span class="student-id">105987496</span></td>
+        <td>Wattala, Sri Lanka</td>
+        <td>Cyber Security Specialist</td>
+        <td>Lasagna</td>
+      </tr>
 
-      <article>
-        <h3>Liron Roshain Joanic Willathgamuwa</h3>
-        <p><strong>Hometown:</strong> To be added</p>
-        <p><strong>Job:</strong> To be added</p>
-        <p><strong>Favourite Snack:</strong> To be added</p>
-      </article>
+      <tr>
+        <td>Dylan Kelly</td>
+        <td><span class="student-id">105332711</span></td>
+        <td>Watchupga, VIC, Australia</td>
+        <td>Farm Hand</td>
+        <td>Scones</td>
+      </tr>
+    </table>
+  </section>
 
-      <article>
-        <h3>Dylan Kelly</h3>
-        <p><strong>Hometown:</strong> To be added</p>
-        <p><strong>Job:</strong> To be added</p>
-        <p><strong>Favourite Snack:</strong> To be added</p>
-      </article>
-    </section>
+  <!-- Contributions + Quotes -->
+  <section class="about-section">
+    <h2>Contributions & Quotes</h2>
 
-    <section>
-      <h2>Group Photo</h2>
-      <figure>
-        <img src="Group photo.jpg" alt="UrbanSync group photo with all team members">
-        <figcaption>Group photo UrbanSync</figcaption>
-      </figure>
-    </section>
-  </main>
+    <dl>
+      <dt>MD Areen Chowdhury</dt>
+      <dd>Developed about.html</dd>
+      <dd>Quote: "Suuii"</dd>
+      <dd>Translation: "Suuii"</dd>
 
-  <footer>
-    <p>&copy; 2026 UrbanSync | Smart City Consultancy Project</p>
-  </footer>
+      <dt>Reach Peng</dt>
+      <dd>Developed index.html</dd>
+      <dd>Quote: "ជីវិតគឺល្អ" (Khmer)</dd>
+      <dd>Translation: "Life is good"</dd>
+
+      <dt>Liron Roshain Joanic Willathgamuwa</dt>
+      <dd>Developed apply.html</dd>
+      <dd>Quote: "ජීවිතය ලස්සනයි" (Sinhala)</dd>
+      <dd>Translation: "Life is beautiful"</dd>
+
+      <dt>Dylan Kelly</dt>
+      <dd>Developed jobs.html</dd>
+      <dd>Quote: "No worries mate"</dd>
+      <dd>Translation: "Everything is fine"</dd>
+    </dl>
+  </section>
+
+  <!-- Fun Facts -->
+  <section class="about-section">
+    <h2>Fun Facts</h2>
+
+    <p><strong>Areen:</strong> From Dhaka, works in hospitality, loves pizza.</p>
+    <p><strong>Reach:</strong> From Cambodia, works at Hungry Jack's, likes popcorn.</p>
+    <p><strong>Liron:</strong> From Sri Lanka, into cybersecurity, enjoys lasagna.</p>
+    <p><strong>Dylan:</strong> From Victoria, works as a farm hand, likes scones.</p>
+  </section>
+
+  <!-- Group Photo -->
+  <section class="about-section">
+    <h2>Group Photo</h2>
+
+    <figure>
+      <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+      <figcaption>UrbanSync Group</figcaption>
+    </figure>
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 UrbanSync</p>
+</footer>
+
 </body>
 </html>
