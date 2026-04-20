@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="About page for UrbanSync group project">
@@ -8,11 +7,10 @@
   <title>About - UrbanSync</title>
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 
   <!-- Embedded CSS -->
   <style>
-    /* About page styling */
     .about-container {
       background: white;
       border: 1px solid #d4e9ec;
@@ -30,13 +28,11 @@
       margin-bottom: 10px;
     }
 
-    /* Fix bullets (global CSS removed them) */
     .about-section ul {
       list-style-type: disc;
       margin-left: 20px;
     }
 
-    /* Table */
     .member-table {
       width: 100%;
       border-collapse: collapse;
@@ -52,7 +48,6 @@
 
     .member-table th {
       background-color: #09637E;
-      /* hex colour */
       color: white;
     }
 
@@ -60,7 +55,6 @@
       background-color: #dceff1;
     }
 
-    /* Student ID */
     .student-id {
       background-color: #EBF4F6;
       border: 1px solid #088395;
@@ -68,7 +62,6 @@
       border-radius: 8px;
     }
 
-    /* Definition list */
     dt {
       font-weight: bold;
       margin-top: 10px;
@@ -81,13 +74,11 @@
       font-size: 14px;
     }
 
-    /* Caption */
     caption {
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    /* Figure */
     figure {
       border: 2px solid #088395;
       border-radius: 12px;
@@ -95,7 +86,6 @@
       text-align: center;
     }
 
-    /* Accessibility */
     a:focus {
       outline: 2px solid black;
     }
@@ -104,41 +94,34 @@
 
 <body>
 
-  <header class="navbar">
-    <div class="navbar-container">
-      <nav>
-        <ul class="navbar-link">
-          <li class="navbar-link-item"><a class="navbar-link-item-a" href="index.html">Home</a></li>
-          <li class="navbar-link-item"><a class="navbar-link-item-a" href="jobs.html">Jobs</a></li>
-          <li class="navbar-link-item"><a class="navbar-link-item-a" href="apply.html">Apply</a></li>
-          <li class="navbar-link-item"><a class="navbar-link-item-a" href="about.html">About</a></li>
-        </ul>
-      </nav>
+<header class="navbar">
+  <div class="navbar-container">
+
+    <div class="logo">
+      <img src="Group photo.jpg" class="logo-pic" alt="UrbanSync logo">
     </div>
-  </header>
 
-  <main class="about-container">
+    <nav>
+      <ul class="navbar-link">
+        <li><a class="navbar-link-item-a" href="index.html">Home</a></li>
+        <li><a class="navbar-link-item-a" href="jobs.html">Job Description</a></li>
+        <li><a class="navbar-link-item-a" href="apply.html">Apply</a></li>
+        <li><a class="navbar-link-item-a" href="about.html">About</a></li>
+      </ul>
+    </nav>
 
-    <!-- Intro -->
+  </div>
+</header>
+
+<main>
+  <div class="about-container">
+
+    <!-- Title -->
     <section class="about-section">
       <h1 style="letter-spacing: 1px;">UrbanSync</h1>
-      <p>This page introduces the UrbanSync team and their contributions.</p>
+      <p>This page introduces our group and their contributions.</p>
     </section>
 
-    <!-- Group Info -->
-    <section class="about-section">
-      <h2>Group Information</h2>
-      <ul>
-        <li><strong>Group Name:</strong> UrbanSync</li>
-        <li>
-          <strong>Class Day and Time:</strong>
-          <ul>
-            <li>Thursday</li>
-            <li>4:30 PM - 6:30 PM</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
     <!-- Group Info -->
     <section class="about-section">
       <h2>Group Information</h2>
@@ -157,227 +140,156 @@
     <!-- Members -->
     <section class="about-section">
       <h2>Group Members</h2>
-      <!-- Members -->
-      <section class="about-section">
-        <h2>Group Members</h2>
 
-        <table class="member-table">
-          <tr>
-            <th>Name</th>
-            <th>Student ID</th>
-            <th>Hometown</th>
-            <th>Job</th>
-            <th>Snack</th>
-          </tr>
-          <table class="member-table">
-            <tr>
-              <th>Name</th>
-              <th>Student ID</th>
-              <th>Hometown</th>
-              <th>Job</th>
-              <th>Snack</th>
-            </tr>
+      <table class="member-table">
+        <tr>
+          <th>Name</th>
+          <th>Student ID</th>
+          <th>Hometown</th>
+          <th>Job</th>
+          <th>Favourite Snack</th>
+        </tr>
 
-            <tr>
-              <td>MD Areen Chowdhury</td>
-              <td><span class="student-id">105693861</span></td>
-              <td>Dhaka, Bangladesh</td>
-              <td>BOH, Hospitality</td>
-              <td>Pizza slice</td>
-            </tr>
-            <tr>
-              <td>MD Areen Chowdhury</td>
-              <td><span class="student-id">105693861</span></td>
-              <td>Dhaka, Bangladesh</td>
-              <td>BOH, Hospitality</td>
-              <td>Pizza slice</td>
-            </tr>
+        <tr>
+          <td>MD Areen Chowdhury</td>
+          <td><span class="student-id">105693861</span></td>
+          <td>Dhaka, Bangladesh</td>
+          <td>BOH, Hospitality</td>
+          <td>Pizza slice</td>
+        </tr>
 
-            <tr>
-              <td>Reach Peng</td>
-              <td><span class="student-id">106382377</span></td>
-              <td>Phnom Penh, Cambodia</td>
-              <td>Casual Worker, Hungry Jack's</td>
-              <td>Popcorn</td>
-            </tr>
-            <tr>
-              <td>Reach Peng</td>
-              <td><span class="student-id">106382377</span></td>
-              <td>Phnom Penh, Cambodia</td>
-              <td>Casual Worker, Hungry Jack's</td>
-              <td>Popcorn</td>
-            </tr>
+        <tr>
+          <td>Reach Peng</td>
+          <td><span class="student-id">106382377</span></td>
+          <td>Phnom Penh, Cambodia</td>
+          <td>Casual Worker, Hungry Jack's</td>
+          <td>Popcorn</td>
+        </tr>
 
-            <tr>
-              <td>Liron Roshain Joanic Willathgamuwa</td>
-              <td><span class="student-id">105987496</span></td>
-              <td>Wattala, Sri Lanka</td>
-              <td>Cyber Security Specialist</td>
-              <td>Lasagna</td>
-            </tr>
-            <tr>
-              <td>Liron Roshain Joanic Willathgamuwa</td>
-              <td><span class="student-id">105987496</span></td>
-              <td>Wattala, Sri Lanka</td>
-              <td>Cyber Security Specialist</td>
-              <td>Lasagna</td>
-            </tr>
+        <tr>
+          <td>Liron Roshain Joanic Willathgamuwa</td>
+          <td><span class="student-id">105987496</span></td>
+          <td>Wattala, Sri Lanka</td>
+          <td>Cyber Security Specialist</td>
+          <td>Lasagna</td>
+        </tr>
 
-            <tr>
-              <td>Dylan Kelly</td>
-              <td><span class="student-id">105332711</span></td>
-              <td>Watchupga, VIC, Australia</td>
-              <td>Farm Hand</td>
-              <td>Scones</td>
-            </tr>
-          </table>
-      </section>
-      <tr>
-        <td>Dylan Kelly</td>
-        <td><span class="student-id">105332711</span></td>
-        <td>Watchupga, VIC, Australia</td>
-        <td>Farm Hand</td>
-        <td>Scones</td>
-      </tr>
+        <tr>
+          <td>Dylan Kelly</td>
+          <td><span class="student-id">105332711</span></td>
+          <td>Watchupga, VIC, Australia</td>
+          <td>Farm Hand</td>
+          <td>Scones</td>
+        </tr>
       </table>
     </section>
 
-    <!-- Contributions + Quotes -->
+    <!-- Contributions -->
     <section class="about-section">
       <h2>Member Contributions and Quotes</h2>
 
       <dl>
         <dt>MD Areen Chowdhury</dt>
         <dd>Developed about.html</dd>
-        <dd>Quote: "কি অবস্থা"</dd>
-        <dd>Translation: "What's up"</dd>
+        <dd>"কি অবস্থা" — "What's up"</dd>
 
         <dt>Reach Peng</dt>
         <dd>Developed index.html</dd>
-        <dd>Quote: "ជីវិតគឺល្អ"</dd>
-        <dd>Translation: "Life is good"</dd>
+        <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
 
         <dt>Liron Roshain Joanic Willathgamuwa</dt>
         <dd>Developed apply.html</dd>
-        <dd>Quote: "ජීවිතය ලස්සනයි"</dd>
-        <dd>Translation: "Life is beautiful"</dd>
+        <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
 
         <dt>Dylan Kelly</dt>
         <dd>Developed jobs.html</dd>
-        <dd>Quote: "No worries mate"</dd>
-        <dd>Translation: "Everything is fine"</dd>
+        <dd>"No worries mate" — "Everything is fine"</dd>
       </dl>
     </section>
 
-    <!-- Fun Facts TABLE (IMPORTANT FOR HD) -->
+    <!-- Fun Facts -->
     <section class="about-section">
       <h2>Fun Facts</h2>
 
       <table class="member-table">
         <caption>Group Member Fun Facts</caption>
-        <table class="member-table">
-          <caption>Group Member Fun Facts</caption>
 
-          <tr>
-            <th>Name</th>
-            <th>Hometown</th>
-            <th>Job</th>
-            <th>Favourite Snack</th>
-          </tr>
-          <tr>
-            <th>Name</th>
-            <th>Hometown</th>
-            <th>Job</th>
-            <th>Favourite Snack</th>
-          </tr>
+        <tr>
+          <th>Name</th>
+          <th>Hometown</th>
+          <th>Job</th>
+          <th>Favourite Snack</th>
+        </tr>
 
-          <tr>
-            <td>MD Areen Chowdhury</td>
-            <td>Dhaka, Bangladesh</td>
-            <td>BOH, Hospitality</td>
-            <td>Pizza slice</td>
-          </tr>
-          <tr>
-            <td>MD Areen Chowdhury</td>
-            <td>Dhaka, Bangladesh</td>
-            <td>BOH, Hospitality</td>
-            <td>Pizza slice</td>
-          </tr>
+        <tr>
+          <td>MD Areen Chowdhury</td>
+          <td>Dhaka, Bangladesh</td>
+          <td>BOH, Hospitality</td>
+          <td>Pizza slice</td>
+        </tr>
 
-          <tr>
-            <td>Reach Peng</td>
-            <td>Phnom Penh, Cambodia</td>
-            <td>Casual Worker, Hungry Jack's</td>
-            <td>Popcorn</td>
-          </tr>
-          <tr>
-            <td>Reach Peng</td>
-            <td>Phnom Penh, Cambodia</td>
-            <td>Casual Worker, Hungry Jack's</td>
-            <td>Popcorn</td>
-          </tr>
+        <tr>
+          <td>Reach Peng</td>
+          <td>Phnom Penh, Cambodia</td>
+          <td>Casual Worker, Hungry Jack's</td>
+          <td>Popcorn</td>
+        </tr>
 
-          <tr>
-            <td>Liron Roshain Joanic Willathgamuwa</td>
-            <td>Wattala, Sri Lanka</td>
-            <td>Cyber Security Specialist</td>
-            <td>Lasagna</td>
-          </tr>
-          <tr>
-            <td>Liron Roshain Joanic Willathgamuwa</td>
-            <td>Wattala, Sri Lanka</td>
-            <td>Cyber Security Specialist</td>
-            <td>Lasagna</td>
-          </tr>
+        <tr>
+          <td>Liron Roshain Joanic Willathgamuwa</td>
+          <td>Wattala, Sri Lanka</td>
+          <td>Cyber Security Specialist</td>
+          <td>Lasagna</td>
+        </tr>
 
-          <tr>
-            <td>Dylan Kelly</td>
-            <td>Watchupga, VIC, Australia</td>
-            <td>Farm Hand</td>
-            <td>Scones</td>
-          </tr>
-          <tr>
-            <td>Dylan Kelly</td>
-            <td>Watchupga, VIC, Australia</td>
-            <td>Farm Hand</td>
-            <td>Scones</td>
-          </tr>
+        <tr>
+          <td>Dylan Kelly</td>
+          <td>Watchupga, VIC, Australia</td>
+          <td>Farm Hand</td>
+          <td>Scones</td>
+        </tr>
 
-        </table>
-    </section>
-    </table>
+      </table>
     </section>
 
-    <!-- Photo -->
+    <!-- Group Photo -->
     <section class="about-section">
       <h2>Group Photo</h2>
-      <!-- Photo -->
-      <section class="about-section">
-        <h2>Group Photo</h2>
 
-        <figure>
-          <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
-          <figcaption>UrbanSync Group</figcaption>
-        </figure>
-      </section>
+      <figure>
+        <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+        <figcaption>UrbanSync Group</figcaption>
+      </figure>
+    </section>
 
-  </main>
+  </div>
+</main>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-column">
-        <h3 class="footer-column-title">UrbanSync</h3>
-        <p class="footer-column-item">Smart City Consultancy Project</p>
-      </div>
 
-      <div class="footer-column">
-        <h3 class="footer-column-title">Class</h3>
-        <p class="footer-column-item">Thursday</p>
-        <p class="footer-column-item">4:30 PM - 6:30 PM</p>
-      </div>
+<footer>
+  <div class="footer-container">
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Pages</h3>
+      <p class="footer-column-item"><a href="index.html">Home</a></p>
+      <p class="footer-column-item"><a href="jobs.html">Job Description</a></p>
+      <p class="footer-column-item"><a href="apply.html">Apply</a></p>
+      <p class="footer-column-item"><a href="about.html">About</a></p>
     </div>
-  </footer>
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Resources</h3>
+      <p class="footer-column-item"><a href="#">Github Repository</a></p>
+      <p class="footer-column-item"><a href="#">Jira</a></p>
+    </div>
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Contact Us</h3>
+      <p class="footer-column-item"><a href="mailto:your@email.com">Email</a></p>
+    </div>
+
+  </div>
+</footer>
 
 </body>
-
 </html>
