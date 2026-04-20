@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="About page for UrbanSync group project">
@@ -94,202 +95,230 @@
 
 <body>
 
-<header class="navbar">
-  <div class="navbar-container">
-
-    <div class="logo">
-      <img src="Group photo.jpg" class="logo-pic" alt="UrbanSync logo">
-    </div>
-
-    <nav>
-      <ul class="navbar-link">
-        <li><a class="navbar-link-item-a" href="index.html">Home</a></li>
-        <li><a class="navbar-link-item-a" href="jobs.html">Job Description</a></li>
-        <li><a class="navbar-link-item-a" href="apply.html">Apply</a></li>
-        <li><a class="navbar-link-item-a" href="about.html">About</a></li>
-      </ul>
+  <header>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-logo">
+          <a href="index.html"><img src="images/logo.png" class="logo-pic"></a>
+        </div>
+        <ul class="navbar-link">
+          <li class="navbar-link-item">
+            <a href="jobs.html" class="navbar-link-item-a">JOB DESCRIPTION</a>
+          </li>
+          <li class="navbar-link-item">
+            <a href="apply.html" class="navbar-link-item-a">APPLY</a>
+          </li>
+          <li class="navbar-link-item">
+            <a href="about.html" class="navbar-link-item-a">ABOUT</a>
+          </li>
+        </ul>
+        <form class="search-bar">
+          <input type="text" name="search-text" placeholder="SEARCH FOR JOBS..." class="search-text">
+          <button type="submit" class="job-search-button">SEARCH</button>
+        </form>
+      </div>
+      </div>
     </nav>
+  </header>
 
-  </div>
-</header>
+  <main>
+    <div class="about-container">
 
-<main>
-  <div class="about-container">
+      <!-- Title -->
+      <section class="about-section">
+        <h1 style="letter-spacing: 1px;">UrbanSync</h1>
+        <p>This page introduces our group and their contributions.</p>
+      </section>
 
-    <!-- Title -->
-    <section class="about-section">
-      <h1 style="letter-spacing: 1px;">UrbanSync</h1>
-      <p>This page introduces our group and their contributions.</p>
-    </section>
+      <!-- Group Info -->
+      <section class="about-section">
+        <h2>Group Information</h2>
+        <ul>
+          <li><strong>Group Name:</strong> UrbanSync</li>
+          <li>
+            <strong>Class Day and Time:</strong>
+            <ul>
+              <li>Thursday</li>
+              <li>4:30 PM - 6:30 PM</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
 
-    <!-- Group Info -->
-    <section class="about-section">
-      <h2>Group Information</h2>
-      <ul>
-        <li><strong>Group Name:</strong> UrbanSync</li>
-        <li>
-          <strong>Class Day and Time:</strong>
-          <ul>
-            <li>Thursday</li>
-            <li>4:30 PM - 6:30 PM</li>
+      <!-- Members -->
+      <section class="about-section">
+        <h2>Group Members</h2>
+
+        <table class="member-table">
+          <tr>
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Favourite Snack</th>
+          </tr>
+
+          <tr>
+            <td>MD Areen Chowdhury</td>
+            <td><span class="student-id">105693861</span></td>
+            <td>Dhaka, Bangladesh</td>
+            <td>BOH, Hospitality</td>
+            <td>Pizza slice</td>
+          </tr>
+
+          <tr>
+            <td>Reach Peng</td>
+            <td><span class="student-id">106382377</span></td>
+            <td>Phnom Penh, Cambodia</td>
+            <td>Casual Worker, Hungry Jack's</td>
+            <td>Popcorn</td>
+          </tr>
+
+          <tr>
+            <td>Liron Roshain Joanic Willathgamuwa</td>
+            <td><span class="student-id">105987496</span></td>
+            <td>Wattala, Sri Lanka</td>
+            <td>Cyber Security Specialist</td>
+            <td>Lasagna</td>
+          </tr>
+
+          <tr>
+            <td>Dylan Kelly</td>
+            <td><span class="student-id">105332711</span></td>
+            <td>Watchupga, VIC, Australia</td>
+            <td>Farm Hand</td>
+            <td>Scones</td>
+          </tr>
+        </table>
+      </section>
+
+      <!-- Contributions -->
+      <section class="about-section">
+        <h2>Member Contributions and Quotes</h2>
+
+        <dl>
+          <dt>MD Areen Chowdhury</dt>
+          <dd>Developed about.html</dd>
+          <dd>"কি অবস্থা" — "What's up"</dd>
+
+          <dt>Reach Peng</dt>
+          <dd>Developed index.html</dd>
+          <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
+
+          <dt>Liron Roshain Joanic Willathgamuwa</dt>
+          <dd>Developed apply.html</dd>
+          <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
+
+          <dt>Dylan Kelly</dt>
+          <dd>Developed jobs.html</dd>
+          <dd>"No worries mate" — "Everything is fine"</dd>
+        </dl>
+      </section>
+
+      <!-- Fun Facts -->
+      <section class="about-section">
+        <h2>Fun Facts</h2>
+
+        <table class="member-table">
+          <caption>Group Member Fun Facts</caption>
+
+          <tr>
+            <th>Name</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Favourite Snack</th>
+          </tr>
+
+          <tr>
+            <td>MD Areen Chowdhury</td>
+            <td>Dhaka, Bangladesh</td>
+            <td>BOH, Hospitality</td>
+            <td>Pizza slice</td>
+          </tr>
+
+          <tr>
+            <td>Reach Peng</td>
+            <td>Phnom Penh, Cambodia</td>
+            <td>Casual Worker, Hungry Jack's</td>
+            <td>Popcorn</td>
+          </tr>
+
+          <tr>
+            <td>Liron Roshain Joanic Willathgamuwa</td>
+            <td>Wattala, Sri Lanka</td>
+            <td>Cyber Security Specialist</td>
+            <td>Lasagna</td>
+          </tr>
+
+          <tr>
+            <td>Dylan Kelly</td>
+            <td>Watchupga, VIC, Australia</td>
+            <td>Farm Hand</td>
+            <td>Scones</td>
+          </tr>
+
+        </table>
+      </section>
+
+      <!-- Group Photo -->
+      <section class="about-section">
+        <h2>Group Photo</h2>
+
+        <figure>
+          <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+          <figcaption>UrbanSync Group</figcaption>
+        </figure>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <nav>
+      <div class="footer-container">
+        <div class="footer-column">
+          <h2 class="footer-column-title">Pages</h2>
+          <ul class="footer-column-list">
+            <li class="footer-column-item">
+              <a href="/index.html">Home</a>
+            </li>
+            <li class="footer-column-item">
+              <a href="/jobs.html">Job Description</a>
+            </li>
+            <li class="footer-column-item">
+              <a href="/apply.html">Apply</a>
+            </li>
+            <li class="footer-column-item">
+              <a href="/about.html">About</a>
+            </li>
           </ul>
-        </li>
-      </ul>
-    </section>
+        </div>
+        <div class="footer-column">
+          <h2 class="footer-column-title">Resources</h2>
+          <ul class="footer-column-list">
+            <li class="footer-column-item">
+              <a href="https://github.com/mqypr/UrbanSync">Github Repository</a>
+            </li>
+            <li>
+              <a class="footer-column-item"
+                href="https://pengreach123.atlassian.net/?continue=https%3A%2F%2Fpengreach123.atlassian.net%2Fwelcome%2Fsoftware%3FprojectId%3D10033&atlOrigin=eyJpIjoiOGMzNTY2NzRmYTE2NGY5MzkxNmFkNDQ3ZmFmNWVmYmYiLCJwIjoiamlyYS1zb2Z0d2FyZSJ9">Jira
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h2 class="footer-column-title">Contact Us</h2>
+          <ul class="footer-column-list">
+            <li>
+              <a href="mailto:blank" class="footer-column-item">Email</a>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-    <!-- Members -->
-    <section class="about-section">
-      <h2>Group Members</h2>
-
-      <table class="member-table">
-        <tr>
-          <th>Name</th>
-          <th>Student ID</th>
-          <th>Hometown</th>
-          <th>Job</th>
-          <th>Favourite Snack</th>
-        </tr>
-
-        <tr>
-          <td>MD Areen Chowdhury</td>
-          <td><span class="student-id">105693861</span></td>
-          <td>Dhaka, Bangladesh</td>
-          <td>BOH, Hospitality</td>
-          <td>Pizza slice</td>
-        </tr>
-
-        <tr>
-          <td>Reach Peng</td>
-          <td><span class="student-id">106382377</span></td>
-          <td>Phnom Penh, Cambodia</td>
-          <td>Casual Worker, Hungry Jack's</td>
-          <td>Popcorn</td>
-        </tr>
-
-        <tr>
-          <td>Liron Roshain Joanic Willathgamuwa</td>
-          <td><span class="student-id">105987496</span></td>
-          <td>Wattala, Sri Lanka</td>
-          <td>Cyber Security Specialist</td>
-          <td>Lasagna</td>
-        </tr>
-
-        <tr>
-          <td>Dylan Kelly</td>
-          <td><span class="student-id">105332711</span></td>
-          <td>Watchupga, VIC, Australia</td>
-          <td>Farm Hand</td>
-          <td>Scones</td>
-        </tr>
-      </table>
-    </section>
-
-    <!-- Contributions -->
-    <section class="about-section">
-      <h2>Member Contributions and Quotes</h2>
-
-      <dl>
-        <dt>MD Areen Chowdhury</dt>
-        <dd>Developed about.html</dd>
-        <dd>"কি অবস্থা" — "What's up"</dd>
-
-        <dt>Reach Peng</dt>
-        <dd>Developed index.html</dd>
-        <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
-
-        <dt>Liron Roshain Joanic Willathgamuwa</dt>
-        <dd>Developed apply.html</dd>
-        <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
-
-        <dt>Dylan Kelly</dt>
-        <dd>Developed jobs.html</dd>
-        <dd>"No worries mate" — "Everything is fine"</dd>
-      </dl>
-    </section>
-
-    <!-- Fun Facts -->
-    <section class="about-section">
-      <h2>Fun Facts</h2>
-
-      <table class="member-table">
-        <caption>Group Member Fun Facts</caption>
-
-        <tr>
-          <th>Name</th>
-          <th>Hometown</th>
-          <th>Job</th>
-          <th>Favourite Snack</th>
-        </tr>
-
-        <tr>
-          <td>MD Areen Chowdhury</td>
-          <td>Dhaka, Bangladesh</td>
-          <td>BOH, Hospitality</td>
-          <td>Pizza slice</td>
-        </tr>
-
-        <tr>
-          <td>Reach Peng</td>
-          <td>Phnom Penh, Cambodia</td>
-          <td>Casual Worker, Hungry Jack's</td>
-          <td>Popcorn</td>
-        </tr>
-
-        <tr>
-          <td>Liron Roshain Joanic Willathgamuwa</td>
-          <td>Wattala, Sri Lanka</td>
-          <td>Cyber Security Specialist</td>
-          <td>Lasagna</td>
-        </tr>
-
-        <tr>
-          <td>Dylan Kelly</td>
-          <td>Watchupga, VIC, Australia</td>
-          <td>Farm Hand</td>
-          <td>Scones</td>
-        </tr>
-
-      </table>
-    </section>
-
-    <!-- Group Photo -->
-    <section class="about-section">
-      <h2>Group Photo</h2>
-
-      <figure>
-        <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
-        <figcaption>UrbanSync Group</figcaption>
-      </figure>
-    </section>
-
-  </div>
-</main>
-
-
-<footer>
-  <div class="footer-container">
-
-    <div class="footer-column">
-      <h3 class="footer-column-title">Pages</h3>
-      <p class="footer-column-item"><a href="index.html">Home</a></p>
-      <p class="footer-column-item"><a href="jobs.html">Job Description</a></p>
-      <p class="footer-column-item"><a href="apply.html">Apply</a></p>
-      <p class="footer-column-item"><a href="about.html">About</a></p>
-    </div>
-
-    <div class="footer-column">
-      <h3 class="footer-column-title">Resources</h3>
-      <p class="footer-column-item"><a href="#">Github Repository</a></p>
-      <p class="footer-column-item"><a href="#">Jira</a></p>
-    </div>
-
-    <div class="footer-column">
-      <h3 class="footer-column-title">Contact Us</h3>
-      <p class="footer-column-item"><a href="mailto:your@email.com">Email</a></p>
-    </div>
-
-  </div>
-</footer>
+    </nav>
+  </footer>
 
 </body>
+
 </html>
