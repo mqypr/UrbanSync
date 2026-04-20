@@ -359,7 +359,6 @@ footer {
 .jobs-layout {
   display: flex;
   flex-direction: row-reverse;
-  min-height: calc(100vh - 12rem);
 }
 
 #JobNav {
