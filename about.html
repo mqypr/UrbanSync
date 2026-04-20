@@ -12,38 +12,31 @@
 
   <!-- Embedded CSS -->
   <style>
-    /* About Page Styling */
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-    }
-
+    /* About page styling */
     .about-container {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: white;
-      border: 1px solid var(--tertiary);
-      border-radius: 8px;
+      background: white;
+      border: 1px solid #d4e9ec;
+      border-radius: 20px;
+      padding: 2rem;
     }
 
     .about-section {
-      margin-bottom: 30px;
+      margin-bottom: 2rem;
     }
 
     .about-section h2 {
-      margin-bottom: 10px;
-      border-bottom: 2px solid var(--secondary);
+      border-bottom: 3px solid #088395;
       padding-bottom: 5px;
+      margin-bottom: 10px;
     }
 
-    /* Fix bullet list */
+    /* Fix bullets (global CSS removed them) */
     .about-section ul {
       list-style-type: disc;
       margin-left: 20px;
     }
 
-    /* Table styling */
+    /* Table */
     .member-table {
       width: 100%;
       border-collapse: collapse;
@@ -52,7 +45,7 @@
 
     .member-table th,
     .member-table td {
-      border: 1px solid #ccc;
+      border: 1px solid #cfe3e6;
       padding: 10px;
       font-size: 14px;
     }
@@ -63,9 +56,8 @@
       color: white;
     }
 
-    /* Hover effect */
     .member-table tr:hover {
-      background-color: #dff3f6;
+      background-color: #dceff1;
     }
 
     /* Student ID */
@@ -73,14 +65,14 @@
       background-color: #EBF4F6;
       border: 1px solid #088395;
       padding: 4px 6px;
-      border-radius: 4px;
+      border-radius: 8px;
     }
 
     /* Definition list */
     dt {
       font-weight: bold;
       margin-top: 10px;
-      color: var(--primary);
+      color: #09637E;
     }
 
     dd {
@@ -98,9 +90,9 @@
     /* Figure */
     figure {
       border: 2px solid #088395;
+      border-radius: 12px;
       padding: 10px;
       text-align: center;
-      border-radius: 6px;
     }
 
     /* Accessibility */
@@ -147,51 +139,106 @@
         </li>
       </ul>
     </section>
+    <!-- Group Info -->
+    <section class="about-section">
+      <h2>Group Information</h2>
+      <ul>
+        <li><strong>Group Name:</strong> UrbanSync</li>
+        <li>
+          <strong>Class Day and Time:</strong>
+          <ul>
+            <li>Thursday</li>
+            <li>4:30 PM - 6:30 PM</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
     <!-- Members -->
     <section class="about-section">
       <h2>Group Members</h2>
+      <!-- Members -->
+      <section class="about-section">
+        <h2>Group Members</h2>
 
-      <table class="member-table">
-        <tr>
-          <th>Name</th>
-          <th>Student ID</th>
-          <th>Hometown</th>
-          <th>Job</th>
-          <th>Snack</th>
-        </tr>
+        <table class="member-table">
+          <tr>
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Snack</th>
+          </tr>
+          <table class="member-table">
+            <tr>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Hometown</th>
+              <th>Job</th>
+              <th>Snack</th>
+            </tr>
 
-        <tr>
-          <td>MD Areen Chowdhury</td>
-          <td><span class="student-id">105693861</span></td>
-          <td>Dhaka, Bangladesh</td>
-          <td>BOH, Hospitality</td>
-          <td>Pizza slice</td>
-        </tr>
+            <tr>
+              <td>MD Areen Chowdhury</td>
+              <td><span class="student-id">105693861</span></td>
+              <td>Dhaka, Bangladesh</td>
+              <td>BOH, Hospitality</td>
+              <td>Pizza slice</td>
+            </tr>
+            <tr>
+              <td>MD Areen Chowdhury</td>
+              <td><span class="student-id">105693861</span></td>
+              <td>Dhaka, Bangladesh</td>
+              <td>BOH, Hospitality</td>
+              <td>Pizza slice</td>
+            </tr>
 
-        <tr>
-          <td>Reach Peng</td>
-          <td><span class="student-id">106382377</span></td>
-          <td>Phnom Penh, Cambodia</td>
-          <td>Casual Worker, Hungry Jack's</td>
-          <td>Popcorn</td>
-        </tr>
+            <tr>
+              <td>Reach Peng</td>
+              <td><span class="student-id">106382377</span></td>
+              <td>Phnom Penh, Cambodia</td>
+              <td>Casual Worker, Hungry Jack's</td>
+              <td>Popcorn</td>
+            </tr>
+            <tr>
+              <td>Reach Peng</td>
+              <td><span class="student-id">106382377</span></td>
+              <td>Phnom Penh, Cambodia</td>
+              <td>Casual Worker, Hungry Jack's</td>
+              <td>Popcorn</td>
+            </tr>
 
-        <tr>
-          <td>Liron Roshain Joanic Willathgamuwa</td>
-          <td><span class="student-id">105987496</span></td>
-          <td>Wattala, Sri Lanka</td>
-          <td>Cyber Security Specialist</td>
-          <td>Lasagna</td>
-        </tr>
+            <tr>
+              <td>Liron Roshain Joanic Willathgamuwa</td>
+              <td><span class="student-id">105987496</span></td>
+              <td>Wattala, Sri Lanka</td>
+              <td>Cyber Security Specialist</td>
+              <td>Lasagna</td>
+            </tr>
+            <tr>
+              <td>Liron Roshain Joanic Willathgamuwa</td>
+              <td><span class="student-id">105987496</span></td>
+              <td>Wattala, Sri Lanka</td>
+              <td>Cyber Security Specialist</td>
+              <td>Lasagna</td>
+            </tr>
 
-        <tr>
-          <td>Dylan Kelly</td>
-          <td><span class="student-id">105332711</span></td>
-          <td>Watchupga, VIC, Australia</td>
-          <td>Farm Hand</td>
-          <td>Scones</td>
-        </tr>
+            <tr>
+              <td>Dylan Kelly</td>
+              <td><span class="student-id">105332711</span></td>
+              <td>Watchupga, VIC, Australia</td>
+              <td>Farm Hand</td>
+              <td>Scones</td>
+            </tr>
+          </table>
+      </section>
+      <tr>
+        <td>Dylan Kelly</td>
+        <td><span class="student-id">105332711</span></td>
+        <td>Watchupga, VIC, Australia</td>
+        <td>Farm Hand</td>
+        <td>Scones</td>
+      </tr>
       </table>
     </section>
 
@@ -228,54 +275,91 @@
 
       <table class="member-table">
         <caption>Group Member Fun Facts</caption>
+        <table class="member-table">
+          <caption>Group Member Fun Facts</caption>
 
-        <tr>
-          <th>Name</th>
-          <th>Hometown</th>
-          <th>Job</th>
-          <th>Favourite Snack</th>
-        </tr>
+          <tr>
+            <th>Name</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Favourite Snack</th>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Favourite Snack</th>
+          </tr>
 
-        <tr>
-          <td>MD Areen Chowdhury</td>
-          <td>Dhaka, Bangladesh</td>
-          <td>BOH, Hospitality</td>
-          <td>Pizza slice</td>
-        </tr>
+          <tr>
+            <td>MD Areen Chowdhury</td>
+            <td>Dhaka, Bangladesh</td>
+            <td>BOH, Hospitality</td>
+            <td>Pizza slice</td>
+          </tr>
+          <tr>
+            <td>MD Areen Chowdhury</td>
+            <td>Dhaka, Bangladesh</td>
+            <td>BOH, Hospitality</td>
+            <td>Pizza slice</td>
+          </tr>
 
-        <tr>
-          <td>Reach Peng</td>
-          <td>Phnom Penh, Cambodia</td>
-          <td>Casual Worker, Hungry Jack's</td>
-          <td>Popcorn</td>
-        </tr>
+          <tr>
+            <td>Reach Peng</td>
+            <td>Phnom Penh, Cambodia</td>
+            <td>Casual Worker, Hungry Jack's</td>
+            <td>Popcorn</td>
+          </tr>
+          <tr>
+            <td>Reach Peng</td>
+            <td>Phnom Penh, Cambodia</td>
+            <td>Casual Worker, Hungry Jack's</td>
+            <td>Popcorn</td>
+          </tr>
 
-        <tr>
-          <td>Liron Roshain Joanic Willathgamuwa</td>
-          <td>Wattala, Sri Lanka</td>
-          <td>Cyber Security Specialist</td>
-          <td>Lasagna</td>
-        </tr>
+          <tr>
+            <td>Liron Roshain Joanic Willathgamuwa</td>
+            <td>Wattala, Sri Lanka</td>
+            <td>Cyber Security Specialist</td>
+            <td>Lasagna</td>
+          </tr>
+          <tr>
+            <td>Liron Roshain Joanic Willathgamuwa</td>
+            <td>Wattala, Sri Lanka</td>
+            <td>Cyber Security Specialist</td>
+            <td>Lasagna</td>
+          </tr>
 
-        <tr>
-          <td>Dylan Kelly</td>
-          <td>Watchupga, VIC, Australia</td>
-          <td>Farm Hand</td>
-          <td>Scones</td>
-        </tr>
+          <tr>
+            <td>Dylan Kelly</td>
+            <td>Watchupga, VIC, Australia</td>
+            <td>Farm Hand</td>
+            <td>Scones</td>
+          </tr>
+          <tr>
+            <td>Dylan Kelly</td>
+            <td>Watchupga, VIC, Australia</td>
+            <td>Farm Hand</td>
+            <td>Scones</td>
+          </tr>
 
-      </table>
+        </table>
+    </section>
+    </table>
     </section>
 
     <!-- Photo -->
     <section class="about-section">
       <h2>Group Photo</h2>
+      <!-- Photo -->
+      <section class="about-section">
+        <h2>Group Photo</h2>
 
-      <figure>
-        <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
-        <figcaption>UrbanSync Group</figcaption>
-      </figure>
-    </section>
+        <figure>
+          <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+          <figcaption>UrbanSync Group</figcaption>
+        </figure>
+      </section>
 
   </main>
 
