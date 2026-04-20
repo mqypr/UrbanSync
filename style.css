@@ -514,10 +514,10 @@ footer {
 
 .index-hero-slogan-highlight {
   filter: blur(2px);
+}
 
-  &:hover {
-    filter: blur(0px);
-  }
+.index-hero-slogan-highlight:hover {
+  filter: blur(0px);
 }
 
 .index-intro {
