@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Application Page</title>
     <link rel="stylesheet" href="style.css" />
-
-    <style>
-
-
-    </style>
 </head>
 
 <body id="JobsPage">
@@ -41,10 +36,14 @@
     </header>
 
     <div class="jobs-layout">
+
+        <!-- Job Aside Navigation Box -->
         <aside id="JobNav">
             <h2 style="color:white;">Jobs</h2>
 
             <div class="JobContainer">
+
+                <!-- Job 1 -->
                 <a href="Jobs/job01.html" target="contentMain">
                     <section class="JobSection">
                         <h3>Frontend Web Developer</h3>
@@ -53,6 +52,7 @@
                     </section>
                 </a>
 
+                <!-- Job 2 -->
                 <a href="Jobs/job02.html" target="contentMain">
                     <section class="JobSection">
                         <h3>IT Support Officer</h3>
@@ -63,6 +63,8 @@
             </div>
         </aside>
 
+
+        <!-- Inline Frame for job details and information -->
         <main id="JobContent">
             <iframe id="JobsContentMain" name="contentMain" src="Jobs/job01.html" title="Job Information"></iframe>
         </main>
