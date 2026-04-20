@@ -17,7 +17,6 @@
         color: var(--bg-main);
         font-size: 24px;
       }
-
     }
 
     @media only screen and (max-width: 1000px) {
@@ -46,17 +45,11 @@
         <div class="navbar-logo">
           <a href="index.html"><img src="./images/logo.png" class="logo-pic" alt="logo-pic"></a>
         </div>
-        <ul class="navbar-link">
-          <li class="navbar-link-item">
-            <a href="jobs.html" class="navbar-link-item-a">JOB DESCRIPTION</a>
-          </li>
-          <li class="navbar-link-item">
-            <a href="apply.html" class="navbar-link-item-a">APPLY</a>
-          </li>
-          <li class="navbar-link-item">
-            <a href="about.html" class="navbar-link-item-a">ABOUT</a>
-          </li>
-        </ul>
+        <div class="navbar-link">
+          <a href="jobs.html" class="navbar-link-item-a">JOB DESCRIPTION</a>
+          <a href="apply.html" class="navbar-link-item-a">APPLY</a>
+          <a href="about.html" class="navbar-link-item-a">ABOUT</a>
+        </div>
         <form class="search-bar">
           <input type="text" name="search-text" placeholder="SEARCH FOR JOBS..." class="search-text">
           <button type="submit" class="job-search-button">SEARCH</button>

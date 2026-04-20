@@ -627,3 +627,9 @@ footer {
   color: var(--main-font);
   font-size: small;
 }
+
+@media only screen and (max-width: 750px) {
+  .search-bar {
+    display: none;
+  }
+}
