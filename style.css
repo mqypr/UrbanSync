@@ -1,3 +1,4 @@
+/* :root command inspired from chatgpt "how to structure css file" */
 :root {
   --primary: #09637E;
   --secondary: #088395;
@@ -494,6 +495,7 @@ footer {
   background-position: center;
   height: 400px;
   align-items: center;
+  /* display: flex inspired from: https://www.w3schools.com/cssref/pr_class_display.php */
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -636,4 +638,57 @@ footer {
   .search-bar {
     display: none;
   }
+}
+
+/* about page */
+.about-container {
+  background: white;
+  border: 1px solid #d4e9ec;
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 5%;
+}
+
+.about-section {
+  margin-bottom: 2rem;
+}
+
+.about-section h2 {
+  border-bottom: 3px solid #088395;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.about-section ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.member-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.member-table th,
+.member-table td {
+  border: 1px solid #cfe3e6;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.member-table th {
+  background-color: #09637E;
+  color: white;
+}
+
+.member-table tr:hover {
+  background-color: #dceff1;
+}
+
+.student-id {
+  background-color: #EBF4F6;
+  border: 1px solid #088395;
+  padding: 4px 6px;
+  border-radius: 8px;
 }
