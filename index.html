@@ -6,8 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <title>Home</title>
-  <style></style>
-  <!--custom navbar for index.html-->
+  <style>
+    @media only screen and (max-width: 800px) {
+      .index-hero-h1 {
+        color: var(--bg-main);
+        font-size: 60px;
+      }
+
+      .index-hero-slogan {
+        color: var(--bg-main);
+        font-size: 24px;
+      }
+
+    }
+
+    @media only screen and (max-width: 1000px) {
+      .index-intro {
+        flex-direction: column;
+      }
+
+      .index-intro-description {
+        max-width: 500px;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .index-intro-vid-content {
+        height: 200px;
+        width: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -45,14 +74,14 @@
     </section>
     <section class="index-intro">
       <div class="index-intro-description">
-        <h2>Infrastructure for the Future.</h2>
+        <h2 class="index-intro-title">Infrastructure for the Future.</h2>
         <p>UrbanSync is the smart city Infrastructure based in Melbourne, here to bring a complete upgrade to your
           city's streets and buildings. We make infrastructure safer <span
             class="index-intro-description-highlight">and</span> faster</p>
         <!--highlight "and"-->
       </div>
       <figure class="index-intro-vid">
-        <!--<video autoplay muted loop src="/images/promo-video.mp4"></video> -->
+        <video autoplay muted loop src="/images/promo-video.mp4" class="index-intro-vid-content"></video>
         <figcaption class="index-intro-figcaption">Video by City Melbourne youtube <a href="#footnote-3"
             class="index-intro-figcaption-sup"><sup>1</sup></a></figcaption>
       </figure>
@@ -68,19 +97,13 @@
       <h2 class="index-compare-title">
         The Pioneer
       </h2>
-      <p class="index-compare-text">
-        UrbanSync <!--add copyright or all rights reserved tag --> offers a complete package that is faster, better, and
-        more cost effective than other services. When
-        you know UrbanSync, you know efficiency.
-      </p>
       <table class="index-compare-table">
         <tr class="index-compare-table-row">
-          <th></th>
           <th class="index-compare-table-title">UrbanSync</th>
           <th class="index-compare-table-title">Other Competitors</th>
         </tr>
-        <tr class="index-compare-table-category">
-          <td clas="index-compare-table-category-data" rowspan="3">Performance</td>
+        <tr class="index-compare-table-row">
+          <td class="index-compare-table-category" colspan="2">Performance</td>
         </tr>
         <tr class="index-compare-table-row">
           <td class="index-compare-table-row-data">Fast Project turn-around</td>
@@ -90,8 +113,8 @@
           <td class="index-compare-table-row-data">Industry-leading quality of results</td>
           <td class="index-compare-table-row-data">Standard quality</td>
         </tr>
-        <tr class="index-compare-table-category">
-          <td class="index-compare-table-category-data" rowspan="3">Efficiency</td>
+        <tr class="index-compare-table-row">
+          <td class="index-compare-table-category" colspan="2">Efficiency</td>
         </tr>
         <tr class="index-compare-table-row">
           <td class="index-compare-table-row-data">$</td>
@@ -101,8 +124,8 @@
           <td class="index-compare-table-row-data">Minimal Resource Overload</td>
           <td class="index-compare-table-row-data">Unplanned resource overload</td>
         </tr>
-        <tr class="index-compare-table-category">
-          <td class="index-compare-table-category-data" rowspan="4">Capability</td>
+        <tr class="index-compare-table-row">
+          <td class="index-compare-table-category" colspan="2">Additional Services</td>
         </tr>
         <tr class="index-compare-table-row">
           <td class="index-compare-table-row-data">Hardware & software integration</td>

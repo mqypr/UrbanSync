@@ -46,6 +46,7 @@ button {
 
 sup {
   text-decoration: underline;
+  font-size: 50%;
 }
 
 
@@ -185,12 +186,6 @@ footer {
 }
 
 /* apply.html styles */
-main {
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
 
 .apply-form-section {
   background-color: white;
@@ -352,158 +347,283 @@ main {
   font-size: 0.85rem;
 }
 
-@media (max-width: 768px) {
-  main {
-    margin: 2rem auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
 
-  .apply-form-section {
-    padding: 1.5rem;
-  }
-
-  .apply-form-section h1 {
-    font-size: 1.6rem;
-  }
-
-  .dob-wrapper {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
 /* jobs.html style stuff */
 /* The Aside html navigation page */
-        #JobsPage {
-            margin: 0;
-            min-height: 100vh;
-            background-color: #EDF4F6;
-        }
+#JobsPage {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #EDF4F6;
+}
 
-        .jobs-layout {
-            display: flex;
-            flex-direction: row-reverse;
-            min-height: calc(100vh - 12rem);
-        }
+.jobs-layout {
+  display: flex;
+  flex-direction: row-reverse;
+  min-height: calc(100vh - 12rem);
+}
 
-        #JobNav {
-            width: 25%;
-            min-width: 16rem;
-            padding: 1.5rem;
-            background-image: linear-gradient(to bottom, #2B617B, #3A8193);
-        }
+#JobNav {
+  width: 25%;
+  min-width: 16rem;
+  padding: 1.5rem;
+  background-image: linear-gradient(to bottom, #2B617B, #3A8193);
+}
 
-        #JobNav h2 {
-            margin: 0 0 1.5rem 0;
-            padding: 1rem;
-            text-align: center;
-            color: #EDF4F6;
-            background-color: #1f4b61;
-            border-radius: 0.75rem;
-        }
+#JobNav h2 {
+  margin: 0 0 1.5rem 0;
+  padding: 1rem;
+  text-align: center;
+  color: #EDF4F6;
+  background-color: #1f4b61;
+  border-radius: 0.75rem;
+}
 
-        .JobContainer {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+.JobContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-        .JobContainer a {
-            text-decoration: none;
-            color: inherit;
-        }
+.JobContainer a {
+  text-decoration: none;
+  color: inherit;
+}
 
-        .JobSection {
-            padding: 1rem;
-            border-radius: 0.75rem;
-            background-image: linear-gradient(to right, #2B617B, #3A8193);
-            color: #EDF4F6;
-            transition: background-image 0.25s ease, transform 0.25s ease;
-        }
+.JobSection {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background-image: linear-gradient(to right, #2B617B, #3A8193);
+  color: #EDF4F6;
+  transition: background-image 0.25s ease, transform 0.25s ease;
+}
 
-        .JobSection:hover {
-            background-image: linear-gradient(to right, #3A8193, #86B1B1);
-            transform: translateY(-0.15rem);
-            cursor: pointer;
-        }
+.JobSection:hover {
+  background-image: linear-gradient(to right, #3A8193, #86B1B1);
+  transform: translateY(-0.15rem);
+  cursor: pointer;
+}
 
-        .JobSection h3 {
-            margin: 0 0 0.5rem 0;
-        }
+.JobSection h3 {
+  margin: 0 0 0.5rem 0;
+}
 
-        .JobSection p {
-            margin: 0.35rem 0 0 0;
-            line-height: 1.4;
-        }
+.JobSection p {
+  margin: 0.35rem 0 0 0;
+  line-height: 1.4;
+}
 
-        #JobContent {
-            flex: 1;
-            padding: 1.5rem;
-        }
+#JobContent {
+  flex: 1;
+  padding: 1.5rem;
+}
 
-        #JobsContentMain {
-            width: 100%;
-            height: 100%;
-            min-height: 80vh;
-            border: none;
-            border-radius: 0.75rem;
-            background-color: white;
-            display: block;
-        }
+#JobsContentMain {
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  border: none;
+  border-radius: 0.75rem;
+  background-color: white;
+  display: block;
+}
 
 /* Job content page styling */
 /* The information page for the jobs*/
-        #JobPageBodyStyle {
-            margin: 0;
-            padding: 1rem;
-            background-color: #EDF4F6;
-        }
+#JobPageBodyStyle {
+  margin: 0;
+  padding: 1rem;
+  background-color: #EDF4F6;
+}
 
-        #JobArticle {
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-        }
+#JobArticle {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
 
-        #JobTitle {
-            margin: 0 0 1.25rem 0;
-            padding: 1rem 1.25rem;
-            background-image: linear-gradient(to right, #2B617B, #3A8193);
-            border-radius: 0.75rem;
-            color: #EDF4F6;
-        }
+#JobTitle {
+  margin: 0 0 1.25rem 0;
+  padding: 1rem 1.25rem;
+  background-image: linear-gradient(to right, #2B617B, #3A8193);
+  border-radius: 0.75rem;
+  color: #EDF4F6;
+}
 
-        #JobTitle h2,
-        #JobTitle h3,
-        #JobTitle p {
-            margin: 0 0 0.5rem 0;
-        }
+#JobTitle h2,
+#JobTitle h3,
+#JobTitle p {
+  margin: 0 0 0.5rem 0;
+}
 
-        #JobTitle p {
-            font-weight: bold;
-        }
+#JobTitle p {
+  font-weight: bold;
+}
 
-        #JobInfo {
-            padding: 0 0.5rem;
-            color: #17323f;
-        }
+#JobInfo {
+  padding: 0 0.5rem;
+  color: #17323f;
+}
 
-        #JobInfo h2 {
-            margin-top: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: #2B617B;
-        }
+#JobInfo h2 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #2B617B;
+}
 
-        #JobReportingLine,
-        #JobResponsobilities,
-        #JobPersonalRequirements {
-            margin: 0 0 1.25rem 0;
-            padding-left: 1.5rem;
-        }
+#JobReportingLine,
+#JobResponsobilities,
+#JobPersonalRequirements {
+  margin: 0 0 1.25rem 0;
+  padding-left: 1.5rem;
+}
 
-        #JobReportingLine li,
-        #JobResponsobilities li,
-        #JobPersonalRequirements li {
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
+#JobReportingLine li,
+#JobResponsobilities li,
+#JobPersonalRequirements li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+
+/* index.html styling */
+.index-hero {
+  background-image: url(/images/city-buildings-night.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.index-hero-h1 {
+  color: var(--bg-main);
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 80px;
+}
+
+.index-hero-slogan {
+  color: var(--bg-main);
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 28px;
+}
+
+.index-hero-slogan-highlight {
+  filter: blur(2px);
+
+  &:hover {
+    filter: blur(0px);
+  }
+}
+
+.index-intro {
+  border: 1px;
+  border-radius: 35px;
+  background-color: var(--bg-main);
+  margin-top: 144px;
+  margin-bottom: 144px;
+  margin-left: 7%;
+  margin-right: 7%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  padding: 24px
+}
+
+
+.index-intro-description {
+  max-width: 500px;
+  font-size: 24px;
+  padding: 24px;
+}
+
+.index-intro-vid {
+  padding: 24px;
+}
+
+
+.index-intro-vid-content {
+  height: 250px;
+  width: auto;
+}
+
+.index-stats {
+  margin: 30px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.index-stats-number {
+  font-size: 67px;
+}
+
+.index-stats-text {
+  font-size: 24px;
+  padding: 60px;
+  max-width: 700px;
+  text-align: center;
+}
+
+.index-compare {
+  margin-top: 144px;
+  margin-bottom: 144px;
+  margin-left: 7%;
+  margin-right: 7%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.index-compare-title {
+  font-size: 48px;
+  padding-bottom: 24px;
+
+}
+
+.index-compare-table {
+  border: 1px;
+  border-radius: 35px;
+  background-color: var(--bg-main);
+  padding: 48px;
+  padding-left: 7%;
+  padding-right: 7%;
+  text-align: center;
+}
+
+
+.index-compare-table-category {
+  font-size: 24px;
+  border-bottom: #088395 1px solid;
+  padding-bottom: 14px;
+}
+
+.index-compare-table-title {
+  font-size: 24px;
+  padding-bottom: 30px;
+}
+
+.index-compare-table-row-data {
+  font-size: 18px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.index-footnote {
+  padding-left: 7%;
+  padding-right: 7%;
+}
+
+.index-footnote-item {
+  font-style: italic;
+  color: var(--main-font);
+  font-size: small;
+}
