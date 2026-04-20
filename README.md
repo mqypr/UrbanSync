@@ -14,3 +14,17 @@ ___
 2. Displayed Jobs in the navigation bar displays basic job information and salary range
 3. The main of the page displays details and relevant information of the selected job
 
+**Apply Page**
+1. 
+2. 
+3. 
+
+**About Page**
+1. 
+2. 
+3. 
+
+**Index Page**
+1. 
+2. 
+3. 
