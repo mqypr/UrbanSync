@@ -130,6 +130,7 @@ sup {
   font-weight: bold;
   font-size: 12px;
   padding: 8px 12px;
+  padding-right: 32px;
   border-left: 2px solid var(--primary);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
