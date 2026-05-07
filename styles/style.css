@@ -1,4 +1,6 @@
 /* :root command inspired from chatgpt "how to structure css file" */
+/* ROOT & RESETS */
+
 :root {
   --primary: #09637E;
   --secondary: #088395;
@@ -14,6 +16,11 @@
   box-sizing: border-box;
   font-family: var(--main-font);
 }
+
+/* ROOT & RESETS END */
+
+
+/* TYPOGRAPHY */
 
 h1,
 h2,
@@ -50,7 +57,14 @@ sup {
   font-size: 50%;
 }
 
+/* TYPOGRAPHY END */
 
+
+
+
+/* LAYOUT COMPONENTS */
+
+/* navbar */
 .navbar {
   position: sticky;
   top: 0;
@@ -145,6 +159,8 @@ sup {
   color: var(--secondary);
 }
 
+
+/* footer */
 footer {
   width: 100%;
   margin-top: 40px;
@@ -187,6 +203,10 @@ footer {
   color: var(--secondary);
 }
 
+/* LAYOUT COMPONENTS END */
+
+
+/* PAGE SPECIFIC STYLES */
 /* apply.html styles */
 
 .apply-form-section {
@@ -486,7 +506,16 @@ footer {
 }
 
 
-/* index.html styling */
+
+
+
+
+
+
+
+
+/* index.html */
+
 .index-hero {
   background-image: url(./images/city-buildings-night.jpg);
   background-repeat: no-repeat;
@@ -640,6 +669,11 @@ footer {
   }
 }
 
+
+
+
+
+
 /* about page */
 .about-container {
   background: white;
@@ -692,3 +726,8 @@ footer {
   padding: 4px 6px;
   border-radius: 8px;
 }
+
+
+
+
+/* PAGE SPECIFIC STYLES END */
