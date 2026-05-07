@@ -517,11 +517,12 @@ footer {
 /* index.html */
 
 .index-hero {
-  background-image: url("./images/city-buildings-night.jpg");
+  background-image: url("../images/city_buildings_night.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
+  backdrop-filter: blur(2px);
   height: 400px;
   align-items: center;
   /* display: flex inspired from: https://www.w3schools.com/cssref/pr_class_display.php */
@@ -535,6 +536,8 @@ footer {
   color: var(--bg-main);
   background-color: rgba(0, 0, 0, 0.4);
   font-size: 80px;
+  backdrop-filter: blur(0);
+
 }
 
 .index-hero-slogan {
