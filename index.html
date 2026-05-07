@@ -51,26 +51,33 @@
 </head>
 
 <body>
+  <!--HEADER-->
   <header>
     <nav class="navbar">
       <div class="navbar-container">
+        <!--navbar logo links to index page-->
         <div class="navbar-logo">
           <a href="index.html"><img src="./images/logo.png" class="logo-pic" alt="logo-pic"></a>
         </div>
+        <!--navbar links to other pages-->
         <div class="navbar-link">
           <a href="jobs.html" class="navbar-link-item-a">JOB DESCRIPTION</a>
           <a href="apply.html" class="navbar-link-item-a">APPLY</a>
           <a href="about.html" class="navbar-link-item-a">ABOUT</a>
         </div>
+        <!--search jobs straight from navbar-->
         <form class="search-bar">
           <label for="search" style="display: none;">search for things in web page</label>
-          <input for="search" name="search-text" placeholder="SEARCH FOR JOBS..." class="search-text">
+          <input id="search" name="search-text" type="search" placeholder="SEARCH FOR JOBS..." class="search-text"
+            aria-label="Search for jobs">
           <button type="submit" class="job-search-button">SEARCH</button>
         </form>
       </div>
     </nav>
   </header>
   <main>
+    <!--HERO SECTION
+    CONTAINS: background picture, company name, and description-->
     <section class="index-hero">
       <h1 class="index-hero-h1">UrbanSync</h1>
       <h2 class="index-hero-slogan">It's about time your streets get an
