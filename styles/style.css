@@ -521,7 +521,7 @@ footer {
 /* index.html */
 
 .index-hero {
-  background-image: url("../images/city_buildings_night.jpg");
+  background-image: url("../styles/images/city_buildings_night.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

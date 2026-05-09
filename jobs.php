@@ -16,25 +16,7 @@
 </head>
 
 <body id="JobsPage">
-    <header>
-        <nav class="navbar">
-            <div class="navbar-container">
-                <div class="navbar-logo">
-                    <a href="index.html"><img src="./images/logo.png" class="logo-pic" alt="logo-pic"></a>
-                </div>
-                <div class="navbar-link">
-                    <a href="jobs.html" class="navbar-link-item-a">JOB DESCRIPTION</a>
-                    <a href="apply.html" class="navbar-link-item-a">APPLY</a>
-                    <a href="about.html" class="navbar-link-item-a">ABOUT</a>
-                </div>
-                <form class="search-bar">
-                    <label for="search" style="display: none;">search for things in web page</label>
-                    <input for="search" name="search-text" placeholder="SEARCH FOR JOBS..." class="search-text">
-                    <button type="submit" class="job-search-button">SEARCH</button>
-                </form>
-            </div>
-        </nav>
-    </header>
+    <?php include "header.inc" ?>
     <div class="jobs-layout">
 
         <!-- Job Aside Navigation Box -->
@@ -44,7 +26,7 @@
             <div class="JobContainer">
 
                 <!-- Job 1 -->
-                <a href="Jobs/job01.html" target="contentMain">
+                <a href="./jobs/job01.php" target="contentMain"> <!--bm1-->
                     <section class="JobSection">
                         <h2>Frontend Web Developer</h2>
                         <p>$70,000 - $85,000</p>
@@ -53,7 +35,7 @@
                 </a>
 
                 <!-- Job 2 -->
-                <a href="Jobs/job02.html" target="contentMain">
+                <a href="jobs/job02.php" target="contentMain">
                     <section class="JobSection">
                         <h2>IT Support Officer</h2>
                         <p>$55,000 - $68,000</p>
@@ -66,7 +48,7 @@
 
         <!-- Inline Frame for job details and information -->
         <main id="JobContent">
-            <iframe id="JobsContentMain" name="contentMain" src="Jobs/job01.html" title="Job Information"></iframe>
+            <iframe id="JobsContentMain" name="contentMain" src="jobs/job01.php" title="Job Information"></iframe>
         </main>
     </div>
 

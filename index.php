@@ -53,22 +53,7 @@
 
 <body>
   <!--HEADER-->
-  <header>
-    <nav class="navbar">
-      <div class="navbar-container">
-        <!--navbar logo links to index page-->
-        <div class="navbar-logo">
-          <a href="index.html"><img src="./images/logo.png" class="logo-pic" alt="logo-pic"></a>
-        </div>
-        <!--navbar links to other pages-->
-        <div class="navbar-link">
-          <a href="jobs.html" class="navbar-link-item-a">JOB DESCRIPTION</a>
-          <a href="apply.html" class="navbar-link-item-a">APPLY</a>
-          <a href="about.html" class="navbar-link-item-a">ABOUT</a>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <?php include "./header.inc" ?>
   <main>
     <!--HERO SECTION
     CONTAINS: background picture, company name, and description-->

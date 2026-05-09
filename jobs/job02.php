@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontend Web Developer</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 
 </head>
+
 <body id="JobPageBodyStyle">
     <article id="JobArticle">
         <section id="JobTitle">
@@ -41,4 +43,5 @@
         </section>
     </article>
 </body>
+
 </html>
