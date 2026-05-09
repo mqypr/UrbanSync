@@ -6,6 +6,12 @@
         <a href="index.php"><img src="./images/logo.png" class="logo-pic" alt="logo-pic"></a>
       </div>
       <!--navbar links to other pages-->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
       <div class="navbar-link">
         <a href="jobs.php" class="navbar-link-item-a">JOB DESCRIPTION</a>
         <a href="apply.php" class="navbar-link-item-a">APPLY</a>

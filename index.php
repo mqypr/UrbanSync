@@ -58,8 +58,8 @@
     <!--HERO SECTION
     CONTAINS: background picture, company name, and description-->
     <section class="index-hero">
-      <h1 class="index-hero-h1">UrbanSync</h1>
-      <h2 class="index-hero-slogan">It's about time your streets get an
+      <h1 class="index-hero-h1" style="font-size: 80px">UrbanSync</h1>
+      <h2 class="index-hero-slogan" style="font-size: 28px">It's about time your streets get an
         <span class="index-hero-slogan-highlight">upgrade</span>
       </h2>
     </section>
