@@ -19,34 +19,16 @@
   <meta property="og:url" content="https://mqypr.github.io/UrbanSync/">
   <meta property="og:type" content="website">
   <style>
-    @media only screen and (max-width: 800px) {
-      .index-hero-h1 {
-        color: var(--bg-main);
-        font-size: 60px;
-      }
-
-
-      .index-hero-slogan {
-        color: var(--bg-main);
-        font-size: 24px;
-      }
+    .navbar {
+      background: none;
     }
 
-    @media only screen and (max-width: 1000px) {
-      .index-intro {
-        flex-direction: column;
-      }
+    .navbar-link-item-a {
+      color: white;
+    }
 
-      .index-intro-description {
-        max-width: 500px;
-        font-size: 20px;
-        text-align: center;
-      }
-
-      .index-intro-vid-content {
-        height: 200px;
-        width: auto;
-      }
+    .navbar-link-item-a:hover {
+      background-color: rgba(220, 239, 241, 0.2);
     }
   </style>
 </head>
@@ -58,8 +40,8 @@
     <!--HERO SECTION
     CONTAINS: background picture, company name, and description-->
     <section class="index-hero">
-      <h1 class="index-hero-h1" style="font-size: 80px">UrbanSync</h1>
-      <h2 class="index-hero-slogan" style="font-size: 28px">It's about time your streets get an
+      <h1 class="index-hero-h1">UrbanSync</h1>
+      <h2 class="index-hero-slogan">It's about time your streets get an
         <span class="index-hero-slogan-highlight">upgrade</span>
       </h2>
     </section>

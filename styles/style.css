@@ -70,19 +70,18 @@ sup {
 
 /* navbar */
 .navbar {
-  position: static;
+  position: sticky;
   top: 0;
-  background: #ebf4f6;
-  border-bottom: 1px solid #d4e9ec;
-  box-shadow: 0 4px 10px rgba(9, 99, 126, 0.08);
+  z-index: 1000;
+  background-color: var(--bg-main);
 }
 
 .navbar-container {
   max-width: 1100px;
-  height: 64px;
+  height: 4rem;
   margin: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 1rem;
+  padding-right: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -95,25 +94,6 @@ sup {
   z-index: 31;
 }
 
-.nav-toggle-checkbox {
-  display: none;
-}
-
-/* hamburger button */
-.nav-toggle-label {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.nav-toggle-label span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: black;
-}
-
 .navbar-link-item-a {
   padding: 8px 14px;
   border-radius: 20px;
@@ -124,7 +104,6 @@ sup {
 
 .navbar-link-item-a:hover {
   background: #dceff1;
-  color: var(--secondary);
 }
 
 .logo-pic {
@@ -541,30 +520,24 @@ footer {
 /* index.html */
 
 .index-hero {
-  position: absolute;
+  position: relative;
+  top: -80px;
   /* needed for ::before positioning */
-  height: 400px;
+  height: 27rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-}
 
-.index-hero::before {
-  content: "";
-  position: absolute;
-  inset: -20px;
   /* shorthand for top/right/bottom/left: 0 */
-  background-image: url("../styles/images/city_buildings_night.jpg");
+  background-image: url("../styles/images/beautiful-white-cloud-blue-sky-background_1035-23406.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  filter: blur(5px);
-  /* adjust blur strength here */
-  z-index: 0;
 }
+
 
 .index-hero-h1,
 .index-hero-slogan {
@@ -572,14 +545,17 @@ footer {
   z-index: 1;
   /* lifts text above the ::before layer */
   color: var(--bg-main);
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
 }
 
 .index-hero-h1 {
-  font-size: 80px;
+  font-size: 6rem;
 }
 
 .index-hero-slogan {
-  font-size: 28px;
+  font-size: 2rem;
 }
 
 
@@ -766,31 +742,37 @@ footer {
 
 /* MEDIA STYLING */
 /* MOBILE */
-@media (max-width: 768px) {
-  .nav-toggle-label {
-    display: flex;
-  }
-
-  .navbar-link {
-    display: none;
+@media only screen and (max-width: 1000px) {
+  .index-intro {
     flex-direction: column;
-    gap: 1rem;
-
-    /* full screen overlay */
-    z-index: 999;
   }
 
-  .navbar-link a {
-    font-size: 1.8rem;
-    color: black;
-    text-decoration: none;
+  .index-intro-description {
+    max-width: 500px;
+    font-size: 20px;
+    text-align: center;
   }
 
-  .nav-toggle-checkbox:checked~.navbar-link {
-    display: block;
-    position: absolute;
+  .index-intro-vid-content {
+    height: 200px;
+    width: auto;
   }
 
+  .index-hero-h1,
+  .index-hero-slogan {
+    position: relative;
+    z-index: 1;
+    /* lifts text above the ::before layer */
+    color: var(--bg-main);
+  }
+
+  .index-hero-h1 {
+    font-size: 3rem;
+  }
+
+  .index-hero-slogan {
+    font-size: 1.5rem;
+  }
 }
 
 /* NEEDS SOME CRAZY DEBUGGING */
