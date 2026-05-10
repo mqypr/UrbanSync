@@ -70,7 +70,7 @@ sup {
 
 /* navbar */
 .navbar {
-  position: sticky;
+  position: static;
   top: 0;
   background: #ebf4f6;
   border-bottom: 1px solid #d4e9ec;
@@ -92,6 +92,7 @@ sup {
   display: flex;
   gap: 10px;
   align-items: center;
+  z-index: 31;
 }
 
 .nav-toggle-checkbox {
@@ -540,7 +541,7 @@ footer {
 /* index.html */
 
 .index-hero {
-  position: relative;
+  position: absolute;
   /* needed for ::before positioning */
   height: 400px;
   display: flex;
@@ -773,16 +774,9 @@ footer {
   .navbar-link {
     display: none;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 
     /* full screen overlay */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: white;
-    padding: 6rem 2rem 2rem;
     z-index: 999;
   }
 
@@ -793,7 +787,8 @@ footer {
   }
 
   .nav-toggle-checkbox:checked~.navbar-link {
-    display: flex;
+    display: block;
+    position: absolute;
   }
 
 }
