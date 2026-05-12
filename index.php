@@ -60,11 +60,18 @@
       </figure>
     </section>
     <section class="index-stats">
-      <h2 class="index-stats-number">Up to <span class="index-stats-number-highlight">15%<a href="#footnote-2"><sup
-              style="font-size: 30%;">2</sup></a>
-        </span></h2>
-      <p class="index-stats-text">Early adopters have seen improvement in traffic congestion, allowing for a general
-        efficiency for citizens, giving them more time to enjoy.</p>
+      <div class="index-stats-vid">
+        <video autoplay loop muted>
+          <source src="./images/stats-bg-vid.mp4">
+        </video>
+      </div>
+      <div class="index-stats-content">
+        <h2 class="index-stats-number">Up to <span class="index-stats-number-highlight">15%<a href="#footnote-2"><sup
+                style="font-size: 30%;">2</sup></a>
+          </span></h2>
+        <p class="index-stats-text">Early adopters have seen improvement in traffic congestion, allowing for a general
+          efficiency for citizens, giving them more time to enjoy.</p>
+      </div>
     </section>
     <section class="index-compare">
       <h2 class="index-compare-title">

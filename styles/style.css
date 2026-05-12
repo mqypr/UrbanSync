@@ -1,14 +1,17 @@
 /* :root command inspired from chatgpt "how to structure css file" */
 /* ROOT & RESETS */
 
+
+/* Default to Light Mode */
 :root {
-  --primary: #09637E;
-  --secondary: #088395;
-  --tertiary: #7AB2B2;
-  --bg-main: #EBF4F6;
-  --text-main: #1A3A47;
+  --bg-main: white;
+  --bg-secondary: #F5F5F7;
+  --accent-hover: #333333;
+  --accent: #000000;
+  --text-main: #1D1D1F;
   --main-font: arial;
 }
+
 
 * {
   margin: 0;
@@ -22,9 +25,11 @@
 
 /* TYPOGRAPHY */
 
-.body {
-  background-color: white;
+body {
+  background-color: var(--bg-main);
+  /* Hide scrollbars */
 }
+
 
 h1,
 h2,
@@ -33,6 +38,10 @@ h4,
 h5,
 h6 {
   font-weight: 600;
+  color: var(--text-main);
+}
+
+p {
   color: var(--text-main);
 }
 
@@ -47,7 +56,7 @@ li {
 
 a {
   text-decoration: none;
-  color: var(--primary)
+  color: var(--text-main)
 }
 
 button {
@@ -73,7 +82,7 @@ sup {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: var(--bg-main);
+  background-color: var(--bg-secondary);
 }
 
 .navbar-container {
@@ -97,13 +106,13 @@ sup {
 .navbar-link-item-a {
   padding: 8px 14px;
   border-radius: 20px;
-  color: var(--primary);
+  color: var(--text-main);
   font-weight: bold;
   font-size: 14px;
 }
 
 .navbar-link-item-a:hover {
-  background: #dceff1;
+  background: var(--bg-main);
 }
 
 .logo-pic {
@@ -117,7 +126,7 @@ sup {
   display: flex;
   width: 320px;
   background: #ebf4f6;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--text-main);
   border-radius: 20px;
   align-items: center;
 }
@@ -127,7 +136,7 @@ sup {
   padding: 8px 12px;
   border: none;
   background: #ebf4f6;
-  color: var(--primary);
+  color: var(--text-main);
   font-size: 13px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -138,18 +147,18 @@ sup {
 }
 
 .search-text::placeholder {
-  color: var(--primary);
+  color: var(--text-main);
 }
 
 .job-search-button {
   border: none;
   background: #ebf4f6;
-  color: var(--primary);
+  color: var(--text-main);
   font-weight: bold;
   font-size: 12px;
   padding: 8px 12px;
   padding-right: 32px;
-  border-left: 2px solid var(--primary);
+  border-left: 2px solid var(--text-main);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   display: flex;
@@ -168,8 +177,7 @@ footer {
   width: 100%;
   margin-top: 40px;
   padding: 30px 20px;
-  background: #ebf4f6;
-  border-top: 1px solid #d4e9ec;
+  background: var(--bg-secondary);
 }
 
 .footer-container {
@@ -188,7 +196,7 @@ footer {
 .footer-column-title {
   font-size: 15px;
   font-weight: bold;
-  color: var(--primary);
+  color: var(--text-main);
   margin-bottom: 10px;
 }
 
@@ -536,14 +544,13 @@ footer {
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
+  margin-bottom: 7rem;
 }
 
 
 .index-hero-h1,
 .index-hero-slogan {
   position: relative;
-  z-index: 1;
-  /* lifts text above the ::before layer */
   color: var(--bg-main);
   margin-left: 1rem;
   margin-right: 1rem;
@@ -560,18 +567,18 @@ footer {
 
 
 .index-intro {
-  border: 1px;
+  border: none;
   border-radius: 35px;
-  background-color: var(--bg-main);
-  margin-top: 144px;
-  margin-bottom: 144px;
-  margin-left: 7%;
-  margin-right: 7%;
+  background-color: var(--bg-secondary);
+  margin-top: 7rem;
+  margin-bottom: 7rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   align-items: center;
-  padding: 24px
+  padding: 2rem;
 }
 
 
@@ -593,32 +600,58 @@ footer {
 .index-intro-vid-content {
   height: 250px;
   width: auto;
+  border-radius: 16px;
+  overflow: hidden;
+  display: block;
 }
 
 .index-stats {
-  margin: 30px;
-  margin-top: 100px;
+  display: grid;
+  background-color: var(--bg-secondary);
+}
+
+.index-stats-vid {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 40rem;
+  overflow: hidden;
+}
+
+.index-stats-vid video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;
+}
+
+.index-stats-content {
+  grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  z-index: 1;
 }
 
 .index-stats-number {
   font-size: 67px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .index-stats-text {
   font-size: 24px;
-  padding: 60px;
   max-width: 700px;
-  text-align: center;
+  margin: 0;
 }
 
 .index-compare {
-  margin-top: 144px;
-  margin-bottom: 144px;
-  margin-left: 7%;
-  margin-right: 7%;
+  margin-top: 7rem;
+  margin-bottom: 7rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
@@ -635,7 +668,7 @@ footer {
 .index-compare-table {
   border: 1px;
   border-radius: 35px;
-  background-color: var(--bg-main);
+  background-color: var(--bg-secondary);
   padding: 48px;
   padding-left: 7%;
   padding-right: 7%;
@@ -667,14 +700,8 @@ footer {
 
 .index-footnote-item {
   font-style: italic;
-  color: var(--main-font);
+  color: var(--text-main);
   font-size: small;
-}
-
-@media only screen and (max-width: 750px) {
-  .search-bar {
-    display: none;
-  }
 }
 
 
@@ -684,8 +711,8 @@ footer {
 
 /* about page */
 .about-container {
-  background: white;
-  border: 1px solid #d4e9ec;
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-secondary);
   border-radius: 20px;
   padding: 2rem;
   margin: 5%;
@@ -696,7 +723,7 @@ footer {
 }
 
 .about-section h2 {
-  border-bottom: 3px solid #088395;
+  border-bottom: 3px solid var(--bg-secondary);
   padding-bottom: 5px;
   margin-bottom: 10px;
 }
@@ -720,17 +747,17 @@ footer {
 }
 
 .member-table th {
-  background-color: #09637E;
-  color: white;
+  background-color: var(--accent);
+  color: var(--text-main);
 }
 
 .member-table tr:hover {
-  background-color: #dceff1;
+  background-color: var(--accent-hover);
 }
 
 .student-id {
-  background-color: #EBF4F6;
-  border: 1px solid #088395;
+  background-color: var(--accent);
+  border: 1px solid var(--accent);
   padding: 4px 6px;
   border-radius: 8px;
 }
@@ -745,33 +772,46 @@ footer {
 @media only screen and (max-width: 1000px) {
   .index-intro {
     flex-direction: column;
+    margin-left: 1.5rem;
+    /* also reduce the side margins on mobile */
+    margin-right: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
 
-  .index-intro-description {
-    max-width: 500px;
-    font-size: 20px;
-    text-align: center;
+  .index-intro-vid {
+    padding: 0;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
   }
 
   .index-intro-vid-content {
-    height: 200px;
-    width: auto;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    overflow: hidden;
+    display: block;
   }
 
-  .index-hero-h1,
-  .index-hero-slogan {
-    position: relative;
-    z-index: 1;
-    /* lifts text above the ::before layer */
-    color: var(--bg-main);
+  .index-intro-description {
+    font-size: clamp(14px, 3.5vw, 20px);
+    text-align: center;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .index-stats-vid {
+    height: 24rem;
   }
 
-  .index-hero-h1 {
+  .index-stats-number {
     font-size: 3rem;
   }
 
-  .index-hero-slogan {
-    font-size: 1.5rem;
+  .index-stats-text {
+    font-size: 1rem;
   }
 }
 
