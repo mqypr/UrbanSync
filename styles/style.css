@@ -27,7 +27,6 @@
 
 body {
   background-color: var(--bg-main);
-  /* Hide scrollbars */
 }
 
 
@@ -175,9 +174,9 @@ sup {
 /* footer */
 footer {
   width: 100%;
-  margin-top: 40px;
   padding: 30px 20px;
   background: var(--bg-secondary);
+  border-top: 1px solid #d2d2d7;
 }
 
 .footer-container {
@@ -579,6 +578,7 @@ footer {
   flex-direction: row;
   align-items: center;
   padding: 2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -600,12 +600,14 @@ footer {
 .index-intro-vid-content {
   height: 250px;
   width: auto;
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
   display: block;
 }
 
 .index-stats {
+  margin-top: 10rem;
+  margin-bottom: 10rem;
   display: grid;
   background-color: var(--bg-secondary);
 }
@@ -636,75 +638,142 @@ footer {
 }
 
 .index-stats-number {
-  font-size: 67px;
+  font-size: 4rem;
   font-weight: bold;
   margin: 0;
 }
 
 .index-stats-text {
-  font-size: 24px;
+  padding-top: 1rem;
+  font-size: 1.5rem;
   max-width: 700px;
   margin: 0;
 }
 
 .index-compare {
-  margin-top: 7rem;
-  margin-bottom: 7rem;
-  margin-left: 5rem;
-  margin-right: 5rem;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  margin: 5rem auto;
+  padding: 0 2rem;
+  max-width: 900px;
 }
 
 .index-compare-title {
-  font-size: 48px;
-  padding-bottom: 24px;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 2rem;
+}
 
+.index-compare-wrapper {
+  overflow-x: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
 .index-compare-table {
-  border: 1px;
-  border-radius: 35px;
+  width: 100%;
+  border-collapse: collapse;
   background-color: var(--bg-secondary);
-  padding: 48px;
-  padding-left: 7%;
-  padding-right: 7%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* column header row */
+.index-compare-col-label {
+  width: 50%;
+}
+
+.index-compare-col-us,
+.index-compare-col-them {
+  width: 25%;
+  padding: 1.2rem 1rem;
+  font-size: clamp(14px, 2vw, 18px);
   text-align: center;
 }
 
+.index-compare-col-us {
+  background-color: #088395;
+  color: white;
+  border-radius: 12px 0 0 0;
+}
 
+.index-compare-col-them {
+  color: var(--text-main);
+  opacity: 0.5;
+}
+
+/* category rows */
 .index-compare-table-category {
-  font-size: 24px;
-  border-bottom: #088395 1px solid;
-  padding-bottom: 14px;
+  font-size: clamp(12px, 1.8vw, 15px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #088395;
+  padding: 1rem 1.5rem 0.5rem;
+  border-top: 1px solid #e0e0e0;
 }
 
-.index-compare-table-title {
-  font-size: 24px;
-  padding-bottom: 30px;
+/* data rows */
+.index-compare-table tbody tr:not(.index-compare-category-row) {
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.index-compare-table-row-data {
-  font-size: 18px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+.index-compare-table tbody tr:not(.index-compare-category-row):last-child {
+  border-bottom: none;
+}
+
+.index-compare-feature {
+  padding: 1rem 1.5rem;
+  font-size: clamp(13px, 1.8vw, 16px);
+  color: var(--text-main);
+}
+
+.index-compare-check {
+  text-align: center;
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.index-compare-check.us {
+  color: #088395;
+}
+
+.index-compare-check.them {
+  color: #bbb;
 }
 
 .index-footnote {
-  padding-left: 7%;
-  padding-right: 7%;
+  padding: 1.5rem 7%;
+  margin-top: 10rem;
+  text-align: center;
+  /* add this */
+}
+
+
+.index-footnote ol {
+  display: inline-block;
+  /* needed so the ol respects text-align center */
+  text-align: left;
+  /* keeps the list items left-aligned within the centered block */
+}
+
+.index-footnote ol {
+  padding-left: 1.2rem;
+  /* indents the numbers */
 }
 
 .index-footnote-item {
-  font-style: italic;
-  color: var(--text-main);
-  font-size: small;
+  font-style: normal;
+  /* Apple doesn't use italic */
+  color: #6e6e73;
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
-
+.index-footnote-item a {
+  color: #6e6e73;
+  text-decoration: underline;
+}
 
 
 
@@ -770,10 +839,16 @@ footer {
 /* MEDIA STYLING */
 /* MOBILE */
 @media only screen and (max-width: 1000px) {
+  .index-compare {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
   .index-intro {
     flex-direction: column;
     margin-left: 1.5rem;
-    /* also reduce the side margins on mobile */
     margin-right: 1.5rem;
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -802,6 +877,14 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .index-hero-h1 {
+    font-size: 4rem;
+  }
+
+  .index-hero-slogan {
+    font-size: 1.5rem;
+  }
+
   .index-stats-vid {
     height: 24rem;
   }
@@ -814,5 +897,3 @@ footer {
     font-size: 1rem;
   }
 }
-
-/* NEEDS SOME CRAZY DEBUGGING */

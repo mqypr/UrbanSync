@@ -42,7 +42,7 @@
     <section class="index-hero">
       <h1 class="index-hero-h1">UrbanSync</h1>
       <h2 class="index-hero-slogan">It's about time your streets get an
-        <span class="index-hero-slogan-highlight">upgrade</span>
+        <span style="text-decoration: underline;">upgrade</span>
       </h2>
     </section>
     <section class="index-intro">
@@ -74,64 +74,72 @@
       </div>
     </section>
     <section class="index-compare">
-      <h2 class="index-compare-title">
-        The Pioneer
-      </h2>
-      <table class="index-compare-table">
-        <tr class="index-compare-table-row">
-          <th class="index-compare-table-title">UrbanSync</th>
-          <th class="index-compare-table-title">Other Competitors</th>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-category" colspan="2">Performance</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">Fast Project turn-around</td>
-          <td class="index-compare-table-row-data">Slow, multiple-step process</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">Industry-leading quality of results</td>
-          <td class="index-compare-table-row-data">Standard quality</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-category" colspan="2">Efficiency</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">$</td>
-          <td class="index-compare-table-row-data">$$$$</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">Minimal Resource Overload</td>
-          <td class="index-compare-table-row-data">Unplanned resource overload</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-category" colspan="2">Additional Services</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">Hardware & software integration</td>
-          <td class="index-compare-table-row-data">Hardware & software integration</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">Real-time analysis dashboard</td>
-          <td class="index-compare-table-row-data">-</td>
-        </tr>
-        <tr class="index-compare-table-row">
-          <td class="index-compare-table-row-data">Bespoke city modeling</td>
-          <td class="index-compare-table-row-data">-</td>
-        </tr>
-      </table>
+      <h2 class="index-compare-title">The Pioneer</h2>
+      <div class="index-compare-wrapper">
+        <table class="index-compare-table">
+          <thead>
+            <tr>
+              <th class="index-compare-col-label"></th>
+              <th class="index-compare-col-us">UrbanSync</th>
+              <th class="index-compare-col-them">Competitors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="index-compare-category-row">
+              <td colspan="3" class="index-compare-table-category">Performance</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Fast project turn-around</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">✗</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Industry-leading quality</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">✗</td>
+            </tr>
+            <tr class="index-compare-category-row">
+              <td colspan="3" class="index-compare-table-category">Efficiency</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Affordable pricing ($)</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">✗</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Minimal resource overload</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">✗</td>
+            </tr>
+            <tr class="index-compare-category-row">
+              <td colspan="3" class="index-compare-table-category">Additional Services</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Hardware & software integration</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">✓</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Real-time analysis dashboard</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">–</td>
+            </tr>
+            <tr>
+              <td class="index-compare-feature">Bespoke city modeling</td>
+              <td class="index-compare-check us">✓</td>
+              <td class="index-compare-check them">–</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
     <section class="index-footnote">
-      <h3>Footnote</h3>
-      <p class="index-footnote-item" id="footnote-0"> logo was ai generated: "create a round logo with the name
-        'UrbanSync'"</p>
-      <p class="index-footnote-item" id="footnote-1">source:
-        https://www.freepik.com/free-photo/city-buildings-night_10399859.htm#fromView=keyword&page=1&position=3&uuid=8bfdbdac-3e69-4a16-a49f-b6df951f832b&query=Night+city
-      </p>
-      <p class="index-footnote-item" id="footnote-2">source:
-        https://www.transport.nsw.gov.au/system/files/media/documents/2025/integrated-connected-data-for-safer-final-report-august-2025.pdf
-      </p>
-      <p class="index-footnote-item" id="footnote-3">source: https://www.youtube.com/watch?v=0iYKMj_uhXg</p>
+      <ol>
+        <li class="index-footnote-item" id="footnote-0">Logo was AI generated: "create a round logo with the name 'UrbanSync'"</li>
+        <li class="index-footnote-item" id="footnote-1">Source: <a href="https://www.freepik.com/free-photo/city-buildings-night_10399859.htm#fromView=keyword&page=1&position=3&uuid=8bfdbdac-3e69-4a16-a49f-b6df951f832b&query=Night+city">freepik.com</a></li>
+        <li class="index-footnote-item" id="footnote-2">Source: <a href="https://www.transport.nsw.gov.au/system/files/media/documents/2025/integrated-connected-data-for-safer-final-report-august-2025.pdf">transport.nsw.gov.au</a></li>
+        <li class="index-footnote-item" id="footnote-3">Source: <a href="https://www.youtube.com/watch?v=0iYKMj_uhXg">youtube.com</a></li>
+      </ol>
     </section>
   </main>
   <!--FOOTER -->
