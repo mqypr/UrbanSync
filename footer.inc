@@ -5,16 +5,16 @@
         <h2 class="footer-column-title">Pages</h2>
         <ul class="footer-column-list">
           <li class="footer-column-item">
-            <a href="/index.html">Home</a>
+            <a href="./index.php">Home</a>
           </li>
           <li class="footer-column-item">
-            <a href="/jobs.html">Job Description</a>
+            <a href="./jobs.php">Job Description</a>
           </li>
           <li class="footer-column-item">
-            <a href="/apply.html">Apply</a>
+            <a href="./apply.php">Apply</a>
           </li>
           <li class="footer-column-item">
-            <a href="/about.html">About</a>
+            <a href="./about.php">About</a>
           </li>
         </ul>
       </div>
