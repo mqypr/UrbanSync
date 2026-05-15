@@ -4,13 +4,29 @@
 
 /* Default to Light Mode */
 :root {
-  --bg-main: white;
-  --bg-secondary: #F5F5F7;
-  --accent-hover: #333333;
-  --accent: #000000;
-  --text-main: #1D1D1F;
-  --main-font: arial;
-  --opacity-layer: rgba(255, 255, 255, 0.2);
+  --bg-main: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --bg-tertiary: #e8e8ed;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --text-main: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --main-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif;
+  --opacity-layer: rgba(255, 255, 255, 0.72);
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+/* Dark Mode */
+:root:has(.switch input:checked) {
+  --bg-main: #000000;
+  --bg-secondary: #1c1c1e;
+  --bg-tertiary: #2c2c2e;
+  --accent: #2997ff;
+  --accent-hover: #3ca4ff;
+  --text-main: #f5f5f7;
+  --text-secondary: #98989d;
+  --opacity-layer: rgba(0, 0, 0, 0.72);
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
 
@@ -137,7 +153,7 @@ sup {
 .navbar-settings-dropdown-content {
   display: none;
   position: absolute;
-  top: calc(100%);
+  top: 100%;
   right: 0;
   background: var(--bg-secondary);
   border-radius: 12px;
@@ -151,7 +167,6 @@ sup {
   z-index: 100;
 }
 
-
 /* Show on hover */
 .navbar-settings:hover .navbar-settings-dropdown-content {
   display: flex;
@@ -159,6 +174,26 @@ sup {
 
 .navbar-settings:hover button.navbar-link-item {
   background: var(--bg-main);
+}
+
+.navbar-settings-dropdown-content .navbar-link-item-settings {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.theme-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--text-main);
+  opacity: 0.6;
 }
 
 .logo-pic {
@@ -190,8 +225,7 @@ sup {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
+  background-color: orange;
   transition: .4s;
 }
 
@@ -203,21 +237,14 @@ sup {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
   transition: .4s;
 }
 
-input:checked+.slider {
-  background-color: #2196F3;
+.switch input:checked+.slider {
+  background-color: purple;
 }
 
-input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked+.slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
+.switch input:checked+.slider:before {
   transform: translateX(26px);
 }
 
@@ -627,14 +654,6 @@ footer {
 }
 
 
-
-
-
-
-
-
-
-
 /* index.html */
 
 .index-hero {
@@ -714,6 +733,10 @@ footer {
   border-radius: 1rem;
   overflow: hidden;
   display: block;
+}
+
+.index-intro-figcaption {
+  color: var(--text-main)
 }
 
 .index-stats {
@@ -861,19 +884,12 @@ footer {
 
 .index-footnote ol {
   display: inline-block;
-  /* needed so the ol respects text-align center */
   text-align: left;
-  /* keeps the list items left-aligned within the centered block */
-}
-
-.index-footnote ol {
   padding-left: 1.2rem;
-  /* indents the numbers */
 }
 
 .index-footnote-item {
   font-style: normal;
-  /* Apple doesn't use italic */
   color: #6e6e73;
   font-size: 11px;
   line-height: 1.6;
