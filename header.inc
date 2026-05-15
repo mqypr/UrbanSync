@@ -11,9 +11,9 @@
         <a href="./apply.php" class="navbar-link-item">APPLY</a>
         <a href="./about.php" class="navbar-link-item">ABOUT</a>
         <div class="navbar-settings">
-          <button class="navbar-link-item">SETTINGS</button>
+          <button class="navbar-link-item">ACCOUNT</button>
           <div class="navbar-settings-dropdown-content">
-            <a href="./signup.php" class="navbar-link-item-settings">LOGIN/SIGNUP</a>
+            <a href="./login.php" class="navbar-link-item-settings">LOGIN</a>
             <label class="switch">
               <input type="checkbox">
               <span class="slider round"></span>

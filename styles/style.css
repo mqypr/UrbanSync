@@ -159,7 +159,7 @@ sup {
   border-radius: 12px;
   padding: 12px 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  min-width: 180px;
+  min-width: 6rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -884,12 +884,21 @@ footer {
 
 .index-footnote ol {
   display: inline-block;
+
+  .index-intro-figcaption {
+    color: var(--text-main)
+  }
+
+  /* needed so the ol respects text-align center */
   text-align: left;
+  /* keeps the list items left-aligned within the centered block */
   padding-left: 1.2rem;
+  /* indents the numbers */
 }
 
 .index-footnote-item {
   font-style: normal;
+  /* Apple doesn't use italic */
   color: #6e6e73;
   font-size: 11px;
   line-height: 1.6;
@@ -958,6 +967,113 @@ footer {
   border-radius: 8px;
 }
 
+/* login.php styles */
+.login-main {
+  min-height: calc(100vh - 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-card {
+  background-color: var(--bg-secondary);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--shadow);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.login-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #cfe3e6;
+  margin-bottom: 1rem;
+}
+
+.login-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.login-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 1.8rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.login-input {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--bg-tertiary);
+  border-radius: 10px;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-size: 14px;
+  font-family: var(--main-font);
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 12px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.login-btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.login-register {
+  margin-top: 1.2rem;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.login-register-link {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.login-register-link:hover {
+  text-decoration: underline;
+}
 
 /* PAGE SPECIFIC STYLES END */
 
