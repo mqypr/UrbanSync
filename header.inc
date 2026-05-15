@@ -7,9 +7,19 @@
       </div>
       <!--navbar links to other pages-->
       <div class="navbar-link">
-        <a href="jobs.php" class="navbar-link-item-a">JOB DESCRIPTION</a>
-        <a href="apply.php" class="navbar-link-item-a">APPLY</a>
-        <a href="about.php" class="navbar-link-item-a">ABOUT</a>
+        <a href="./jobs.php" class="navbar-link-item">JOB DESCRIPTION</a>
+        <a href="./apply.php" class="navbar-link-item">APPLY</a>
+        <a href="./about.php" class="navbar-link-item">ABOUT</a>
+        <div class="navbar-settings">
+          <button class="navbar-link-item">SETTINGS</button>
+          <div class="navbar-settings-dropdown-content">
+            <a href="./signup.php" class="navbar-link-item-settings">LOGIN/SIGNUP</a>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   </nav>

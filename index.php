@@ -23,12 +23,19 @@
       background: none;
     }
 
-    .navbar-link-item-a {
+    .navbar-link-item,
+    .navbar-link-item-settings {
       color: white;
     }
 
-    .navbar-link-item-a:hover {
+    .navbar-link-item:hover,
+    .navbar-link-item-settings:hover {
       background-color: rgba(220, 239, 241, 0.2);
+    }
+
+    .navbar-settings-dropdown-content,
+    .navbar-settings:hover button.navbar-link-item {
+      background: rgba(220, 239, 241, 0.2);
     }
   </style>
 </head>
@@ -40,10 +47,12 @@
     <!--HERO SECTION
     CONTAINS: background picture, company name, and description-->
     <section class="index-hero">
-      <h1 class="index-hero-h1">UrbanSync</h1>
-      <h2 class="index-hero-slogan">It's about time your streets get an
-        <span style="text-decoration: underline;">upgrade</span>
-      </h2>
+      <div class="index-hero-text">
+        <h1>UrbanSync</h1>
+        <h2>It's about time your streets get an
+          <span style="text-decoration: underline;">upgrade</span>
+        </h2>
+      </div>
     </section>
     <section class="index-intro">
       <div class="index-intro-description">
