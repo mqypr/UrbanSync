@@ -18,16 +18,19 @@ if (isset($_POST['login'])) {
     mysqli_stmt_store_result($stmt);
 
     if (mysqli_stmt_num_rows($stmt) === 1) {
+      $id              = 0;
       $hashed_password = '';
-      $first_name = '';
+      $dark_mode       = 0;
+      $first_name      = '';
       mysqli_stmt_bind_result($stmt, $id, $hashed_password, $dark_mode, $first_name);
       mysqli_stmt_fetch($stmt);
-      $_SESSION['first_name'] = $first_name;
 
       if (password_verify($input_password, $hashed_password)) {
-        $_SESSION['user_id']   = $id;
-        $_SESSION['email']     = $email;
-        $_SESSION['dark_mode'] = $dark_mode;
+        $_SESSION['user_id']    = $id;
+        $_SESSION['email']      = $email;
+        $_SESSION['first_name'] = $first_name;
+        $_SESSION['dark_mode']  = $dark_mode;
+        mysqli_stmt_close($stmt);
         header("Location: ./index.php");
         exit;
       } else {
@@ -36,12 +39,11 @@ if (isset($_POST['login'])) {
     } else {
       $error = "Incorrect email or password.";
     }
+
     mysqli_stmt_close($stmt);
   }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,7 +56,7 @@ if (isset($_POST['login'])) {
 </head>
 
 <body>
-  <!--HEADER-->
+
   <?php include "./header.inc" ?>
 
   <main class="login-main">
@@ -64,7 +66,6 @@ if (isset($_POST['login'])) {
       <p class="login-subtitle">Welcome back to UrbanSync</p>
 
       <form class="login-form" action="" method="post">
-
         <?php if ($error): ?>
           <p class="login-error"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
@@ -87,8 +88,6 @@ if (isset($_POST['login'])) {
       </p>
     </div>
   </main>
-
-  <!--FOOTER-->
   <?php include "footer.inc" ?>
 </body>
 

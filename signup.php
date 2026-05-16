@@ -29,7 +29,7 @@ if (isset($_POST['signup'])) {
   $gender         = $_POST['gender'];
   $email          = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
   $phone_code     = $_POST['phone_code'] ?? '+61';
-  $phone          = $phone_code . trim($_POST['phone']);
+  $phone          = trim($_POST['phone']);
   $code           = trim($_POST['verify_code']);
   $input_password = $_POST['password'];
   $confirm        = $_POST['confirm_password'];
@@ -184,6 +184,11 @@ function pw_class($test)
             <p class="signup-code-error"><?= htmlspecialchars($code_error) ?></p>
           <?php endif; ?>
 
+          <!-- Verification code -->
+          <label class="signup-label" for="verify_code">Verification Code</label>
+          <input class="signup-input" type="text" id="verify_code" name="verify_code"
+            placeholder="6-digit code" maxlength="6" required>
+
           <!-- Phone -->
           <label class="signup-label" for="phone">Phone Number</label>
           <div class="signup-phone-row">
@@ -196,11 +201,6 @@ function pw_class($test)
               value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
               required>
           </div>
-
-          <!-- Verification code -->
-          <label class="signup-label" for="verify_code">Verification Code</label>
-          <input class="signup-input" type="text" id="verify_code" name="verify_code"
-            placeholder="6-digit code" maxlength="6" required>
 
           <!-- Password -->
           <label class="signup-label" for="password">Password</label>
