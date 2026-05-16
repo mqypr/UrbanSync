@@ -89,48 +89,49 @@ session_start()
       <!-- Members -->
       <section class="about-section">
         <h2>Group Members</h2>
+        <div class="member-table-wrapper">
+          <table class="member-table">
+            <tr>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Hometown</th>
+              <th>Job</th>
+              <th>Favourite Snack</th>
+            </tr>
 
-        <table class="member-table">
-          <tr>
-            <th>Name</th>
-            <th>Student ID</th>
-            <th>Hometown</th>
-            <th>Job</th>
-            <th>Favourite Snack</th>
-          </tr>
+            <tr>
+              <td>MD Areen Chowdhury</td>
+              <td><span class="student-id">105693861</span></td>
+              <td>Dhaka, Bangladesh</td>
+              <td>BOH, Hospitality</td>
+              <td>Pizza slice</td>
+            </tr>
 
-          <tr>
-            <td>MD Areen Chowdhury</td>
-            <td><span class="student-id">105693861</span></td>
-            <td>Dhaka, Bangladesh</td>
-            <td>BOH, Hospitality</td>
-            <td>Pizza slice</td>
-          </tr>
+            <tr>
+              <td>Reach Peng</td>
+              <td><span class="student-id">106382377</span></td>
+              <td>Phnom Penh, Cambodia</td>
+              <td>Casual Worker, Hungry Jack's</td>
+              <td>Popcorn</td>
+            </tr>
 
-          <tr>
-            <td>Reach Peng</td>
-            <td><span class="student-id">106382377</span></td>
-            <td>Phnom Penh, Cambodia</td>
-            <td>Casual Worker, Hungry Jack's</td>
-            <td>Popcorn</td>
-          </tr>
+            <tr>
+              <td>Liron Roshain Joanic Willathgamuwa</td>
+              <td><span class="student-id">105987496</span></td>
+              <td>Wattala, Sri Lanka</td>
+              <td>Cyber Security Specialist</td>
+              <td>Lasagna</td>
+            </tr>
 
-          <tr>
-            <td>Liron Roshain Joanic Willathgamuwa</td>
-            <td><span class="student-id">105987496</span></td>
-            <td>Wattala, Sri Lanka</td>
-            <td>Cyber Security Specialist</td>
-            <td>Lasagna</td>
-          </tr>
-
-          <tr>
-            <td>Dylan Kelly</td>
-            <td><span class="student-id">105332711</span></td>
-            <td>Watchupga, VIC, Australia</td>
-            <td>Farm Hand</td>
-            <td>Scones</td>
-          </tr>
-        </table>
+            <tr>
+              <td>Dylan Kelly</td>
+              <td><span class="student-id">105332711</span></td>
+              <td>Watchupga, VIC, Australia</td>
+              <td>Farm Hand</td>
+              <td>Scones</td>
+            </tr>
+          </table>
+        </div>
       </section>
 
       <!-- Contributions -->

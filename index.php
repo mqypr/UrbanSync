@@ -49,8 +49,8 @@ session_start()
   <!--HEADER-->
   <?php include "./header.inc" ?>
   <main>
-    <!--HERO SECTION
-    CONTAINS: background picture, company name, and description-->
+
+    <!-- Hero Section -->
     <section class="index-hero">
       <div class="index-hero-text">
         <h1>UrbanSync</h1>
@@ -59,38 +59,59 @@ session_start()
         </h2>
       </div>
     </section>
+
+    <!-- Introduction Section -->
     <section class="index-intro">
+
+      <!-- text section -->
       <div class="index-intro-description">
         <h2 class="index-intro-title">Infrastructure for the Future.</h2>
         <p>UrbanSync is the smart city Infrastructure based in Melbourne, here to bring a complete upgrade to your
-          city's streets and buildings. We make infrastructure safer <span
-            class="index-intro-description-highlight">and</span> faster</p>
-        <!--highlight "and"-->
+          city's streets and buildings. We make infrastructure safer <span>and</span> faster</p>
       </div>
+
+      <!-- video -->
       <figure class="index-intro-vid">
         <video autoplay muted loop playsinline src="./images/promo-video.mp4" class="index-intro-vid-content"></video>
         <figcaption class="index-intro-figcaption">Video by City Melbourne youtube <a href="#footnote-3"
             class="index-intro-figcaption-sup"><sup>1</sup></a></figcaption>
       </figure>
+
     </section>
+
+    <!-- Statistics Section -->
     <section class="index-stats">
+
+      <!-- background video -->
       <div class="index-stats-vid">
         <video autoplay loop muted playsinline>
           <source src="./images/stats-bg-vid.mp4">
         </video>
       </div>
+
+      <!-- Big stats number & description -->
       <div class="index-stats-content">
         <h2 class="index-stats-number">Up to <span class="index-stats-number-highlight">15%<a href="#footnote-2"><sup
                 style="font-size: 30%">2</sup></a>
           </span></h2>
+
         <p class="index-stats-text">Early adopters have seen improvement in traffic congestion, allowing for a general
           efficiency for citizens, giving them more time to enjoy.</p>
       </div>
+
     </section>
+
+    <!-- Comparison section -->
     <section class="index-compare">
+
+      <!-- section header -->
       <h2 class="index-compare-title">The Pioneer</h2>
+
+      <!-- comparison table -->
       <div class="index-compare-wrapper">
         <table class="index-compare-table">
+
+          <!-- companies in comparison -->
           <thead>
             <tr>
               <th class="index-compare-col-label"></th>
@@ -98,6 +119,8 @@ session_start()
               <th class="index-compare-col-them">Competitors</th>
             </tr>
           </thead>
+
+          <!-- table content -->
           <tbody>
             <tr class="index-compare-category-row">
               <td colspan="3" class="index-compare-table-category">Performance</td>

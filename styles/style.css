@@ -87,6 +87,8 @@ sup {
   font-size: 50%;
 }
 
+
+/* code from w3 toggle slider */
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -209,12 +211,12 @@ sup {
   left: 50%;
   transform: translateX(-50%);
   background: var(--bg-secondary);
-  padding: 12px 6px;
+  padding: 2rem 0.5rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   width: 100vw;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   z-index: 999;
 }
 
@@ -706,6 +708,10 @@ footer {
   padding: 24px;
 }
 
+.index-intro-description span {
+  text-decoration: underline;
+}
+
 .index-intro-title {
   padding-bottom: 12px;
 }
@@ -772,6 +778,9 @@ footer {
   margin: 0;
 }
 
+
+/* comparison section */
+
 .index-compare {
   margin: 5rem auto;
   padding: 0 2rem;
@@ -823,12 +832,13 @@ footer {
 
 /* category rows */
 .index-compare-table-category {
-  font-size: clamp(12px, 1.8vw, 15px);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #088395;
-  padding: 1rem 1.5rem 0.5rem;
+  padding: 1rem 1.5rem;
+  padding-top: 2rem;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -881,7 +891,6 @@ footer {
 
 .index-footnote-item {
   font-style: normal;
-  /* Apple doesn't use italic */
   color: #6e6e73;
   font-size: 11px;
   line-height: 1.6;
@@ -921,6 +930,11 @@ footer {
   margin-left: 20px;
 }
 
+.member-table-wrapper {
+  overflow-x: auto;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
 .member-table {
   width: 100%;
   border-collapse: collapse;
@@ -948,6 +962,7 @@ footer {
   border: 1px solid var(--accent);
   padding: 4px 6px;
   border-radius: 8px;
+  color: var(--bg-main);
 }
 
 /* login.php styles */
