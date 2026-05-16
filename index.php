@@ -26,17 +26,20 @@ session_start()
     }
 
     .navbar-link-item,
-    .navbar-link-item-settings {
+    label.navbar-link-vert-item {
       color: white;
     }
 
-    .navbar-link-item:hover,
-    .navbar-link-item-settings:hover {
-      background-color: rgba(220, 239, 241, 0.2);
+    .navbar-link-vert-item {
+      color: black;
     }
 
-    .navbar-settings-dropdown-content,
-    .navbar-settings:hover button.navbar-link-item {
+    .navbar-link-item:hover {
+      background: rgba(220, 239, 241, 0.2);
+    }
+
+    .menu-toggle-input:checked~.navbar-link-item,
+    .menu-toggle-input:checked~label.navbar-link-item {
       background: rgba(220, 239, 241, 0.2);
     }
   </style>
