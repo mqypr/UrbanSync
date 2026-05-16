@@ -23,8 +23,8 @@ if (isset($_POST['send_code'])) {
 
 /* ── Handle signup submission ── */
 if (isset($_POST['signup'])) {
-  $first          = trim($_POST['first_name']);
-  $last           = trim($_POST['last_name']);
+  $first          = trim(ucfirst(strtolower($_POST['first_name'])));
+  $last           = trim(ucfirst(strtolower($_POST['last_name'])));
   $dob            = $_POST['dob'];
   $gender         = $_POST['gender'];
   $email          = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);

@@ -12,15 +12,17 @@ if (isset($_POST['login'])) {
   if (empty($email) || empty($input_password)) {
     $error = "Please fill in all fields.";
   } else {
-    $stmt = mysqli_prepare($conn, "SELECT id, password, dark_mode FROM users WHERE email = ?");
+    $stmt = mysqli_prepare($conn, "SELECT id, password, dark_mode, first_name FROM users WHERE email = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
 
     if (mysqli_stmt_num_rows($stmt) === 1) {
       $hashed_password = '';
-      mysqli_stmt_bind_result($stmt, $id, $hashed_password, $dark_mode);
+      $first_name = '';
+      mysqli_stmt_bind_result($stmt, $id, $hashed_password, $dark_mode, $first_name);
       mysqli_stmt_fetch($stmt);
+      $_SESSION['first_name'] = $first_name;
 
       if (password_verify($input_password, $hashed_password)) {
         $_SESSION['user_id']   = $id;
