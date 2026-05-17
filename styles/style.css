@@ -7,11 +7,11 @@
   --bg-main: #ffffff;
   --bg-secondary: #f5f5f7;
   --bg-tertiary: #e8e8ed;
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
+  --accent: #09637e;
+  --accent-hover: #088395;
   --text-main: #1d1d1f;
   --text-secondary: #6e6e73;
-  --main-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif;
+  --main-font: 'SF Pro Display', Arial, sans-serif;
   --opacity-layer: rgba(255, 255, 255, 0.72);
   --shadow: rgba(0, 0, 0, 0.08);
 }
@@ -21,8 +21,8 @@
   --bg-main: #000000;
   --bg-secondary: #1c1c1e;
   --bg-tertiary: #2c2c2e;
-  --accent: #2997ff;
-  --accent-hover: #3ca4ff;
+  --accent: #09637e;
+  --accent-hover: #088395;
   --text-main: #f5f5f7;
   --text-secondary: #98989d;
   --opacity-layer: rgba(0, 0, 0, 0.72);
@@ -76,10 +76,27 @@ a {
 }
 
 button {
-  all: unset;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 12px;
+  background-color: #09637e;
+  /* Layout & typography */
+  font-family: var(--main-font);
+  font-size: 1rem;
+  display: block;
   cursor: pointer;
   font-weight: bold;
-  color: var(--text-main);
+  text-align: center;
+  color: white;
+  transition: background-color 0.2s, transform 0.1s;
+  border-radius: 14px;
+}
+
+button:hover {
+  background-color: #088395;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
 }
 
 sup {
@@ -451,7 +468,7 @@ footer {
   width: 100%;
   border: none;
   color: white;
-  background-color: #09637e;
+  background-color: var(--accent);
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 700;
@@ -463,7 +480,7 @@ footer {
 }
 
 .apply-form-section input[type="submit"]:hover {
-  background-color: #088395;
+  background-color: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
 }
@@ -853,6 +870,7 @@ footer {
 
 .index-compare-feature {
   padding: 1rem 1.5rem;
+  min-width: 12rem;
   font-size: clamp(13px, 1.8vw, 16px);
   color: var(--text-main);
 }
@@ -1038,24 +1056,11 @@ footer {
   box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
 }
 
-.login-btn {
+.login-button {
+  /* flag */
   width: 100%;
   margin-top: 1.5rem;
-  padding: 12px;
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  font-family: var(--main-font);
-  cursor: pointer;
   transition: background-color 0.2s, transform 0.15s;
-}
-
-.login-btn:hover {
-  background-color: var(--accent-hover);
-  transform: translateY(-1px);
 }
 
 .login-register {
