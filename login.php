@@ -9,9 +9,7 @@ if (isset($_POST['login'])) {
   $email          = trim($_POST['email']);
   $input_password = $_POST['password'];
 
-  if (empty($email) || empty($input_password)) {
-    $error = "Please fill in all fields.";
-  } else {
+  if (!empty($email) || !empty($input_password)) {
     $stmt = mysqli_prepare($conn, "SELECT id, password, dark_mode, first_name FROM users WHERE email = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
@@ -41,6 +39,8 @@ if (isset($_POST['login'])) {
     }
 
     mysqli_stmt_close($stmt);
+  } else {
+    $error = "Please fill in all fields.";
   }
 }
 ?>
@@ -80,7 +80,7 @@ if (isset($_POST['login'])) {
         <input class="login-input" type="password" id="password" name="password"
           placeholder="Enter your password" required>
 
-        <button class="login-btn" type="submit" name="login" value="1">Sign In</button>
+        <button class="login-button" type="submit" name="login" value="1">Sign In</button>
       </form>
 
       <p class="login-register">Not registered?

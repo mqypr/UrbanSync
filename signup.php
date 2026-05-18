@@ -35,6 +35,8 @@ if (isset($_POST['signup'])) {
   $confirm        = $_POST['confirm_password'];
 
   /* Basic field checks */
+
+  /* problem: check if email exists first */
   if (empty($first))  $errors[] = "First name is required.";
   if (empty($last))   $errors[] = "Last name is required.";
   if (empty($dob))    $errors[] = "Date of birth is required.";

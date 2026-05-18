@@ -4,6 +4,13 @@
 
 /* Default to Light Mode */
 :root {
+  /* Headings */
+  /* ai: give me a font size set up with clamp for my root */
+  --fs-h1: clamp(2rem, 5vw + 1rem, 3.5rem);
+  --fs-h2: clamp(1.5rem, 3vw + 1rem, 2.25rem);
+  --fs-h3: clamp(1.25rem, 2vw + 1rem, 1.75rem);
+  --fs-body: clamp(1rem, 1vw + 0.75rem, 1.125rem);
+
   --bg-main: #ffffff;
   --bg-secondary: #f5f5f7;
   --bg-tertiary: #e8e8ed;
@@ -11,7 +18,9 @@
   --accent-hover: #088395;
   --text-main: #1d1d1f;
   --text-secondary: #6e6e73;
-  --main-font: 'SF Pro Display', Arial, sans-serif;
+  --main-font: 'SF Pro Display',
+    Arial,
+    sans-serif;
   --opacity-layer: rgba(255, 255, 255, 0.72);
   --shadow: rgba(0, 0, 0, 0.08);
 }
@@ -57,8 +66,22 @@ h6 {
   color: var(--text-main);
 }
 
+h1 {
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+}
+
+
 p {
   color: var(--text-main);
+  font-size: 1.5rem;
 }
 
 ul {
@@ -203,7 +226,7 @@ sup {
   border-radius: 20px;
   color: var(--text-main);
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -722,23 +745,22 @@ footer {
 .index-intro-description {
   max-width: 500px;
   font-size: 24px;
-  padding: 24px;
 }
 
-.index-intro-description span {
-  text-decoration: underline;
-}
-
-.index-intro-title {
-  padding-bottom: 12px;
-}
-
+.index-intro-description,
 .index-intro-vid {
   padding: 24px;
 }
 
+.index-intro-description h2 {
+  padding-bottom: 12px;
+}
 
-.index-intro-vid-content {
+.index-intro-description p span {
+  text-decoration: underline;
+}
+
+.index-intro-vid video {
   height: 250px;
   width: auto;
   border-radius: 1rem;
@@ -746,8 +768,9 @@ footer {
   display: block;
 }
 
-.index-intro-figcaption {
-  color: var(--text-main)
+.index-intro-vid figcaption {
+  color: var(--text-main);
+  font-size: clamp(14px, 3.5vw, 20px);
 }
 
 .index-stats {
@@ -782,13 +805,13 @@ footer {
   z-index: 1;
 }
 
-.index-stats-number {
+.index-stats h2 {
   font-size: 4rem;
   font-weight: bold;
   margin: 0;
 }
 
-.index-stats-text {
+.index-stats p {
   padding-top: 1rem;
   font-size: 1.5rem;
   max-width: 700px;
@@ -1375,20 +1398,20 @@ footer {
     width: 100%;
     border-radius: 16px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
   }
 
-  .index-intro-vid-content {
+  .index-intro-vid video {
     width: 100%;
     height: auto;
     border-radius: 16px;
     overflow: hidden;
     display: block;
-  }
-
-  .index-intro-description {
-    font-size: clamp(14px, 3.5vw, 20px);
-    text-align: center;
-    max-width: 100%;
+    align-self: center;
   }
 }
 

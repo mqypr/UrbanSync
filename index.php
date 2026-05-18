@@ -11,10 +11,11 @@ session_start()
   <link rel="stylesheet" href="./styles/style.css">
   <title>Home - UrbanSync</title>
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
+
   <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+  <meta name="keywords" content="UrbanSync, infrastructure analytics, B2B, urban planning, infrastructure improvement">
   <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
 
-  <!-- Open Graph (for social sharing previews) -->
   <meta property="og:title" content="UrbanSync">
   <meta property="og:description" content="making streets faster and safer">
   <meta property="og:image" content="assets/images/hero-preview.jpg">
@@ -50,7 +51,7 @@ session_start()
   <?php include "./header.inc" ?>
   <main>
 
-    <!-- Hero Section -->
+    <!-- HERO -->
     <section class="index-hero">
       <div class="index-hero-text">
         <h1>UrbanSync</h1>
@@ -60,51 +61,51 @@ session_start()
       </div>
     </section>
 
-    <!-- Introduction Section -->
+    <!-- INTRODUCTION -->
     <section class="index-intro">
 
-      <!-- text section -->
+      <!--text section-->
       <div class="index-intro-description">
-        <h2 class="index-intro-title">Infrastructure for the Future.</h2>
+        <h2>Infrastructure for the Future.</h2>
         <p>UrbanSync is the smart city Infrastructure based in Melbourne, here to bring a complete upgrade to your
           city's streets and buildings. We make infrastructure safer <span>and</span> faster</p>
       </div>
 
-      <!-- video -->
+      <!--video-->
       <figure class="index-intro-vid">
-        <video autoplay muted loop playsinline src="./images/promo-video.mp4" class="index-intro-vid-content"></video>
-        <figcaption class="index-intro-figcaption">Video by City Melbourne youtube <a href="#footnote-3"
+        <video autoplay muted loop playsinline src="./images/promo-video.mp4"></video>
+        <figcaption>Video by City Melbourne youtube <a href="#footnote-3"
             class="index-intro-figcaption-sup"><sup>1</sup></a></figcaption>
       </figure>
 
     </section>
 
-    <!-- Statistics Section -->
+    <!-- STATISTICS -->
     <section class="index-stats">
 
-      <!-- background video -->
+      <!--background video-->
       <div class="index-stats-vid">
         <video autoplay loop muted playsinline>
           <source src="./images/stats-bg-vid.mp4">
         </video>
       </div>
 
-      <!-- Big stats number & description -->
+      <!--Big stats number & description-->
       <div class="index-stats-content">
-        <h2 class="index-stats-number">Up to <span class="index-stats-number-highlight">15%<a href="#footnote-2"><sup
+        <h2>Up to <span>15%<a href="#footnote-2"><sup
                 style="font-size: 30%">2</sup></a>
           </span></h2>
 
-        <p class="index-stats-text">Early adopters have seen improvement in traffic congestion, allowing for a general
+        <p>Early adopters have seen improvement in traffic congestion, allowing for a general
           efficiency for citizens, giving them more time to enjoy.</p>
       </div>
 
     </section>
 
-    <!-- Comparison section -->
+    <!-- COMPARISON -->
     <section class="index-compare">
 
-      <!-- section header -->
+      <!--section header-->
       <h2 class="index-compare-title">The Pioneer</h2>
 
       <!-- comparison table -->
@@ -170,6 +171,8 @@ session_start()
         </table>
       </div>
     </section>
+
+    <!-- FOOTNOTE -->
     <section class="index-footnote">
       <ol>
         <li class="index-footnote-item" id="footnote-0">Logo was AI generated: "create a round logo with the name 'UrbanSync'"</li>
