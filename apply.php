@@ -53,7 +53,7 @@ session_start();
   <main>
     <section class="apply-form-section">
       <h1 style="color: #09637e;">Job Application Form</h1>
-      <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="POST">
+      <form action="process_eoi.php" method="POST" novalidate>
 
         <!-- Job Reference Number -->
         <label for="jobRef">Job Reference Number:</label>
