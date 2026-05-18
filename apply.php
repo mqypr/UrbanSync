@@ -1,5 +1,5 @@
 <?php
-session_start()
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,12 +78,21 @@ session_start()
         <!-- Gender -->
         <fieldset>
           <legend>Gender:</legend>
-          <input type="radio" id="male" name="gender" value="Male" required>
-          <label for="male">Male</label>
-          <input type="radio" id="female" name="gender" value="Female" required>
-          <label for="female">Female</label>
-          <input type="radio" id="other" name="gender" value="Other" required>
-          <label for="other">Other</label>
+
+          <div class="option-row">
+            <input type="radio" id="male" name="gender" value="Male" required>
+            <label for="male">Male</label>
+          </div>
+
+          <div class="option-row">
+            <input type="radio" id="female" name="gender" value="Female" required>
+            <label for="female">Female</label>
+          </div>
+
+          <div class="option-row">
+            <input type="radio" id="other" name="gender" value="Other" required>
+            <label for="other">Other</label>
+          </div>
         </fieldset>
         <br>
 
@@ -129,14 +138,26 @@ session_start()
         <!-- Skill List -->
         <fieldset>
           <legend>Skills:</legend>
-          <input type="checkbox" id="skill1" name="skills[]" value="Programming">
-          <label for="skill1">Programming</label>
-          <input type="checkbox" id="skill2" name="skills[]" value="Networking">
-          <label for="skill2">Networking</label>
-          <input type="checkbox" id="skill3" name="skills[]" value="Data Analysis">
-          <label for="skill3">Data Analysis</label>
-          <input type="checkbox" id="skill4" name="skills[]" value="Project Management">
-          <label for="skill4">Project Management</label>
+
+          <div class="option-row">
+            <input type="checkbox" id="skill1" name="skills[]" value="Programming">
+            <label for="skill1">Programming</label>
+          </div>
+
+          <div class="option-row">
+            <input type="checkbox" id="skill2" name="skills[]" value="Networking">
+            <label for="skill2">Networking</label>
+          </div>
+
+          <div class="option-row">
+            <input type="checkbox" id="skill3" name="skills[]" value="Data Analysis">
+            <label for="skill3">Data Analysis</label>
+          </div>
+
+          <div class="option-row">
+            <input type="checkbox" id="skill4" name="skills[]" value="Project Management">
+            <label for="skill4">Project Management</label>
+          </div>
         </fieldset>
         <br>
 
