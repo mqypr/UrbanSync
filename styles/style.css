@@ -131,6 +131,7 @@ sup {
 /* code from w3 toggle slider */
 /* The switch - the box around the slider */
 .switch {
+  display: none;
   position: relative;
   display: inline-block;
   width: 60px;
@@ -287,58 +288,6 @@ sup {
 }
 
 
-
-
-/*.search-bar {
-  display: flex;
-  width: 320px;
-  background: #ebf4f6;
-  border: 2px solid var(--text-main);
-  border-radius: 20px;
-  align-items: center;
-}
-
-.search-text {
-  width: 220px;
-  padding: 8px 12px;
-  border: none;
-  background: #ebf4f6;
-  color: var(--text-main);
-  font-size: 13px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-}
-
-.search-text:focus {
-  outline: none;
-}
-
-.search-text::placeholder {
-  color: var(--text-main);
-}
-
-.job-search-button {
-  border: none;
-  background: #ebf4f6;
-  color: var(--text-main);
-  font-weight: bold;
-  font-size: 12px;
-  padding: 8px 12px;
-  padding-right: 32px;
-  border-left: 2px solid var(--text-main);
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.job-search-button:hover {
-  background: #dceff1;
-  color: var(--secondary);
-}
-
-*/
 /* footer */
 footer {
   width: 100%;
@@ -554,17 +503,6 @@ footer {
   background-color: #EDF4F6;
 }
 
-/*
-.jobs-layout {
-  
-Removed flexbox for floating as specified
-  
-  display: flex;
-  flex-direction: row-reverse;
-}
-*/
-
-/*The aside bar*/
 #JobNav {
   float: right;
   width: 30%;
@@ -636,7 +574,6 @@ Removed flexbox for floating as specified
 }
 
 /* Job content page styling */
-/* The information page for the jobs*/
 #JobPageBodyStyle {
   margin: 0;
   padding: 1rem;
@@ -698,7 +635,6 @@ Removed flexbox for floating as specified
 .index-hero {
   position: relative;
   top: -80px;
-  /* needed for ::before positioning */
   height: 27rem;
   display: flex;
   justify-content: center;
@@ -706,7 +642,6 @@ Removed flexbox for floating as specified
   align-items: center;
   overflow: hidden;
 
-  /* shorthand for top/right/bottom/left: 0 */
   background-image: url("../styles/images/index-hero-background.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -926,17 +861,13 @@ Removed flexbox for floating as specified
   padding: 1.5rem 7%;
   margin-top: 10rem;
   text-align: center;
-  /* add this */
 }
 
 
 .index-footnote ol {
   display: inline-block;
-  /* needed so the ol respects text-align center */
   text-align: left;
-  /* keeps the list items left-aligned within the centered block */
   padding-left: 1.2rem;
-  /* indents the numbers */
 }
 
 .index-footnote-item {
@@ -1089,7 +1020,6 @@ Removed flexbox for floating as specified
 }
 
 .login-button {
-  /* flag */
   width: 100%;
   margin-top: 1.5rem;
   transition: background-color 0.2s, transform 0.15s;
@@ -1380,8 +1310,344 @@ Removed flexbox for floating as specified
   }
 }
 
-/* PAGE SPECIFIC STYLES END */
+/* account.php styles */
+.account-main {
+  min-height: calc(100vh - 4rem);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
 
+.account-card {
+  background-color: var(--bg-secondary);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--shadow);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.account-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #cfe3e6;
+  margin-bottom: 1rem;
+}
+
+.account-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.account-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 1.8rem;
+}
+
+.account-success {
+  background-color: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  color: #34c759;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 1.2rem;
+}
+
+.account-errors {
+  background-color: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  border-radius: 10px;
+  padding: 0.8rem 1rem 0.8rem 1.8rem;
+  margin-bottom: 1.2rem;
+  text-align: left;
+  list-style: disc;
+}
+
+.account-errors li {
+  color: #ff3b30;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0;
+}
+
+.account-section {
+  background-color: var(--bg-main);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.account-row {
+  display: flex;
+  gap: 12px;
+}
+
+.account-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+  margin-top: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.account-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--bg-tertiary);
+  border-radius: 10px;
+  background-color: var(--bg-secondary);
+  color: var(--text-main);
+  font-size: 14px;
+  font-family: var(--main-font);
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.account-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(9, 99, 126, 0.15);
+}
+
+.account-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.account-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.account-email-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.account-email-input {
+  flex: 1;
+}
+
+.account-code-btn {
+  padding: 10px 14px;
+  background-color: var(--bg-tertiary);
+  color: var(--text-main);
+  border: 1.5px solid var(--bg-tertiary);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: var(--main-font);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.account-code-btn:hover {
+  background-color: var(--bg-secondary);
+  box-shadow: none;
+  transform: none;
+}
+
+.account-code-sent {
+  font-size: 12px;
+  color: #34c759;
+  margin-top: 6px;
+}
+
+.account-code-error {
+  font-size: 12px;
+  color: #ff3b30;
+  margin-top: 6px;
+}
+
+.account-phone-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.account-phone-prefix {
+  width: 70px;
+  flex-shrink: 0;
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.account-phone-input {
+  flex: 1;
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.account-pw-rules {
+  list-style: none;
+  margin-top: 8px;
+  padding: 10px 14px;
+  background-color: var(--bg-secondary);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account-match-msg {
+  font-size: 12px;
+  margin-top: 6px;
+  min-height: 18px;
+}
+
+.account-pref-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+  gap: 1rem;
+}
+
+.account-pref-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.account-pref-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.account-pref-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.account-save-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 13px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.account-save-btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
+}
+
+.account-danger-zone {
+  margin-top: 1.5rem;
+  border: 1.5px solid rgba(255, 59, 48, 0.3);
+  border-radius: 14px;
+  padding: 1.2rem;
+  text-align: left;
+  background-color: rgba(255, 59, 48, 0.04);
+}
+
+.account-danger-title {
+  font-size: 1rem;
+  color: #ff3b30;
+  margin-bottom: 0.4rem;
+}
+
+.account-danger-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+.account-danger-details summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ff3b30;
+  user-select: none;
+  padding: 0.4rem 0;
+}
+
+.account-danger-details summary::-webkit-details-marker {
+  color: #ff3b30;
+}
+
+.account-danger-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.8rem;
+  gap: 0.5rem;
+}
+
+.account-danger-input {
+  border-color: rgba(255, 59, 48, 0.3);
+}
+
+.account-danger-input:focus {
+  border-color: #ff3b30;
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15);
+}
+
+.account-danger-btn {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 11px;
+  background-color: #ff3b30;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.account-danger-btn:hover {
+  background-color: #e0281e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255, 59, 48, 0.3);
+}
+
+/* PAGE SPECIFIC STYLES END */
 
 
 /* MEDIA STYLING */
@@ -1429,7 +1695,6 @@ Removed flexbox for floating as specified
     justify-content: space-between;
   }
 
-
   .navbar-link-vert {
     display: flex;
   }
@@ -1465,5 +1730,18 @@ Removed flexbox for floating as specified
 
   .footer-container {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .signup-row,
+  .account-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .account-card {
+    padding: 1.5rem 1rem;
   }
 }

@@ -1,4 +1,9 @@
 <header>
+  <label class="switch" style="display:none">
+    <input type="checkbox"
+      <?= isset($current_user) && $current_user['dark_mode'] ? 'checked' : '' ?>>
+    <span class="slider round"></span>
+  </label>
   <nav class="navbar">
     <div class="navbar-container">
 

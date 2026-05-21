@@ -1,10 +1,5 @@
 <?php
-$host     = "localhost";
-$db_user  = "root";
-$db_pass  = "";
-$database = "urbansync_db";
-
-$conn = mysqli_connect($host, $db_user, $db_pass, $database);
+require_once 'settings.php';
 $current_user = null;
 if (isset($_SESSION['user_id'])) {
   $s = mysqli_prepare($conn, "SELECT * FROM users WHERE id = ?");
