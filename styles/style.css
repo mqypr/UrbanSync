@@ -6,10 +6,14 @@
 :root {
   /* Headings */
   /* ai: give me a font size set up with clamp for my root */
-  --fs-h1: clamp(2rem, 5vw + 1rem, 3.5rem);
-  --fs-h2: clamp(1.5rem, 3vw + 1rem, 2.25rem);
-  --fs-h3: clamp(1.25rem, 2vw + 1rem, 1.75rem);
-  --fs-body: clamp(1rem, 1vw + 0.75rem, 1.125rem);
+  --fs-h1: clamp(3rem, 1.524vw + 2.629rem, 4rem);
+  --fs-h2: clamp(2rem, 1.143vw + 1.554rem, 2.75rem);
+  --fs-h3: clamp(1.5rem, 0.762vw + 1.203rem, 1.75rem);
+  /* Apple-style discrete body text */
+  --fs-body: 21px;
+  --fs-body-line-height: 24px;
+
+
 
   --bg-main: #ffffff;
   --bg-secondary: #f5f5f7;
@@ -86,7 +90,9 @@ h3 {
 
 p {
   color: var(--text-main);
-  font-size: 1.5rem;
+  font-size: var(--fs-body);
+  line-height: var(--fs-body-line-height);
+
 }
 
 ul {
@@ -330,7 +336,7 @@ footer {
   width: 100%;
   padding: 30px 20px;
   background: var(--bg-secondary);
-  border-top: 1px solid #d2d2d7;
+  border-top: 1px solid var(--bg-tertiary);
 }
 
 .footer-container {
@@ -751,7 +757,7 @@ footer {
 
 .index-intro-vid figcaption {
   color: var(--text-main);
-  font-size: clamp(14px, 3.5vw, 20px);
+  font-size: var(--fs-body);
 }
 
 .index-stats {
@@ -792,9 +798,9 @@ footer {
   margin: 0;
 }
 
-.index-stats p {
+.index-stats h3 {
+  font-weight: unset;
   padding-top: 1rem;
-  font-size: 1.5rem;
   max-width: 700px;
   margin: 0;
 }
@@ -1748,6 +1754,11 @@ body.s-body {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --fs-body: 17px;
+    --fs-body-line-height: 26px;
+  }
+
   .navbar-container {
     justify-content: space-between;
   }
