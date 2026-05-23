@@ -877,8 +877,7 @@ footer {
   margin: 0;
 }
 
-.index-stats h3 {
-  font-weight: unset;
+.index-stats p {
   padding-top: 1rem;
   max-width: 700px;
   margin: 0;
@@ -1452,7 +1451,7 @@ body.s-body {
 }
 
 .account-card {
-  background-color: var(--bg-secondary);
+  background-color: var(--opacity-layer);
   border-radius: 20px;
   box-shadow: 0 8px 32px var(--shadow);
   padding: 2.5rem 2rem;

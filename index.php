@@ -93,8 +93,8 @@ require_once './settings.php';
                 style="font-size: 30%">2</sup></a>
           </span></h2>
 
-        <h3>Early adopters have seen improvement in traffic congestion, allowing for a general
-          efficiency for citizens, giving them more time to enjoy.</h3>
+        <p>Early adopters have seen improvement in traffic congestion, allowing for a general
+          efficiency for citizens, giving them more time to enjoy.</p>
       </div>
 
     </section>
