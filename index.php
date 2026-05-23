@@ -32,10 +32,6 @@ require_once './settings.php';
       color: white;
     }
 
-    .navbar-link-vert-item {
-      color: black;
-    }
-
     .navbar-link-item:hover {
       background: rgba(220, 239, 241, 0.2);
     }

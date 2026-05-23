@@ -1,15 +1,20 @@
+<?php $is_dark = ($_COOKIE['dark_mode'] ?? '0') === '1'; ?>
+
 <header>
+  <!-- hidden switch still drives :root:has() dark mode -->
   <label class="switch" style="display:none">
-    <input type="checkbox"
-      <?= isset($current_user) && $current_user['dark_mode'] ? 'checked' : '' ?>>
+    <input type="checkbox" <?= $is_dark ? 'checked' : '' ?>>
     <span class="slider round"></span>
   </label>
+
   <nav class="navbar">
     <div class="navbar-container">
 
       <!-- Logo -->
       <div class="navbar-logo">
-        <a href="index.php"><img src="./images/logo.png" class="logo-pic" alt="logo-pic"></a>
+        <a href="index.php">
+          <img src="./images/logo.png" class="logo-pic" alt="logo-pic">
+        </a>
       </div>
 
       <!-- Desktop nav links -->
@@ -17,6 +22,18 @@
         <a href="./jobs.php" class="navbar-link-item">JOB DESCRIPTION</a>
         <a href="./apply.php" class="navbar-link-item">APPLY</a>
         <a href="./about.php" class="navbar-link-item">ABOUT</a>
+
+        <!-- Settings dropdown -->
+        <div class="navbar-settings">
+          <div class="navbar-link-item navbar-settings-trigger">SETTINGS</div>
+          <div class="navbar-settings-dropdown">
+            <form method="POST" action="./toggle_theme.php">
+              <button type="submit" class="navbar-settings-toggle">
+                <?= $is_dark ? 'Light Mode' : 'Dark Mode' ?>
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
 
       <!-- Desktop: account / login -->
@@ -28,7 +45,7 @@
         <a href="./login.php" class="navbar-link-item">LOGIN</a>
       <?php endif; ?>
 
-      <!-- mobile menu -->
+      <!-- Mobile menu -->
       <div class="navbar-link-vert">
         <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
         <label class="navbar-link-vert-item" for="menu-toggle" style="font-size: 33px;">=</label>
@@ -44,6 +61,13 @@
           <?php else: ?>
             <a href="./login.php" class="navbar-link-vert-item">LOGIN</a>
           <?php endif; ?>
+
+          <!-- Theme button at bottom of mobile menu -->
+          <form method="POST" action="./toggle_theme.php" class="navbar-theme-form">
+            <button type="submit" class="navbar-theme-btn">
+              <?= $is_dark ? 'Light Mode' : 'Dark Mode' ?>
+            </button>
+          </form>
         </div>
       </div>
 

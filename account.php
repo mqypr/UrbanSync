@@ -14,10 +14,16 @@ $success  = false;
 $code_sent  = false;
 $code_error = '';
 
+$success = false;
+if (!empty($_SESSION['changed'])) {
+  $success = true;
+  unset($_SESSION['changed']);
+}
+
 /* ── Helper: fetch latest user row ── */
 function fetch_user($conn, $id)
 {
-  $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, email, phone_code, phone, dark_mode FROM users WHERE id = ?");
+  $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, email, phone_code, phone FROM users WHERE id = ?");
   mysqli_stmt_bind_param($s, "i", $id);
   mysqli_stmt_execute($s);
   $r = mysqli_stmt_get_result($s);
@@ -52,7 +58,6 @@ if (isset($_POST['save_all'])) {
   $new_email  = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
   $phone_code = trim($_POST['phone_code'] ?? '+61');
   $phone      = trim($_POST['phone']);
-  $dark_mode  = isset($_POST['dark_mode']) ? 1 : 0;
   $cur_pw     = $_POST['current_password']    ?? '';
   $new_pw     = $_POST['new_password']        ?? '';
   $conf_pw    = $_POST['confirm_new_password'] ?? '';
@@ -105,14 +110,15 @@ if (isset($_POST['save_all'])) {
   }
 
   /* Commit if no errors */
+  /* Commit if no errors */
   if (empty($errors)) {
     if ($change_pw) {
       $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
-      $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, password=?, dark_mode=? WHERE id=?");
-      mysqli_stmt_bind_param($upd, "sssssssiii", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $dark_mode, $user_id);
+      $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, password=? WHERE id=?");
+      mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
     } else {
-      $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, dark_mode=? WHERE id=?");
-      mysqli_stmt_bind_param($upd, "ssssssiii", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $dark_mode, $user_id);
+      $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=? WHERE id=?");
+      mysqli_stmt_bind_param($upd, "ssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
     }
     mysqli_stmt_execute($upd);
     mysqli_stmt_close($upd);
@@ -121,8 +127,9 @@ if (isset($_POST['save_all'])) {
       unset($_SESSION['verify_code'], $_SESSION['verify_email'], $_SESSION['code_expiry']);
     }
 
-    $user    = fetch_user($conn, $user_id);
-    $success = true;
+    $_SESSION['changed'] = true;
+    header("Location: ./account.php");
+    exit;
   }
 }
 
@@ -319,24 +326,6 @@ function pw_class($test)
               <?= ($new_pw_display === $conf_pw_display) ? '✓ Passwords match' : '✗ Passwords do not match' ?>
             </p>
           <?php endif; ?>
-        </div>
-
-        <!-- ── Preferences ── -->
-        <div class="account-section">
-          <h2 class="account-section-title">Preferences</h2>
-
-          <div class="account-pref-row">
-            <div class="account-pref-info">
-              <span class="account-pref-label">Dark Mode</span>
-              <span class="account-pref-desc">Use a dark colour scheme across UrbanSync</span>
-            </div>
-            <!-- Reuse the existing .switch from style.css -->
-            <label class="switch">
-              <input type="checkbox" name="dark_mode" value="1"
-                <?= ($user['dark_mode'] ?? 0) ? 'checked' : '' ?>>
-              <span class="slider round"></span>
-            </label>
-          </div>
         </div>
 
         <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
