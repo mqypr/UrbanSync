@@ -97,7 +97,7 @@ function pw_class($test)
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
 </head>
 
-<body>
+<body class="s-body">
   <!--HEADER-->
   <?php include "./header.inc" ?>
 
@@ -171,7 +171,7 @@ function pw_class($test)
               value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
               required>
             <!-- formnovalidate skips full form validation, only sends email -->
-            <button class="signup-code-btn" type="submit" name="send_code" value="1" formnovalidate>
+            <button class="code-btn" type="submit" name="send_code" value="1" formnovalidate>
               Send Code
             </button>
           </div>
@@ -180,10 +180,10 @@ function pw_class($test)
             value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
 
           <?php if ($code_sent): ?>
-            <p class="signup-code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
+            <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
           <?php endif; ?>
           <?php if ($code_error): ?>
-            <p class="signup-code-error"><?= htmlspecialchars($code_error) ?></p>
+            <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
           <?php endif; ?>
 
           <!-- Verification code -->

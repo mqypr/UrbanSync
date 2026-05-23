@@ -4,7 +4,8 @@
 require_once("settings.php");
 
 // clean user input
-function clean_input($data) {
+function clean_input($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -142,7 +143,6 @@ if ($errors != "") {
     </body>
     </html>
     ";
-
 } else {
 
     // insert data
@@ -221,7 +221,6 @@ if ($errors != "") {
         </body>
         </html>
         ";
-
     } else {
         echo "<p>Error inserting record.</p>";
     }
@@ -229,5 +228,3 @@ if ($errors != "") {
 
 // close database
 mysqli_close($conn);
-
-?>

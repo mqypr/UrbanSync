@@ -9,7 +9,7 @@ if (isset($_POST['login'])) {
   $email          = trim($_POST['email']);
   $input_password = $_POST['password'];
 
-  if (!empty($email) || !empty($input_password)) {
+  if (!empty($email) && !empty($input_password)) {
     $stmt = mysqli_prepare($conn, "SELECT id, password, dark_mode, first_name FROM users WHERE email = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
@@ -55,7 +55,7 @@ if (isset($_POST['login'])) {
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
 </head>
 
-<body>
+<body class='s-body'>
 
   <?php include "./header.inc" ?>
 

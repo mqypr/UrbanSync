@@ -255,7 +255,7 @@ function pw_class($test)
               placeholder="you@email.com"
               value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>"
               required>
-            <button class="account-code-btn" type="submit" name="send_code" value="1" formnovalidate>
+            <button class="code-btn" type="submit" name="send_code" value="1" formnovalidate>
               Send Code
             </button>
           </div>
@@ -263,10 +263,10 @@ function pw_class($test)
             value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>">
 
           <?php if ($code_sent): ?>
-            <p class="account-code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
+            <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
           <?php endif; ?>
           <?php if ($code_error): ?>
-            <p class="account-code-error"><?= htmlspecialchars($code_error) ?></p>
+            <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
           <?php endif; ?>
 
           <p class="account-hint">Only required if you are changing your email address.</p>
@@ -340,7 +340,7 @@ function pw_class($test)
         </div>
 
         <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
-        <button class="account-signout" name="signout" value="1">Signout</button>
+        <button class="account-signout-btn" name="signout" value="1">Signout</button>
 
       </form>
 
