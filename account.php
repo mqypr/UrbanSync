@@ -3,19 +3,17 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 session_start();
 require_once './settings.php';
-$error = '';
+$errors   = [];
+$success  = false;
+$code_sent  = false;
+$code_error = '';
+$user_id  = $_SESSION['user_id'];
 
 /* ── Auth guard ── */
 if (!isset($_SESSION['user_id'])) {
   header('Location: ./login.php');
   exit;
 }
-
-$user_id  = $_SESSION['user_id'];
-$errors   = [];
-$success  = false;
-$code_sent  = false;
-$code_error = '';
 
 $success = false;
 if (!empty($_SESSION['changed'])) {

@@ -108,7 +108,7 @@ button {
   border: none;
   outline: none;
   padding: 12px;
-  background-color: #09637e;
+  background-color: var(--accent);
   /* Layout & typography */
   font-family: var(--main-font);
   font-size: 1rem;
@@ -122,7 +122,7 @@ button {
 }
 
 button:hover {
-  background-color: #088395;
+  background-color: var(--accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
 }
@@ -268,8 +268,11 @@ sup {
   cursor: pointer;
 }
 
-.navbar-link-item:hover {
+.navbar-link-item:hover,
+.navbar-settings:hover .navbar-link-item,
+.navbar-link-vert-item:hover {
   background: var(--bg-main);
+  box-shadow: 0 8px 24px var(--shadow);
 }
 
 /* Settings dropdown - desktop */
@@ -297,10 +300,6 @@ sup {
   display: block;
 }
 
-.navbar-settings:hover .navbar-link-item {
-  background: var(--bg-main);
-}
-
 .navbar-settings-toggle {
   width: 100%;
   font-size: 13px;
@@ -316,7 +315,7 @@ sup {
   box-shadow: none;
 }
 
-/* Theme button - mobile menu */
+/* mobile theme button */
 .navbar-theme-form {
   width: 100%;
   padding-top: 1rem;
@@ -364,10 +363,11 @@ sup {
   height: 95vh;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 0.5rem;
   z-index: 999;
 }
 
+/* no scroll when menu is clicked */
 .menu-toggle-input:checked~.navbar-link-vert-dropdown {
   display: flex;
 }
@@ -398,7 +398,7 @@ body:has(.menu-toggle-input:not(:checked)) .index-hero {
   color: var(--text-main);
   font-weight: bold;
   font-size: 14px;
-  padding: 6px 12px;
+  padding: 1rem;
   border-radius: 8px;
   width: 100%;
   text-align: center;
@@ -406,10 +406,6 @@ body:has(.menu-toggle-input:not(:checked)) .index-hero {
 }
 
 
-
-.navbar-link-vert-item:hover {
-  background: var(--bg-main);
-}
 
 /* body with background */
 body.s-body {
@@ -762,7 +758,7 @@ footer {
 }
 
 
-/* index.php */
+/* index.php styles */
 
 .index-hero {
   position: relative;
@@ -1182,7 +1178,6 @@ footer {
   letter-spacing: 0.04em;
 }
 
-/* ── Shared: inputs ── */
 .signup-input,
 .login-input,
 .account-input {
@@ -1210,7 +1205,6 @@ footer {
   display: block;
 }
 
-/* ── Shared: input focus ── */
 .signup-input:focus,
 .login-input:focus,
 .account-input:focus {
@@ -1219,14 +1213,12 @@ footer {
   box-shadow: 0 0 0 3px rgba(9, 99, 126, 0.15);
 }
 
-/* ── Shared: selects ── */
 .signup-select,
 .account-select {
   appearance: none;
   cursor: pointer;
 }
 
-/* ── Shared: email row ── */
 .signup-email-row,
 .account-email-row {
   display: flex;
@@ -1261,7 +1253,6 @@ footer {
   border-radius: 0 10px 10px 0;
 }
 
-/* ── Shared: error lists ── */
 .signup-errors,
 .account-errors {
   background-color: rgba(255, 59, 48, 0.1);
@@ -1319,10 +1310,6 @@ footer {
   color: var(--text-secondary);
 }
 
-.signup-pw-rules {
-  background-color: var(--bg-main);
-}
-
 .account-pw-rules {
   background-color: var(--bg-secondary);
 }
@@ -1356,27 +1343,7 @@ footer {
 .login-button,
 .account-save-btn {
   width: 100%;
-  margin-top: 1.5rem;
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  font-size: 15px;
-  font-weight: bold;
-  font-family: var(--main-font);
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.15s;
-}
-
-.signup-btn,
-.account-save-btn {
-  padding: 12px;
-  border-radius: 10px;
-}
-
-.account-save-btn {
-  margin-top: 0.5rem;
-  padding: 13px;
-  border-radius: 12px;
+  margin-top: 1rem;
 }
 
 .signup-btn:hover,
@@ -1387,7 +1354,6 @@ footer {
   box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
 }
 
-/* ── Account-only: signout + danger zone ── */
 .account-signout-btn {
   margin-top: 1rem;
   background-color: #ff3b30;
@@ -1469,7 +1435,7 @@ footer {
   box-shadow: 0 6px 14px rgba(255, 59, 48, 0.3);
 }
 
-/* ── Account-only: sections ── */
+/* Account-only */
 .account-section {
   background-color: var(--bg-main);
   border-radius: 14px;
@@ -1495,7 +1461,6 @@ footer {
   margin-bottom: 0;
 }
 
-/* ── Responsive ── */
 @media (max-width: 480px) {
 
   .signup-row,

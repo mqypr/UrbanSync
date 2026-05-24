@@ -32,23 +32,14 @@ require_once './settings.php';
       color: white;
     }
 
-    .navbar-link-item:hover {
-      background: rgba(220, 239, 241, 0.2);
-    }
-
     .menu-toggle-input:checked~.navbar-link-item,
-    .menu-toggle-input:checked~label.navbar-link-item {
-      background: rgba(220, 239, 241, 0.2);
-    }
-
-    .navbar-settings-dropdown {
+    .menu-toggle-input:checked~label.navbar-link-item,
+    .navbar-settings-dropdown,
+    .navbar-link-item:hover,
+    .navbar-settings:hover .navbar-link-item {
       background: rgba(220, 239, 241, 0.2);
       border: none;
       box-shadow: 0 8px 24px var(--shadow);
-    }
-
-    .navbar-settings:hover .navbar-link-item {
-      background: rgba(220, 239, 241, 0.2);
     }
   </style>
 </head>
