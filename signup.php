@@ -114,7 +114,7 @@ function pw_class($test)
 
   <main class="signup-main">
     <div class="signup-card">
-      <img src="./images/logo.png" class="signup-logo" alt="UrbanSync logo">
+      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
       <h1 class="signup-title">Create Account</h1>
       <p class="signup-subtitle">Join UrbanSync today</p>
 
@@ -220,19 +220,19 @@ function pw_class($test)
           <input class="signup-input" type="password" id="password" name="password"
             placeholder="Create a password" required>
 
+          <!-- Confirm password -->
+          <label class="signup-label" for="confirm_password">Confirm Password</label>
+          <input class="signup-input" type="password" id="confirm_password" name="confirm_password"
+            placeholder="Repeat your password" required>
+
           <!-- Password rules: neutral on first load, green/red after a submit attempt -->
-          <ul class="signup-pw-rules">
+          <ul class="pw-rules">
             <li class="pw-rule <?= $attempted ? pw_class(strlen($pw) >= 8)            : '' ?>">At least 8 characters</li>
             <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[A-Z]/', $pw))  : '' ?>">Uppercase letter (A–Z)</li>
             <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[a-z]/', $pw))  : '' ?>">Lowercase letter (a–z)</li>
             <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[0-9]/', $pw))  : '' ?>">Number (0–9)</li>
             <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[\W_]/', $pw))  : '' ?>">Symbol (!@#$...)</li>
           </ul>
-
-          <!-- Confirm password -->
-          <label class="signup-label" for="confirm_password">Confirm Password</label>
-          <input class="signup-input" type="password" id="confirm_password" name="confirm_password"
-            placeholder="Repeat your password" required>
 
           <!-- Match message: only shown after a submit attempt -->
           <?php if ($attempted): ?>

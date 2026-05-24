@@ -59,7 +59,7 @@ if (isset($_POST['login'])) {
 
   <main class="login-main">
     <div class="login-card">
-      <img src="./images/logo.png" class="login-logo" alt="UrbanSync logo">
+      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
       <h1 class="login-title">Sign In</h1>
       <p class="login-subtitle">Welcome back to UrbanSync</p>
 

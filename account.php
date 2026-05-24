@@ -194,7 +194,7 @@ function pw_class($test)
   <main class="account-main">
     <div class="account-card">
 
-      <img src="./images/logo.png" class="account-logo" alt="UrbanSync logo">
+      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
       <h1 class="account-title">Account Settings</h1>
       <p class="account-subtitle">Manage your UrbanSync profile</p>
 
@@ -312,7 +312,7 @@ function pw_class($test)
           <input class="account-input" type="password" id="new_password" name="new_password"
             placeholder="Create a new password">
 
-          <ul class="account-pw-rules">
+          <ul class="pw-rules">
             <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8)               : '' ?>">At least 8 characters</li>
             <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display))     : '' ?>">Uppercase letter (A–Z)</li>
             <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display))     : '' ?>">Lowercase letter (a–z)</li>

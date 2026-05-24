@@ -409,6 +409,14 @@ body:has(.menu-toggle-input:not(:checked)) .index-hero {
   background: var(--bg-main);
 }
 
+/* body with background */
+body.s-body {
+  background-image: var(--bg-img);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
 
 /* footer */
 footer {
@@ -1067,34 +1075,29 @@ footer {
   color: var(--bg-main);
 }
 
-/* login.php */
-body.s-body {
-  background-image: var(--bg-img);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-}
 
+/* account, signup, login styles */
+.signup-main,
+.account-main,
 .login-main {
   min-height: calc(100vh - 4rem);
   display: flex;
-  align-items: center;
   justify-content: center;
   padding: 2rem;
 }
 
+.signup-card,
+.account-card,
 .login-card {
   background-color: var(--opacity-layer);
   border-radius: 20px;
   box-shadow: 0 8px 32px var(--shadow);
   padding: 2.5rem 2rem;
   width: 100%;
-  max-width: 420px;
   text-align: center;
 }
 
-.login-logo {
+.logo {
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -1102,462 +1105,89 @@ body.s-body {
   margin-bottom: 1rem;
 }
 
-.login-title {
-  font-size: 1.8rem;
-  margin-bottom: 0.3rem;
-}
-
-.login-subtitle {
+.account-subtitle,
+.login-subtitle,
+.signup-subtitle {
   color: var(--text-secondary);
   font-size: 14px;
   margin-bottom: 1.8rem;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-label {
-  display: block;
-  text-align: left;
-  font-size: 13px;
-  font-weight: bold;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-  margin-top: 14px;
-}
-
-.login-input {
-  display: block;
-  width: 100%;
-  padding: 10px 14px;
-  border: 1.5px solid var(--bg-tertiary);
-  border-radius: 10px;
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  font-size: 14px;
-  font-family: var(--main-font);
-  box-sizing: border-box;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.login-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
-}
-
-.login-button {
-  width: 100%;
-  margin-top: 1.5rem;
-  transition: background-color 0.2s, transform 0.15s;
-}
-
-.login-register {
-  margin-top: 1.2rem;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.login-register-link {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-.login-register-link:hover {
-  text-decoration: underline;
-}
-
-/* signup.php styles */
-.signup-main {
-  min-height: calc(100vh - 4rem);
-  display: flex;
+.signup-main,
+.login-main {
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
+}
+
+.account-main {
+  align-items: flex-start;
+}
+
+
+.login-card {
+  max-width: 420px;
 }
 
 .signup-card {
-  background-color: var(--opacity-layer);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px var(--shadow);
-  padding: 2.5rem 2rem;
-  width: 100%;
   max-width: 520px;
-  text-align: center;
-}
-
-.signup-logo {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 2px solid #cfe3e6;
-  margin-bottom: 1rem;
-}
-
-.signup-title {
-  font-size: 1.8rem;
-  margin-bottom: 0.3rem;
-}
-
-.signup-subtitle {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 1.5rem;
-}
-
-.signup-errors {
-  background-color: rgba(255, 59, 48, 0.1);
-  border: 1px solid rgba(255, 59, 48, 0.3);
-  border-radius: 10px;
-  padding: 0.8rem 1rem 0.8rem 1.8rem;
-  margin-bottom: 1rem;
-  text-align: left;
-  list-style: disc;
-}
-
-.signup-errors li {
-  color: #ff3b30;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.signup-success {
-  background-color: rgba(52, 199, 89, 0.1);
-  border: 1px solid rgba(52, 199, 89, 0.3);
-  border-radius: 10px;
-  padding: 1rem;
-  color: #34c759;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.signup-success-link {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.signup-row {
-  display: flex;
-  gap: 12px;
-}
-
-.signup-field {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.signup-label {
-  font-size: 13px;
-  font-weight: bold;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-  margin-top: 14px;
-}
-
-.signup-input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1.5px solid var(--bg-tertiary);
-  border-radius: 10px;
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  font-size: 14px;
-  font-family: var(--main-font);
-  box-sizing: border-box;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.signup-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
-}
-
-.signup-select {
-  appearance: none;
-  cursor: pointer;
-}
-
-.signup-email-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.signup-email-input {
-  flex: 1;
-}
-
-.signup-code-btn {
-  padding: 10px 14px;
-  background-color: var(--bg-tertiary);
-  color: var(--text-main);
-  border: 1.5px solid var(--bg-tertiary);
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: bold;
-  font-family: var(--main-font);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s;
-}
-
-.signup-code-btn:hover {
-  background-color: var(--bg-secondary);
-  box-shadow: none;
-  transform: none;
-}
-
-.signup-code-sent {
-  font-size: 12px;
-  color: #34c759;
-  margin-top: 6px;
-}
-
-.signup-code-error {
-  font-size: 12px;
-  color: #ff3b30;
-  margin-top: 6px;
-}
-
-.signup-phone-row {
-  display: flex;
-  align-items: stretch;
-}
-
-.signup-phone-prefix {
-  width: 70px;
-  flex-shrink: 0;
-  border-radius: 10px 0 0 10px;
-  border-right: none;
-  padding: 10px 8px;
-  text-align: center;
-}
-
-.signup-phone-row .signup-phone-input {
-  flex: 1;
-  border-radius: 0 10px 10px 0;
-}
-
-.signup-match-msg {
-  font-size: 12px;
-  margin-top: 6px;
-  min-height: 18px;
-}
-
-.match-ok {
-  color: #34c759;
-}
-
-.match-fail {
-  color: #ff3b30;
-}
-
-.signup-pw-rules {
-  list-style: none;
-  margin-top: 8px;
-  padding: 10px 14px;
-  background-color: var(--bg-main);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.pw-rule::before {
-  content: '○ ';
-}
-
-.pw-rule {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.pw-rule-pass {
-  color: #34c759;
-}
-
-.pw-rule-pass::before {
-  content: '✓ ';
-}
-
-.pw-rule-fail {
-  color: #ff3b30;
-}
-
-.pw-rule-fail::before {
-  content: '✗ ';
-}
-
-.signup-btn {
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 12px;
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  font-family: var(--main-font);
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.15s;
-}
-
-.signup-btn:hover {
-  background-color: var(--accent-hover);
-  transform: translateY(-1px);
-}
-
-.signup-login {
-  margin-top: 1.2rem;
-  font-size: 13px;
-  color: var(--text-secondary);
-  text-align: center;
-}
-
-.signup-login-link {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-.signup-login-link:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 480px) {
-  .signup-row {
-    flex-direction: column;
-    gap: 0;
-  }
-}
-
-/* account.php styles */
-.account-main {
-  min-height: calc(100vh - 4rem);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 2.5rem 1rem;
 }
 
 .account-card {
-  background-color: var(--opacity-layer);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px var(--shadow);
-  padding: 2.5rem 2rem;
-  width: 100%;
   max-width: 560px;
-  text-align: center;
 }
 
-.account-logo {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 2px solid #cfe3e6;
-  margin-bottom: 1rem;
-}
 
+.signup-title,
+.login-title,
 .account-title {
   font-size: 1.8rem;
   margin-bottom: 0.3rem;
 }
 
-.account-subtitle {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 1.8rem;
-}
 
-.account-success {
-  background-color: rgba(52, 199, 89, 0.1);
-  border: 1px solid rgba(52, 199, 89, 0.3);
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  color: #34c759;
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 1.2rem;
-}
-
-.account-errors {
-  background-color: rgba(255, 59, 48, 0.1);
-  border: 1px solid rgba(255, 59, 48, 0.3);
-  border-radius: 10px;
-  padding: 0.8rem 1rem 0.8rem 1.8rem;
-  margin-bottom: 1.2rem;
-  text-align: left;
-  list-style: disc;
-}
-
-.account-errors li {
-  color: #ff3b30;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.account-form {
+.signup-form,
+.account-form,
+.login-form {
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 0;
 }
 
-.account-section {
-  background-color: var(--bg-main);
-  border-radius: 14px;
-  padding: 1.4rem 1.2rem;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-}
 
-.account-section-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 0.8rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--bg-tertiary);
-}
 
+.signup-row,
 .account-row {
   display: flex;
   gap: 12px;
 }
 
+.signup-field,
 .account-field {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
+
+.signup-label,
+.login-label,
 .account-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   color: var(--text-secondary);
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   margin-top: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
+/* ── Shared: inputs ── */
+.signup-input,
+.login-input,
 .account-input {
   width: 100%;
   padding: 10px 14px;
   border: 1.5px solid var(--bg-tertiary);
   border-radius: 10px;
-  background-color: var(--bg-secondary);
   color: var(--text-main);
   font-size: 14px;
   font-family: var(--main-font);
@@ -1565,71 +1195,55 @@ body.s-body {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.signup-input,
+.login-input {
+  background-color: var(--bg-main);
+}
+
+.account-input {
+  background-color: var(--bg-secondary);
+}
+
+.login-input {
+  display: block;
+}
+
+/* ── Shared: input focus ── */
+.signup-input:focus,
+.login-input:focus,
 .account-input:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(9, 99, 126, 0.15);
 }
 
+/* ── Shared: selects ── */
+.signup-select,
 .account-select {
   appearance: none;
   cursor: pointer;
 }
 
-.account-hint {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 6px;
-  margin-bottom: 0;
-}
-
+/* ── Shared: email row ── */
+.signup-email-row,
 .account-email-row {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
+.signup-email-input,
 .account-email-input {
   flex: 1;
 }
 
-.account-code-btn {
-  padding: 10px 14px;
-  background-color: var(--bg-tertiary);
-  color: var(--text-main);
-  border: 1.5px solid var(--bg-tertiary);
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: bold;
-  font-family: var(--main-font);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s;
-}
-
-.account-code-btn:hover {
-  background-color: var(--bg-secondary);
-  box-shadow: none;
-  transform: none;
-}
-
-.account-code-sent {
-  font-size: 12px;
-  color: #34c759;
-  margin-top: 6px;
-}
-
-.account-code-error {
-  font-size: 12px;
-  color: #ff3b30;
-  margin-top: 6px;
-}
-
+.signup-phone-row,
 .account-phone-row {
   display: flex;
   align-items: stretch;
 }
 
+.signup-phone-prefix,
 .account-phone-prefix {
   width: 70px;
   flex-shrink: 0;
@@ -1639,61 +1253,111 @@ body.s-body {
   text-align: center;
 }
 
-.account-phone-input {
+.signup-phone-row .signup-phone-input,
+.account-phone-row .account-phone-input {
   flex: 1;
-  border-radius: 0 10px 10px 0 !important;
+  border-radius: 0 10px 10px 0;
 }
 
-.account-pw-rules {
+/* ── Shared: error lists ── */
+.signup-errors,
+.account-errors {
+  background-color: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  border-radius: 10px;
+  padding: 0.8rem 1rem 0.8rem 1.8rem;
+  text-align: left;
+  list-style: disc;
+  margin-bottom: 1rem;
+}
+
+.signup-errors li,
+.account-errors li {
+  color: #ff3b30;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.signup-success,
+.account-success {
+  background-color: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  border-radius: 10px;
+  color: #34c759;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.signup-success {
+  padding: 1rem;
+}
+
+.account-success {
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.signup-success-link {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+
+.pw-rules {
   list-style: none;
   margin-top: 8px;
   padding: 10px 14px;
-  background-color: var(--bg-secondary);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
+.pw-rule {
+  color: var(--text-secondary);
+}
+
+.signup-pw-rules {
+  background-color: var(--bg-main);
+}
+
+.account-pw-rules {
+  background-color: var(--bg-secondary);
+}
+
+.signup-match-msg,
 .account-match-msg {
   font-size: 12px;
   margin-top: 6px;
   min-height: 18px;
 }
 
-.account-pref-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.6rem;
-  gap: 1rem;
-}
-
-.account-pref-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.account-pref-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-.account-pref-desc {
-  font-size: 12px;
+.signup-login,
+.login-register {
+  margin-top: 1.2rem;
+  font-size: 13px;
   color: var(--text-secondary);
 }
 
+.signup-login-link,
+.login-register-link {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.signup-login-link:hover,
+.login-register-link:hover {
+  text-decoration: underline;
+}
+
+.signup-btn,
+.login-button,
 .account-save-btn {
   width: 100%;
-  margin-top: 0.5rem;
-  padding: 13px;
+  margin-top: 1.5rem;
   background-color: var(--accent);
   color: white;
   border: none;
-  border-radius: 12px;
   font-size: 15px;
   font-weight: bold;
   font-family: var(--main-font);
@@ -1701,12 +1365,27 @@ body.s-body {
   transition: background-color 0.2s, transform 0.15s;
 }
 
+.signup-btn,
+.account-save-btn {
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.account-save-btn {
+  margin-top: 0.5rem;
+  padding: 13px;
+  border-radius: 12px;
+}
+
+.signup-btn:hover,
+.login-button:hover,
 .account-save-btn:hover {
   background-color: var(--accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
 }
 
+/* ── Account-only: signout + danger zone ── */
 .account-signout-btn {
   margin-top: 1rem;
   background-color: #ff3b30;
@@ -1786,6 +1465,46 @@ body.s-body {
   background-color: #e0281e;
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(255, 59, 48, 0.3);
+}
+
+/* ── Account-only: sections ── */
+.account-section {
+  background-color: var(--bg-main);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.account-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+
+  .signup-row,
+  .account-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .account-card {
+    padding: 1.5rem 1rem;
+  }
 }
 
 /* PAGE SPECIFIC STYLES END */

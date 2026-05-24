@@ -71,7 +71,7 @@ require_once './settings.php';
       <!--video-->
       <figure class="index-intro-vid">
         <video autoplay muted loop playsinline src="./images/promo-video.mp4"></video>
-        <figcaption>Video by City Melbourne youtube <a href="#footnote-3"
+        <figcaption style="font-size:10px">Video by City Melbourne youtube <a href="#footnote-3"
             class="index-intro-figcaption-sup"><sup>1</sup></a></figcaption>
       </figure>
 
