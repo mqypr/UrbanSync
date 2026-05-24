@@ -46,7 +46,7 @@
       <!-- Mobile menu -->
       <div class="navbar-link-vert">
         <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
-        <label class="navbar-link-vert-item" for="menu-toggle" style="font-size: 33px;">=</label>
+        <label class="navbar-link-vert-item" id='menu-toggle' for="menu-toggle">=</label>
         <div class="navbar-link-vert-dropdown">
           <a href="./index.php" class="navbar-link-vert-item">HOME</a>
           <a href="./jobs.php" class="navbar-link-vert-item">JOB DESCRIPTION</a>
