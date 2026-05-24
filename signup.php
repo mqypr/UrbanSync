@@ -15,7 +15,7 @@ if (isset($_POST['send_code'])) {
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $code_error = "Please enter a valid email address before sending a code.";
   } else {
-    $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+    $code = str_pad(random_int(0, 999999), 6, '2', STR_PAD_LEFT);
     $_SESSION['verify_code']  = $code;
     $_SESSION['verify_email'] = $email;
     $_SESSION['code_expiry']  = time() + 600;
@@ -37,24 +37,24 @@ if (isset($_POST['signup'])) {
   $confirm        = $_POST['confirm_password'];
 
   /* Basic field checks */
-
-  /* problem: check if email exists first */
-  $check = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
-  mysqli_stmt_bind_param($check, "s", $email);
-  mysqli_stmt_execute($check);
-  mysqli_stmt_store_result($check);
   if (empty($first))  $errors[] = "First name is required.";
   if (empty($last))   $errors[] = "Last name is required.";
   if (empty($dob))    $errors[] = "Date of birth is required.";
   if (empty($gender)) $errors[] = "Please select a gender.";
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email address.";
+
+  $check = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
+  mysqli_stmt_bind_param($check, "s", $email);
+  mysqli_stmt_execute($check);
+  mysqli_stmt_store_result($check);
   if (mysqli_stmt_num_rows($check) > 0) {
     $errors[] = "An account with that email already exists.";
   }
   mysqli_stmt_close($check);
+
   if (empty($phone))  $errors[] = "Phone number is required.";
 
-  /* Verification code */
+  /* verification code */
   if (empty($code)) {
     $errors[] = "Please enter the verification code.";
   } elseif (!isset($_SESSION['verify_code'])) {
@@ -227,9 +227,9 @@ function pw_class($test)
           <!-- Password rules: neutral on first load, green/red after a submit attempt -->
           <ul class="pw-rules">
             <li class="pw-rule <?= $attempted ? pw_class(strlen($pw) >= 8)            : '' ?>">At least 8 characters</li>
-            <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[A-Z]/', $pw))  : '' ?>">Uppercase letter (A–Z)</li>
-            <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[a-z]/', $pw))  : '' ?>">Lowercase letter (a–z)</li>
-            <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[0-9]/', $pw))  : '' ?>">Number (0–9)</li>
+            <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[A-Z]/', $pw))  : '' ?>">Uppercase letter (A-Z)</li>
+            <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[a-z]/', $pw))  : '' ?>">Lowercase letter (a-z)</li>
+            <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[0-9]/', $pw))  : '' ?>">Number (0-9)</li>
             <li class="pw-rule <?= $attempted ? pw_class(preg_match('/[\W_]/', $pw))  : '' ?>">Symbol (!@#$...)</li>
           </ul>
 

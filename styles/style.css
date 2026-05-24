@@ -12,8 +12,8 @@
   --bg-main: #ffffff;
   --bg-secondary: #f5f5f7;
   --bg-tertiary: #e8e8ed;
-  --accent: #09637e;
-  --accent-hover: #088395;
+  --accent: #088395;
+  --accent-hover: #09637e;
   --text-main: #1d1d1f;
   --text-secondary: #6e6e73;
   --main-font: 'SF Pro Display', Arial, sans-serif;
@@ -31,8 +31,8 @@
   --bg-main: #000000;
   --bg-secondary: #1c1c1e;
   --bg-tertiary: #2c2c2e;
-  --accent: #09637e;
-  --accent-hover: #088395;
+  --accent: #088395;
+  --accent-hover: #09637e;
   --text-main: #f5f5f7;
   --text-secondary: #98989d;
   --main-font: 'SF Pro Display', Arial, sans-serif;
@@ -310,7 +310,9 @@ sup {
   display: block;
 }
 
-.navbar-settings-toggle:hover {
+.navbar-settings-toggle:hover,
+#menu-toggle:hover,
+.navbar-theme-btn:hover {
   transform: none;
   box-shadow: none;
 }
@@ -335,8 +337,6 @@ sup {
 
 .navbar-theme-btn:hover {
   background-color: var(--accent-hover);
-  transform: none;
-  box-shadow: none;
 }
 
 
@@ -405,7 +405,9 @@ body:has(.menu-toggle-input:not(:checked)) .index-hero {
   white-space: nowrap;
 }
 
-
+#menu-toggle {
+  font-size: 33px;
+}
 
 /* body with background */
 body.s-body {
@@ -1242,7 +1244,6 @@ footer {
   width: 70px;
   flex-shrink: 0;
   border-radius: 10px 0 0 10px;
-  border-right: none;
   padding: 10px 8px;
   text-align: center;
 }
@@ -1271,6 +1272,7 @@ footer {
   margin-bottom: 4px;
 }
 
+
 .signup-success,
 .account-success {
   background-color: rgba(52, 199, 89, 0.1);
@@ -1280,6 +1282,7 @@ footer {
   font-weight: bold;
   font-size: 14px;
 }
+
 
 .signup-success {
   padding: 1rem;
@@ -1295,6 +1298,12 @@ footer {
   font-weight: bold;
 }
 
+.signup-match-msg,
+.account-match-msg {
+  font-size: 12px;
+  margin-top: 6px;
+  min-height: 18px;
+}
 
 .pw-rules {
   list-style: none;
@@ -1307,19 +1316,32 @@ footer {
 }
 
 .pw-rule {
+  font-size: 12px;
   color: var(--text-secondary);
 }
 
-.account-pw-rules {
-  background-color: var(--bg-secondary);
+.pw-rule-fail {
+  color: #ff3b30;
 }
 
-.signup-match-msg,
-.account-match-msg {
-  font-size: 12px;
-  margin-top: 6px;
-  min-height: 18px;
+.pw-rule-pass {
+  color: #34c759;
 }
+
+.pw-rule::before {
+  content: '○ ';
+}
+
+.pw-rule-pass::before {
+  content: '✓ ';
+}
+
+.pw-rule-fail::before {
+  content: '✗ ';
+}
+
+
+
 
 .signup-login,
 .login-register {
@@ -1353,6 +1375,8 @@ footer {
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
 }
+
+/* Account-only */
 
 .account-signout-btn {
   margin-top: 1rem;
@@ -1394,7 +1418,7 @@ footer {
   padding: 0.4rem 0;
 }
 
-.account-danger-details summary::-webkit-details-marker {
+.account-danger-details summary::marker {
   color: #ff3b30;
 }
 
@@ -1435,9 +1459,9 @@ footer {
   box-shadow: 0 6px 14px rgba(255, 59, 48, 0.3);
 }
 
-/* Account-only */
 .account-section {
-  background-color: var(--bg-main);
+  background-color: rgba(9, 99, 126, 0.04);
+  border: 1.5px solid rgba(9, 99, 126, 0.3);
   border-radius: 14px;
   padding: 1.4rem 1.2rem;
   margin-bottom: 1rem;

@@ -9,19 +9,20 @@ $code_sent  = false;
 $code_error = '';
 $user_id  = $_SESSION['user_id'];
 
-/* ── Auth guard ── */
+/* Auth guard */
 if (!isset($_SESSION['user_id'])) {
   header('Location: ./login.php');
   exit;
 }
 
+/* notification */
 $success = false;
 if (!empty($_SESSION['changed'])) {
   $success = true;
   unset($_SESSION['changed']);
 }
 
-/* ── Helper: fetch latest user row ── */
+/* fetch latest user row */
 function fetch_user($conn, $id)
 {
   $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, email, phone_code, phone FROM users WHERE id = ?");
@@ -35,14 +36,14 @@ function fetch_user($conn, $id)
 
 $user = fetch_user($conn, $user_id);
 
-/* ── Send verification code for email change ── */
+/* Send verification code */
 if (isset($_POST['send_code'])) {
   $email_for_code = filter_var(trim($_POST['email_for_code']), FILTER_SANITIZE_EMAIL);
 
   if (!filter_var($email_for_code, FILTER_VALIDATE_EMAIL)) {
     $code_error = "Please enter a valid email address before sending a code.";
   } else {
-    $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+    $code = str_pad(random_int(0, 999999), 6, '2', STR_PAD_LEFT);
     $_SESSION['verify_code']  = $code;
     $_SESSION['verify_email'] = $email_for_code;
     $_SESSION['code_expiry']  = time() + 600;
@@ -69,9 +70,19 @@ if (isset($_POST['save_all'])) {
   if (empty($dob))    $errors[] = "Date of birth is required.";
   if (empty($gender)) $errors[] = "Please select a gender.";
   if (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email address.";
+
+  $check = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
+  mysqli_stmt_bind_param($check, "s", $email);
+  mysqli_stmt_execute($check);
+  mysqli_stmt_store_result($check);
+  if (mysqli_stmt_num_rows($check) > 0) {
+    $errors[] = "An account with that email already exists.";
+  }
+  mysqli_stmt_close($check);
+
   if (empty($phone))  $errors[] = "Phone number is required.";
 
-  /* Email change: require verification code */
+  /* verification code */
   $email_changed = ($new_email !== $user['email']);
   if ($email_changed) {
     $entered_code = trim($_POST['verify_code'] ?? '');
@@ -88,7 +99,7 @@ if (isset($_POST['save_all'])) {
     }
   }
 
-  /* Password change: only if current_password is filled */
+  /* Password change */
   $change_pw = !empty($cur_pw) || !empty($new_pw);
   if ($change_pw) {
     $ps = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
@@ -110,8 +121,6 @@ if (isset($_POST['save_all'])) {
     }
   }
 
-  /* Commit if no errors */
-  /* Commit if no errors */
   if (empty($errors)) {
     if ($change_pw) {
       $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
@@ -127,7 +136,7 @@ if (isset($_POST['save_all'])) {
     if ($email_changed) {
       unset($_SESSION['verify_code'], $_SESSION['verify_email'], $_SESSION['code_expiry']);
     }
-
+  } else {
     $_SESSION['changed'] = true;
     header("Location: ./account.php");
     exit;
@@ -208,11 +217,11 @@ function pw_class($test)
         </ul>
       <?php endif; ?>
 
-      <!-- ════ MAIN SETTINGS FORM ════ -->
+      <!-- MAIN SETTINGS FORM -->
       <form class="account-form" action="" method="post">
 
-        <!-- ── Personal Info ── -->
-        <div class="account-section">
+        <!-- Personal Info -->
+        <section class="account-section">
           <h2 class="account-section-title">Personal Information</h2>
 
           <div class="account-row">
@@ -250,10 +259,10 @@ function pw_class($test)
               </select>
             </div>
           </div>
-        </div>
+        </section>
 
-        <!-- ── Contact ── -->
-        <div class="account-section">
+        <!-- Contact -->
+        <section class="account-section">
           <h2 class="account-section-title">Contact Details</h2>
 
           <!-- Email + Send code -->
@@ -295,47 +304,46 @@ function pw_class($test)
               value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone']) ?>"
               required>
           </div>
-        </div>
+        </section>
 
         <!-- ── Password ── -->
-        <div class="account-section">
+        <section class="account-section">
           <h2 class="account-section-title">Change Password</h2>
           <p class="account-hint">Leave these blank to keep your current password.</p>
 
           <label class="account-label" for="current_password">Current Password</label>
-          <input class="account-input" type="password" id="current_password" name="current_password"
+          <input class="account-input" type="password" id="current_password" name="current_password" autocomplete="off"
             placeholder="Your current password">
 
           <label class="account-label" for="new_password">New Password</label>
-          <input class="account-input" type="password" id="new_password" name="new_password"
+          <input class="account-input" type="password" id="new_password" name="new_password" autocomplete="new-password"
             placeholder="Create a new password">
 
           <ul class="pw-rules">
             <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8)               : '' ?>">At least 8 characters</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display))     : '' ?>">Uppercase letter (A–Z)</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display))     : '' ?>">Lowercase letter (a–z)</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display))     : '' ?>">Number (0–9)</li>
+            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display))     : '' ?>">Uppercase letter (A-Z)</li>
+            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display))     : '' ?>">Lowercase letter (a-z)</li>
+            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display))     : '' ?>">Number (0-9)</li>
             <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[\W_]/', $new_pw_display))     : '' ?>">Symbol (!@#$...)</li>
           </ul>
 
           <label class="account-label" for="confirm_new_password">Confirm New Password</label>
-          <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password"
+          <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password" autocomplete="new-password"
             placeholder="Repeat your new password">
-
           <?php if ($attempted && !empty($new_pw_display)): ?>
-            <p class="account-match-msg <?= ($new_pw_display === $conf_pw_display) ? 'match-ok' : 'match-fail' ?>">
-              <?= ($new_pw_display === $conf_pw_display) ? '✓ Passwords match' : '✗ Passwords do not match' ?>
-            </p>
+            <li class="pw-rule <?= ($new_pw_display === $conf_pw_display) ? 'pw_rule-pass' : 'pw-rule-fail' ?>">
+              <?= ($new_pw_display === $conf_pw_display) ? 'Passwords match' : 'Passwords do not match' ?>
+            </li>
           <?php endif; ?>
-        </div>
+        </section>
 
         <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
         <button class="account-signout-btn" name="signout" value="1">Signout</button>
 
       </form>
 
-      <!-- ════ DANGER ZONE ════ -->
-      <div class="account-danger-zone">
+      <!-- danger zone -->
+      <section class="account-danger-zone">
         <h2 class="account-danger-title">Danger Zone</h2>
         <p class="account-danger-desc">
           Permanently deletes your account and all associated data.
@@ -347,14 +355,14 @@ function pw_class($test)
 
           <form class="account-danger-form" action="" method="post">
             <label class="account-label" for="delete_password">Confirm your password to continue</label>
-            <input class="account-input account-danger-input" type="password" id="delete_password"
+            <input class="account-input account-danger-input" type="password"
               name="delete_password" placeholder="Enter your password" required>
             <button class="account-danger-btn" type="submit" name="delete_account" value="1">
               Yes, permanently delete my account
             </button>
           </form>
         </details>
-      </div>
+      </section>
 
     </div><!-- /account-card -->
   </main>
