@@ -1,7 +1,7 @@
 <?php $is_dark = ($_COOKIE['dark_mode'] ?? '0') === '1'; ?>
 
 <header>
-  <!-- hidden switch still drives :root:has() dark mode -->
+  <!-- hidden light/dark -->
   <label class="switch" style="display:none">
     <input type="checkbox" <?= $is_dark ? 'checked' : '' ?>>
     <span class="slider round"></span>
@@ -22,9 +22,7 @@
         <a href="./jobs.php" class="navbar-link-item">JOB DESCRIPTION</a>
         <a href="./apply.php" class="navbar-link-item">APPLY</a>
         <a href="./about.php" class="navbar-link-item">ABOUT</a>
-
-        <!-- Settings dropdown -->
-        <div class="navbar-settings">
+        <div class="navbar-settings"> <!-- settings dropdown -->
           <div class="navbar-link-item navbar-settings-trigger">SETTINGS</div>
           <div class="navbar-settings-dropdown">
             <form method="POST" action="./toggle_theme.php">
@@ -36,7 +34,7 @@
         </div>
       </div>
 
-      <!-- Desktop: account / login -->
+      <!-- account / login -->
       <?php if (isset($_SESSION['first_name'])): ?>
         <a href="./account.php" class="navbar-link-item">
           <?= htmlspecialchars(strtoupper($_SESSION['first_name'])) ?>
@@ -61,8 +59,6 @@
           <?php else: ?>
             <a href="./login.php" class="navbar-link-vert-item">LOGIN</a>
           <?php endif; ?>
-
-          <!-- Theme button at bottom of mobile menu -->
           <form method="POST" action="./toggle_theme.php" class="navbar-theme-form">
             <button type="submit" class="navbar-theme-btn">
               <?= $is_dark ? 'Light Mode' : 'Dark Mode' ?>

@@ -297,6 +297,10 @@ sup {
   display: block;
 }
 
+.navbar-settings:hover .navbar-link-item {
+  background: var(--bg-main);
+}
+
 .navbar-settings-toggle {
   width: 100%;
   font-size: 13px;
@@ -308,7 +312,6 @@ sup {
 }
 
 .navbar-settings-toggle:hover {
-  background-color: var(--accent-hover);
   transform: none;
   box-shadow: none;
 }
@@ -317,7 +320,6 @@ sup {
 .navbar-theme-form {
   width: 100%;
   padding-top: 1rem;
-  margin-top: auto;
   border-top: 1px solid var(--bg-tertiary);
 }
 
@@ -362,7 +364,7 @@ sup {
   height: 95vh;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   z-index: 999;
 }
 
