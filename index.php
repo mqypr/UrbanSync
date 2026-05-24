@@ -99,6 +99,18 @@ require_once './settings.php';
 
     </section>
 
+    <!-- PROJECTS -->
+    <section class="index-projects">
+      <h2>Past Projects </h2>
+      <div class="projects-carousel"></div>
+
+
+      </div>
+    </section>
+
+
+
+
     <!-- COMPARISON -->
     <section class="index-compare">
 
