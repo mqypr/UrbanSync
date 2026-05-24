@@ -1,1 +1,9 @@
+# API keys / config
+config.php
 settings.php
+
+# Composer dependencies (no need to push these, they can be reinstalled)
+vendor/
+
+# System files
+.DS_Store
