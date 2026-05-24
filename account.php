@@ -118,7 +118,7 @@ if (isset($_POST['save_all'])) {
       mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
     } else {
       $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=? WHERE id=?");
-      mysqli_stmt_bind_param($upd, "ssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
+      mysqli_stmt_bind_param($upd, "sssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
     }
     mysqli_stmt_execute($upd);
     mysqli_stmt_close($upd);
@@ -135,9 +135,9 @@ if (isset($_POST['save_all'])) {
 
 /* -- Signout -- */
 if (isset($_POST['signout'])) {
-  $_POST = null;
   session_destroy();
   header("location:./index.php");
+  exit;
 }
 
 /* ── Delete account ── */
@@ -159,7 +159,7 @@ if (isset($_POST['delete_account'])) {
     mysqli_stmt_execute($del);
     mysqli_stmt_close($del);
     session_destroy();
-    header('Location: ./index.php?deleted=1');
+    header('Location: ./index.php?deleted=1'); /*flag*/
     exit;
   }
 }
@@ -185,7 +185,7 @@ function pw_class($test)
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
 </head>
 
-<body>
+<body class='s-body'>
   <?php include "./header.inc" ?>
 
   <main class="account-main">
