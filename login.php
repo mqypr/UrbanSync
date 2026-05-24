@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
   $input_password = $_POST['password'];
 
   if (!empty($email) && !empty($input_password)) {
-    $stmt = mysqli_prepare($conn, "SELECT id, password, dark_mode, first_name FROM users WHERE email = ?");
+    $stmt = mysqli_prepare($conn, "SELECT id, password, first_name FROM users WHERE email = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
@@ -18,16 +18,14 @@ if (isset($_POST['login'])) {
     if (mysqli_stmt_num_rows($stmt) === 1) {
       $id              = 0;
       $hashed_password = '';
-      $dark_mode       = 0;
       $first_name      = '';
-      mysqli_stmt_bind_result($stmt, $id, $hashed_password, $dark_mode, $first_name);
+      mysqli_stmt_bind_result($stmt, $id, $hashed_password, $first_name);
       mysqli_stmt_fetch($stmt);
 
       if (password_verify($input_password, $hashed_password)) {
         $_SESSION['user_id']    = $id;
         $_SESSION['email']      = $email;
         $_SESSION['first_name'] = $first_name;
-        $_SESSION['dark_mode']  = $dark_mode;
         mysqli_stmt_close($stmt);
         header("Location: ./index.php");
         exit;

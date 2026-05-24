@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 session_start();
-require_once 'settings.php';
+require_once './settings.php';
+$error = '';
 $errors = [];
 $success = false;
 $code_sent = false;
@@ -37,11 +40,19 @@ if (isset($_POST['signup'])) {
   /* Basic field checks */
 
   /* problem: check if email exists first */
+  $check = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
+  mysqli_stmt_bind_param($check, "s", $email);
+  mysqli_stmt_execute($check);
+  mysqli_stmt_store_result($check);
   if (empty($first))  $errors[] = "First name is required.";
   if (empty($last))   $errors[] = "Last name is required.";
   if (empty($dob))    $errors[] = "Date of birth is required.";
   if (empty($gender)) $errors[] = "Please select a gender.";
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email address.";
+  if (mysqli_stmt_num_rows($check) > 0) {
+    $errors[] = "An account with that email already exists.";
+  }
+  mysqli_stmt_close($check);
   if (empty($phone))  $errors[] = "Phone number is required.";
 
   /* Verification code */
@@ -67,7 +78,7 @@ if (isset($_POST['signup'])) {
 
   if (empty($errors)) {
     $hashed = password_hash($input_password, PASSWORD_DEFAULT);
-    $stmt = mysqli_prepare($conn, "INSERT INTO users (first_name, last_name, dob, gender, email, phone_code, phone, password, dark_mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)");
+    $stmt = mysqli_prepare($conn, "INSERT INTO users (first_name, last_name, dob, gender, email, phone_code, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "ssssssss", $first, $last, $dob, $gender, $email, $phone_code, $phone, $hashed);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
