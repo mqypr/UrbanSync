@@ -1255,7 +1255,8 @@ footer {
 }
 
 .signup-errors,
-.account-errors {
+.account-errors,
+.login-error {
   background-color: rgba(255, 59, 48, 0.1);
   border: 1px solid rgba(255, 59, 48, 0.3);
   border-radius: 10px;
@@ -1266,7 +1267,8 @@ footer {
 }
 
 .signup-errors li,
-.account-errors li {
+.account-errors li,
+.login-error {
   color: #ff3b30;
   font-size: 13px;
   margin-bottom: 4px;
