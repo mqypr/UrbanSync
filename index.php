@@ -99,18 +99,6 @@ require_once './settings.php';
 
     </section>
 
-    <!-- PROJECTS -->
-    <section class="index-projects">
-      <h2>Past Projects </h2>
-      <div class="projects-carousel"></div>
-
-
-      </div>
-    </section>
-
-
-
-
     <!-- COMPARISON -->
     <section class="index-compare">
 
@@ -178,6 +166,31 @@ require_once './settings.php';
             </tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="index-projects">
+      <h2>Past Projects </h2>
+      <div class="projects-carousel">
+        <?php foreach ($projects as $project): ?>
+          <div class='carousel-cards'>
+            <p><?= htmlspecialchars($project['completed']) ?></p>
+            <h3><?= htmlspecialchars($project['title']) ?></h3>
+            <p><?= htmlspecialchars($project['description']) ?></p>
+            <figure>
+              <img src="<?= htmlspecialchars($project['image_path']) ?>" alt="project picture">
+              <figcaption>Location: <?= htmlspecialchars($project['location']) ?></figcaption>
+            </figure>
+
+
+          </div>
+        <?php endforeach; ?>
+        <!-- dots to represent where the carousel is at -->
+      </div>
+
+      <div class='search-bar'>
+
       </div>
     </section>
 
