@@ -52,7 +52,43 @@ require_once './settings.php';
 
         <!-- Inline Frame for job details and information -->
         <main id="JobContent">
-            <iframe id="JobsContentMain" name="contentMain" src="jobs/job01.php" title="Job Information"></iframe>
+            <!-- <iframe id="JobsContentMain" name="contentMain" src="jobs/job01.php" title="Job Information"></iframe> -->
+
+            <article id="JobArticle">
+
+        <section id="JobTitle">
+            <h2 style="Color:White;">Frontend Web Developer</h2>
+            <h3 style="Color:White;">Reference Number: 10053</h3>
+            <p>$70,000 - $85,000</p>
+        </section>
+
+        <section id="JobInfo">
+            <h2>Frontend Web Developer</h2>
+
+            <h2>Key Reporting Line</h2>
+            <ol id="JobReportingLine">
+                <li>Engineering Manager</li>
+                <li>Technical Lead</li>
+                <li>Product Manager</li>
+            </ol>
+
+            <h2>Key Responsibilities</h2>
+            <ol id="JobResponsobilities">
+                <li>Building front end interfaces</li>
+                <li>Ensuring accessible and intuitive designs are implemented into the user experience</li>
+            </ol>
+
+            <h2>Personal Requirements</h2>
+            <ul id="JobPersonalRequirements">
+                <li>Effective communication for team collaboration</li>
+                <li>High adaptability to new technologies</li>
+                <li>A methodical approach to debugging and creating responsive, accessible websites</li>
+            </ul>
+
+        </section>
+    </article>
+
+
         </main>
     </div>
 

@@ -630,7 +630,7 @@ footer {
 /* jobs.html style stuff */
 /* The Aside html navigation page */
 #JobsPage {
-  background-color: #EDF4F6;
+  background-color: var(--bg-main);
 }
 
 #JobNav {
@@ -639,7 +639,7 @@ footer {
   min-width: 20rem;
   height: 80vh;
   padding: 1.5rem;
-  background-image: linear-gradient(to bottom, #2B617B, #3A8193);
+  background-image: linear-gradient(to bottom, var(--accent), var(--accent-hover));
 }
 
 /* heading in the job aside bar */
@@ -647,8 +647,8 @@ footer {
   margin: 0 0 1.5rem 0;
   padding: 1rem;
   text-align: center;
-  color: #EDF4F6;
-  background-color: #1f4b61;
+  color: var(--bg-main);
+  background-color: var(--accent);
   border-radius: 0.75rem;
 }
 
@@ -667,13 +667,13 @@ footer {
 .JobSection {
   padding: 1rem;
   border-radius: 0.75rem;
-  background-image: linear-gradient(to right, #2B617B, #3A8193);
-  color: #EDF4F6;
+  background-image: linear-gradient(to right, color-mix(in srgb var(--accent), white 20%), color-mix(in srgb var(--accent-hover), white 20%));
+  color: var(--bg-main);
   transition: background-image 0.25s ease, transform 0.25s ease;
 }
 
 .JobSection:hover {
-  background-image: linear-gradient(to right, #3A8193, #86B1B1);
+  background-image: linear-gradient(to right, var(--accent), var(--accent-hover));
   transform: translateY(-0.15rem);
   cursor: pointer;
 }
@@ -699,7 +699,7 @@ footer {
   min-height: 80vh;
   border: none;
   border-radius: 0.75rem;
-  background-color: white;
+  background-color: var(--bg-main);
   display: block;
 }
 
@@ -707,11 +707,11 @@ footer {
 #JobPageBodyStyle {
   margin: 0;
   padding: 1rem;
-  background-color: #EDF4F6;
+  background-color: var(--bg-main);
 }
 
 #JobArticle {
-  background-color: #ffffff;
+  background-color: var(--bg-main);
   border-radius: 0.75rem;
   padding: 1.25rem;
 }
@@ -719,9 +719,9 @@ footer {
 #JobTitle {
   margin: 0 0 1.25rem 0;
   padding: 1rem 1.25rem;
-  background-image: linear-gradient(to right, #2B617B, #3A8193);
+  background-image: linear-gradient(to right, var(--accent), var(--accent-hover));
   border-radius: 0.75rem;
-  color: #EDF4F6;
+  color: var(--bg-main);
 }
 
 #JobTitle h2,
@@ -736,13 +736,13 @@ footer {
 
 #JobInfo {
   padding: 0 0.5rem;
-  color: #17323f;
+  color: color-mix(in srgb, var(--accent), black 25%);
 }
 
 #JobInfo h2 {
   margin-top: 1.25rem;
   margin-bottom: 0.75rem;
-  color: #2B617B;
+  color: var(--accent);
 }
 
 #JobReportingLine,
