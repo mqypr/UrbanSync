@@ -1,7 +1,21 @@
 <?php
 session_start();
 require_once './settings.php';
+
+$sql = "SELECT * FROM opened_jobs LIMIT 1";
+$result = mysqli_query($conn, $sql);
+
+if(!$result){
+    die("Query Failed: " . mysqli_error($conn));
+}
+
+$job = mysqli_fetch_assoc($result);
+
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,8 +33,14 @@ require_once './settings.php';
 
 </head>
 
+
+
+
 <body id="JobsPage">
-    <?php include "header.inc" ?>
+
+    <?php include "header.inc"; ?>
+    
+
     <div class="jobs-layout">
 
         <!-- Job Aside Navigation Box -->
@@ -28,68 +48,210 @@ require_once './settings.php';
             <h1 style="color:white;">Jobs</h1>
 
             <div class="JobContainer">
-
-                <!-- Job 1 -->
-                <a href="./jobs/job01.php" target="contentMain"> <!--bm1-->
+                
+                <a href="" target=""> <!--bm1-->
                     <section class="JobSection">
-                        <h2>Frontend Web Developer</h2>
-                        <p>$70,000 - $85,000</p>
-                        <p>Build and maintain clean, responsive interfaces for company websites.</p>
+
+                        <!-- Title  -->
+                        <h2>
+
+                            <?php 
+                                // We echo the title of the job
+                                echo htmlspecialchars($job["title"]) 
+                            ?>
+
+                        </h2>
+
+                        <!-- Salary -->
+                        <p>
+
+                            <?php 
+
+                                // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
+                                $salary = explode("^" , $job["salary"]);
+
+                                // We echo the first element in $salary array
+                                echo ("$" . htmlspecialchars($salary[0]));
+
+                                // If there is a second element within the array, echo this also
+                                if(isset($salary[1]))
+                                {
+                                    echo("  - $" . htmlspecialchars($salary[1]));
+                                }
+
+                                // If there is only 1 element, we will echo 1 number; example $60,000
+                                // If there are 2 elements however, we will echo both; example $60,000 - $70,000
+
+                            ?>
+
+                        </p>
+
+                        <!-- Short Description -->
+                        <p>
+                            
+                            <?php 
+                            
+                                echo htmlspecialchars($job["short_description"]);
+
+                            ?>
+
+
+                        </p>
+
                     </section>
+                    
                 </a>
 
-                <!-- Job 2 -->
-                <a href="jobs/job02.php" target="contentMain">
-                    <section class="JobSection">
-                        <h2>IT Support Officer</h2>
-                        <p>$55,000 - $68,000</p>
-                        <p>Provide technical support and help staff resolve hardware and software issues.</p>
-                    </section>
-                </a>
             </div>
         </aside>
 
 
-        <!-- Inline Frame for job details and information -->
+        <!-- Job Content -->
         <main id="JobContent">
-            <!-- <iframe id="JobsContentMain" name="contentMain" src="jobs/job01.php" title="Job Information"></iframe> -->
 
             <article id="JobArticle">
 
-        <section id="JobTitle">
-            <h2 style="Color:White;">Frontend Web Developer</h2>
-            <h3 style="Color:White;">Reference Number: 10053</h3>
-            <p>$70,000 - $85,000</p>
-        </section>
+                <section id="JobTitle">
 
-        <section id="JobInfo">
-            <h2>Frontend Web Developer</h2>
+                <!-- Title of the opened job -->
+                    <h2> 
 
-            <h2>Key Reporting Line</h2>
-            <ol id="JobReportingLine">
-                <li>Engineering Manager</li>
-                <li>Technical Lead</li>
-                <li>Product Manager</li>
-            </ol>
+                        <?php 
+                            // We echo the title of the job
+                            echo htmlspecialchars($job["title"]) 
+                        ?>
+                        
+                    </h2>
+                    
+                    <!-- Reference number for the opened job -->
+                    <h3> 
 
-            <h2>Key Responsibilities</h2>
-            <ol id="JobResponsobilities">
-                <li>Building front end interfaces</li>
-                <li>Ensuring accessible and intuitive designs are implemented into the user experience</li>
-            </ol>
+                        <?php 
 
-            <h2>Personal Requirements</h2>
-            <ul id="JobPersonalRequirements">
-                <li>Effective communication for team collaboration</li>
-                <li>High adaptability to new technologies</li>
-                <li>A methodical approach to debugging and creating responsive, accessible websites</li>
-            </ul>
+                            // We echo the reference number of the job
+                            echo htmlspecialchars($job["reference_number"]) 
+                        ?>   
 
-        </section>
-    </article>
+                    </h3>
 
+                    <!-- Listed salary for job title -->
+                    <p> 
+
+                        <?php 
+
+                            // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
+                            $salary = explode("^" , $job["salary"]);
+
+                            // We echo the first element in $salary array
+                            echo ("$" . htmlspecialchars($salary[0]));
+
+                            // If there is a second element within the array, echo this also
+                            if(isset($salary[1]))
+                            {
+                                echo("  - $" . htmlspecialchars($salary[1]));
+                            }
+
+                            // If there is only 1 element, we will echo 1 number; example $60,000
+                            // If there are 2 elements however, we will echo both; example $60,000 - $70,000
+
+                        ?>
+
+                    </p>
+
+                </section>
+
+                <section id="JobInfo">
+
+                    <!-- Job Title -->
+                    <h2>
+                    
+                        <?php
+                            
+                            // We echo job into the information content 
+                            echo htmlspecialchars($job["title"]);
+
+                        ?>
+
+                    </h2>
+
+                    <!-- Key Reporting Line -->
+                    <h2>Key Reporting Line</h2>
+
+                    <ol id="JobReportingLine">
+
+                        <?php 
+
+                            // Because the varchar stored in reporting_line is seperated by a ^, we split the salary into an array and remove ^
+                            $reporting_line = explode("^" , $job["reporting_line"]);
+
+                            // For every item inside of $reporting_line we print it's corresponding element within a list tag
+                            foreach ($reporting_line as $rep)
+                                {
+
+                                    //echo the item within $reporting_line within html list tags
+                                    echo("<li>$rep</li>");
+
+                                }
+                        
+                        ?>
+
+                    </ol>
+
+                    <!-- Key Responsobilities -->
+                    <h2>Key Responsibilities</h2>
+
+                    <ol id="JobResponsobilities">
+                        
+                        <?php 
+
+                                // Because the varchar stored in responsobilities is seperated by a ^, we split the salary into an array and remove ^
+                                $responsobilities = explode("^" , $job["responsobilities"]);
+
+                                // For every item inside of $responsobilities we print it's corresponding element within a list tag
+                                foreach ($responsobilities as $res)
+                                    {
+
+                                        //echo the item within $responsobilities within html list tags
+                                        echo("<li>$res</li>");
+
+                                    }
+                            
+                            ?>
+
+                    </ol>
+                    
+                    <!-- Personal Requirements -->
+                    <h2>Personal Requirements</h2>
+                    <ul id="JobPersonalRequirements">
+                        
+                        <?php 
+
+                                // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
+                                $requirements = explode("^" , $job["requirements"]);
+
+                                // For every item inside of $requirements we print it's corresponding element within a list tag
+                                foreach ($requirements as $req)
+                                    {
+
+                                        //echo the item within $requirements within html list tags
+                                        echo("<li>$req</li>");
+
+                                    }
+                            
+                            ?>
+                    
+                    
+                        <!-- <li>Effective communication for team collaboration</li>
+                        <li>High adaptability to new technologies</li>
+                        <li>A methodical approach to debugging and creating responsive, accessible websites</li> -->
+                    </ul>
+
+                </section>
+
+            </article>
 
         </main>
+
     </div>
 
     <!--FOOTER-->
