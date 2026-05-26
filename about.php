@@ -1,34 +1,89 @@
 <?php
-session_start();
-require_once './settings.php';
+// about.php
+// This page connects to the database and displays group member contributions.
+
+// Include database settings
+require_once("settings.php");
+
+// Connect to the database
+$conn = mysqli_connect($host, $user, $pwd, $sql_db);
+
+// Check connection
+if (!$conn) {
+    die("<p>Database connection failed. Please check settings.php.</p>");
+}
+
+// Select all records from the about_contributions table
+$query = "SELECT * FROM about_contributions ORDER BY id";
+$result = mysqli_query($conn, $query);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="About page for UrbanSync group project">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles/style.css">
   <title>About - UrbanSync</title>
-  <link rel="icon" type="image/x-icon" href="/images/logo.ico">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
-  <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
-
-  <!-- Open Graph (for social sharing previews) -->
-  <meta property="og:title" content="UrbanSync">
-  <meta property="og:description" content="making streets faster and safer">
-  <meta property="og:image" content="assets/images/hero-preview.jpg">
-  <meta property="og:url" content="https://mqypr.github.io/UrbanSync/">
-  <meta property="og:type" content="website">
-
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 
-  <!-- Embedded CSS -->
+  <!-- Embedded CSS example -->
   <style>
+    .about-container {
+      background: white;
+      border: 1px solid #d4e9ec;
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .about-section {
+      margin-bottom: 2rem;
+    }
+
+    .about-section h2 {
+      border-bottom: 3px solid #088395;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    .about-section ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+
+    .member-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .member-table th,
+    .member-table td {
+      border: 1px solid #cfe3e6;
+      padding: 10px;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .member-table th {
+      background-color: #09637E;
+      color: white;
+    }
+
+    .member-table tr:hover {
+      background-color: #dceff1;
+    }
+
+    .student-id {
+      background-color: #EBF4F6;
+      border: 1px solid #088395;
+      padding: 4px 6px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
     dt {
       font-weight: bold;
       margin-top: 10px;
@@ -61,176 +116,183 @@ require_once './settings.php';
 
 <body>
 
-  <?php include "header.inc" ?>
+<header class="navbar">
+  <div class="navbar-container">
 
-  <main>
-    <div class="about-container">
-
-      <!-- Title -->
-      <section class="about-section">
-        <h1 style="letter-spacing: 1px;">UrbanSync</h1>
-        <p>This page introduces our group and their contributions.</p>
-      </section>
-
-      <!-- Group Info -->
-      <section class="about-section">
-        <h2>Group Information</h2>
-        <ul>
-          <li><strong>Group Name:</strong> UrbanSync</li>
-          <li>
-            <strong>Class Day and Time:</strong>
-            <ul>
-              <li>Thursday</li>
-              <li>4:30 PM - 6:30 PM</li>
-            </ul>
-          </li>
-        </ul>
-      </section>
-
-      <!-- Members -->
-      <section class="about-section">
-        <h2>Group Members</h2>
-        <div class="member-table-wrapper">
-          <table class="member-table">
-            <tr>
-              <th>Name</th>
-              <th>Student ID</th>
-              <th>Hometown</th>
-              <th>Job</th>
-              <th>Favourite Snack</th>
-            </tr>
-
-            <tr>
-              <td>MD Areen Chowdhury</td>
-              <td><span class="student-id">105693861</span></td>
-              <td>Dhaka, Bangladesh</td>
-              <td>BOH, Hospitality</td>
-              <td>Pizza slice</td>
-            </tr>
-
-            <tr>
-              <td>Reach Peng</td>
-              <td><span class="student-id">106382377</span></td>
-              <td>Phnom Penh, Cambodia</td>
-              <td>Casual Worker, Hungry Jack's</td>
-              <td>Popcorn</td>
-            </tr>
-
-            <tr>
-              <td>Liron Roshain Joanic Willathgamuwa</td>
-              <td><span class="student-id">105987496</span></td>
-              <td>Wattala, Sri Lanka</td>
-              <td>Cyber Security Specialist</td>
-              <td>Lasagna</td>
-            </tr>
-
-            <tr>
-              <td>Dylan Kelly</td>
-              <td><span class="student-id">105332711</span></td>
-              <td>Watchupga, VIC, Australia</td>
-              <td>Farm Hand</td>
-              <td>Scones</td>
-            </tr>
-          </table>
-        </div>
-      </section>
-
-      <!-- Contributions -->
-      <section class="about-section">
-        <h2>Member Contributions and Quotes</h2>
-
-        <dl>
-          <dt>MD Areen Chowdhury</dt>
-          <dd>Developed about.html</dd>
-          <dd>"কি অবস্থা" — "What's up"</dd>
-
-          <dt>Reach Peng</dt>
-          <dd>Developed index.html</dd>
-          <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
-
-          <dt>Liron Roshain Joanic Willathgamuwa</dt>
-          <dd>Developed apply.html</dd>
-          <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
-
-          <dt>Dylan Kelly</dt>
-          <dd>Developed jobs.html</dd>
-          <dd>"No worries mate" — "Everything is fine"</dd>
-        </dl>
-      </section>
-
-      <!-- Fun Facts -->
-      <section class="about-section">
-        <h2>Fun Facts</h2>
-
-        <table class="member-table">
-          <caption>Group Member Fun Facts</caption>
-
-          <tr>
-            <th>Name</th>
-            <th>Hometown</th>
-            <th>Job</th>
-            <th>Favourite Snack</th>
-          </tr>
-
-          <tr>
-            <td>MD Areen Chowdhury</td>
-            <td>Dhaka, Bangladesh</td>
-            <td>BOH, Hospitality</td>
-            <td>Pizza slice</td>
-          </tr>
-
-          <tr>
-            <td>Reach Peng</td>
-            <td>Phnom Penh, Cambodia</td>
-            <td>Casual Worker, Hungry Jack's</td>
-            <td>Popcorn</td>
-          </tr>
-
-          <tr>
-            <td>Liron Roshain Joanic Willathgamuwa</td>
-            <td>Wattala, Sri Lanka</td>
-            <td>Cyber Security Specialist</td>
-            <td>Lasagna</td>
-          </tr>
-
-          <tr>
-            <td>Dylan Kelly</td>
-            <td>Watchupga, VIC, Australia</td>
-            <td>Farm Hand</td>
-            <td>Scones</td>
-          </tr>
-
-        </table>
-      </section>
-
-      <!-- Group Photo -->
-      <section class="about-section">
-        <h2>Group Photo</h2>
-
-        <figure>
-          <img src="./images/group-photo.jpg" alt="UrbanSync group photo" width="300">
-          <figcaption>UrbanSync Group</figcaption>
-        </figure>
-      </section>
-      <!--Acknowledgement of Country-->
-      <section class="about-section">
-        <h2>Acknowledgement of Country</h2>
-        <p>We respectfully acknowledge the Wurundjeri People of the Kulin Nation, who are the Traditional Owners of the
-          land on which Swinburne’s Australian campuses are located in Melbourne’s east and outer-east, and pay our
-          respect to their Elders past, present and emerging. We are honoured to recognise our connection to Wurundjeri
-          Country, history, culture and spirituality through these locations, and strive to ensure that we operate in a
-          manner that respects and honours the Elders and Ancestors of these lands. We also respectfully acknowledge
-          Swinburne’s Aboriginal and Torres Strait Islander staff, students, alumni, partners and visitors. We also
-          acknowledge and respect the Traditional Owners of lands across Australia, their Elders, Ancestors, cultures
-          and heritage, and recognise the continuing sovereignties of all Aboriginal and Torres Strait Islander Nations.
-        </p>
-      </section>
+    <div class="logo">
+      <img src="Group photo.jpg" class="logo-pic" alt="UrbanSync logo">
     </div>
-  </main>
 
-  <!--FOOTER-->
-  <?php include "footer.inc" ?>
+    <nav>
+      <ul class="navbar-link">
+        <li><a class="navbar-link-item-a" href="index.php">Home</a></li>
+        <li><a class="navbar-link-item-a" href="jobs.php">Job Description</a></li>
+        <li><a class="navbar-link-item-a" href="apply.php">Apply</a></li>
+        <li><a class="navbar-link-item-a" href="about.php">About</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+  <div class="about-container">
+
+    <section class="about-section">
+      <!-- Inline CSS example -->
+      <h1 style="letter-spacing: 1px;">UrbanSync</h1>
+      <p>This page introduces our group and loads member contributions from the database.</p>
+    </section>
+
+    <section class="about-section">
+      <h2>Group Information</h2>
+      <ul>
+        <li><strong>Group Name:</strong> UrbanSync</li>
+        <li>
+          <strong>Class Day and Time:</strong>
+          <ul>
+            <li>Thursday</li>
+            <li>4:30 PM - 6:30 PM</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2>Member Contributions from Database</h2>
+
+      <table class="member-table">
+        <caption>UrbanSync Member Contributions</caption>
+        <tr>
+          <th>Name</th>
+          <th>Student ID</th>
+          <th>Project 1 Contribution</th>
+          <th>Project 2 Contribution</th>
+        </tr>
+
+        <?php
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
+                echo "<td><span class='student-id'>" . htmlspecialchars($row["student_id"]) . "</span></td>";
+                echo "<td>" . htmlspecialchars($row["first_project"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["second_project"]) . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr>";
+            echo "<td colspan='4'>No contribution data found in the database.</td>";
+            echo "</tr>";
+        }
+        ?>
+      </table>
+    </section>
+
+    <section class="about-section">
+      <h2>Member Contributions and Quotes</h2>
+
+      <dl>
+        <dt>MD Areen Chowdhury</dt>
+        <dd>Developed about.html in Project 1 and converted it to about.php in Project 2.</dd>
+        <dd>"কি অবস্থা" — "What's up"</dd>
+
+        <dt>Reach Peng</dt>
+        <dd>Developed index.html in Project 1 and updated the home page in Project 2.</dd>
+        <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
+
+        <dt>Liron Roshain Joanic Willathgamuwa</dt>
+        <dd>Developed apply.html in Project 1 and updated the apply page in Project 2.</dd>
+        <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
+
+        <dt>Dylan Kelly</dt>
+        <dd>Developed jobs.html in Project 1 and updated the jobs page in Project 2.</dd>
+        <dd>"No worries mate" — "Everything is fine"</dd>
+      </dl>
+    </section>
+
+    <section class="about-section">
+      <h2>Fun Facts</h2>
+
+      <table class="member-table">
+        <caption>Group Member Fun Facts</caption>
+        <tr>
+          <th>Name</th>
+          <th>Hometown</th>
+          <th>Job</th>
+          <th>Favourite Snack</th>
+        </tr>
+
+        <tr>
+          <td>MD Areen Chowdhury</td>
+          <td>Dhaka, Bangladesh</td>
+          <td>BOH, Hospitality</td>
+          <td>Pizza slice</td>
+        </tr>
+
+        <tr>
+          <td>Reach Peng</td>
+          <td>Phnom Penh, Cambodia</td>
+          <td>Casual Worker, Hungry Jack's</td>
+          <td>Popcorn</td>
+        </tr>
+
+        <tr>
+          <td>Liron Roshain Joanic Willathgamuwa</td>
+          <td>Wattala, Sri Lanka</td>
+          <td>Cyber Security Specialist</td>
+          <td>Lasagna</td>
+        </tr>
+
+        <tr>
+          <td>Dylan Kelly</td>
+          <td>Watchupga, VIC, Australia</td>
+          <td>Farm Hand</td>
+          <td>Scones</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="about-section">
+      <h2>Group Photo</h2>
+
+      <figure>
+        <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+        <figcaption>UrbanSync Group</figcaption>
+      </figure>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-container">
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Pages</h3>
+      <p class="footer-column-item"><a href="index.php">Home</a></p>
+      <p class="footer-column-item"><a href="jobs.php">Job Description</a></p>
+      <p class="footer-column-item"><a href="apply.php">Apply</a></p>
+      <p class="footer-column-item"><a href="about.php">About</a></p>
+    </div>
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Resources</h3>
+      <p class="footer-column-item"><a href="#">Github Repository</a></p>
+      <p class="footer-column-item"><a href="#">Jira</a></p>
+    </div>
+
+    <div class="footer-column">
+      <h3 class="footer-column-title">Contact Us</h3>
+      <p class="footer-column-item"><a href="mailto:your@email.com">Email</a></p>
+    </div>
+
+  </div>
+</footer>
 
 </body>
-
 </html>
+
+<?php
+mysqli_close($conn);
+?>
