@@ -171,26 +171,23 @@ require_once './settings.php';
 
     <!-- PROJECTS -->
     <section class="index-projects">
-      <h2>Past Projects </h2>
-      <div class="projects-carousel">
-        <?php foreach ($projects as $project): ?>
-          <div class='carousel-cards'>
-            <p><?= htmlspecialchars($project['completed']) ?></p>
-            <h3><?= htmlspecialchars($project['title']) ?></h3>
-            <p><?= htmlspecialchars($project['description']) ?></p>
-            <figure>
-              <img src="<?= htmlspecialchars($project['image_path']) ?>" alt="project picture">
-              <figcaption>Location: <?= htmlspecialchars($project['location']) ?></figcaption>
-            </figure>
-
-
-          </div>
-        <?php endforeach; ?>
-        <!-- dots to represent where the carousel is at -->
-      </div>
-
-      <div class='search-bar'>
-
+      <div class="projects-wrapper">
+        <h2>Past Projects</h2>
+        <div class="projects-carousel">
+          <?php foreach ($projects as $project): ?>
+            <div class="carousel-cards"
+              style="background-image: url('<?= htmlspecialchars($project['image_path']) ?>')">
+              <div class="carousel-card-content">
+                <p class="carousel-card-date"><?= htmlspecialchars($project['completed']) ?></p>
+                <h3 class="carousel-card-title"><?= htmlspecialchars($project['title']) ?></h3>
+                <p class="carousel-card-desc"><?= htmlspecialchars($project['description']) ?></p>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <form class="project-searchbar" action="" method="get">
+          <input class="searchbar-input" type="text" name="project_search" placeholder="Search Projects...">
+        </form>
       </div>
     </section>
 

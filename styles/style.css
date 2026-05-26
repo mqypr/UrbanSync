@@ -750,7 +750,7 @@ footer {
 
 .index-intro {
   border: none;
-  border-radius: 35px;
+  border-radius: 2rem;
   background-color: var(--bg-secondary);
   margin-top: 7rem;
   margin-bottom: 7rem;
@@ -816,7 +816,7 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.1;
+  opacity: 0.5;
 }
 
 .index-stats-content {
@@ -858,7 +858,6 @@ footer {
 
 .index-compare-wrapper {
   overflow-x: auto;
-  border-radius: 1rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -941,31 +940,79 @@ footer {
 
 .index-projects {
   background: var(--bg-secondary);
+  overflow: hidden;
 }
 
-/* carousel inspo: (https://www.youtube.com/watch?v=gmI5nvzv170) */
+.index-projects h2 {
+  margin: 0 0 2rem 10vw;
+}
+
+.projects-wrapper {
+  margin: 6.7rem 0 10rem;
+}
+
 .projects-carousel {
-  margin: 3em auto;
   display: flex;
-  gap: 1em;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-left: 50vw;
+  padding-right: 50vw;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 
 .carousel-cards {
-  height: 12em;
-  width: 12em;
-  background: var(--bg-main);
-  padding: 1em;
-  border-radius: .5em;
-  text-align: center;
-  align-content: center;
+  flex: 0 0 85vw;
+  max-width: 1400px;
+  height: 680px;
+  border-radius: 2rem;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  transform: scale(0.95);
+  transition: opacity 0.3s, transform 0.3s;
+  scroll-snap-align: center;
 }
 
-.carousel-cards figure img {
-  max-width: 100px;
-  aspect-ratio: 3/5;
-  height: auto;
+.carousel-cards:hover {
+  opacity: 1;
+  transform: scale(1);
 }
 
+.carousel-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.95),
+      rgba(0, 0, 0, 0.5),
+      transparent);
+}
+
+.carousel-card-title,
+.carousel-card-desc,
+.carousel-card-date {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 0.5rem;
+}
+
+.carousel-card-date {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--main-font);
+}
+
+.carousel-card-title {
+  color: white;
+}
+
+.carousel-card-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
 
 /* footnote section */
 .index-footnote {
@@ -1469,25 +1516,18 @@ footer {
   margin-bottom: 0;
 }
 
-@media (max-width: 480px) {
-
-  .signup-row,
-  .account-row {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .account-card {
-    padding: 1.5rem 1rem;
-  }
-}
 
 /* PAGE SPECIFIC STYLES END */
 
 
 /* MEDIA STYLING */
 /* MOBILE */
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1024px) {
+  .carousel-cards {
+    height: 628px;
+  }
+
+
   .index-compare {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
@@ -1496,11 +1536,10 @@ footer {
   }
 
   .index-intro {
+    max-width: 600px;
     flex-direction: column;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    align-self: center;
+    margin: auto;
   }
 
   .index-intro-vid {
@@ -1525,7 +1564,13 @@ footer {
   }
 }
 
+
 @media (max-width: 768px) {
+  .carousel-cards {
+    max-width: 500px;
+    height: 480px;
+  }
+
   :root {
     --fs-body: 17px;
     --fs-body-line-height: 26px;
@@ -1570,6 +1615,10 @@ footer {
 
   .footer-container {
     flex-direction: column;
+  }
+
+  .carousel-cards {
+    height: 25rem;
   }
 }
 
