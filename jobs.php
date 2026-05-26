@@ -9,6 +9,7 @@ require_once './settings.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Job Application - UrbanSync</title>
     <link rel="icon" type="image/x-icon" href="./images/logo.ico">
     <meta charset="UTF-8">
@@ -56,37 +57,37 @@ require_once './settings.php';
 
             <article id="JobArticle">
 
-        <section id="JobTitle">
-            <h2 style="Color:White;">Frontend Web Developer</h2>
-            <h3 style="Color:White;">Reference Number: 10053</h3>
-            <p>$70,000 - $85,000</p>
-        </section>
+                <section id="JobTitle">
+                    <h2 style="Color:White;">Frontend Web Developer</h2>
+                    <h3 style="Color:White;">Reference Number: 10053</h3>
+                    <p>$70,000 - $85,000</p>
+                </section>
 
-        <section id="JobInfo">
-            <h2>Frontend Web Developer</h2>
+                <section id="JobInfo">
+                    <h2>Frontend Web Developer</h2>
 
-            <h2>Key Reporting Line</h2>
-            <ol id="JobReportingLine">
-                <li>Engineering Manager</li>
-                <li>Technical Lead</li>
-                <li>Product Manager</li>
-            </ol>
+                    <h2>Key Reporting Line</h2>
+                    <ol id="JobReportingLine">
+                        <li>Engineering Manager</li>
+                        <li>Technical Lead</li>
+                        <li>Product Manager</li>
+                    </ol>
 
-            <h2>Key Responsibilities</h2>
-            <ol id="JobResponsobilities">
-                <li>Building front end interfaces</li>
-                <li>Ensuring accessible and intuitive designs are implemented into the user experience</li>
-            </ol>
+                    <h2>Key Responsibilities</h2>
+                    <ol id="JobResponsobilities">
+                        <li>Building front end interfaces</li>
+                        <li>Ensuring accessible and intuitive designs are implemented into the user experience</li>
+                    </ol>
 
-            <h2>Personal Requirements</h2>
-            <ul id="JobPersonalRequirements">
-                <li>Effective communication for team collaboration</li>
-                <li>High adaptability to new technologies</li>
-                <li>A methodical approach to debugging and creating responsive, accessible websites</li>
-            </ul>
+                    <h2>Personal Requirements</h2>
+                    <ul id="JobPersonalRequirements">
+                        <li>Effective communication for team collaboration</li>
+                        <li>High adaptability to new technologies</li>
+                        <li>A methodical approach to debugging and creating responsive, accessible websites</li>
+                    </ul>
 
-        </section>
-    </article>
+                </section>
+            </article>
 
 
         </main>
