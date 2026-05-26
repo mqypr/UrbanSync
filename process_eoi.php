@@ -20,7 +20,7 @@ if (!$conn) {
 }
 
 /* clean input */
-function clean_input($data)
+function clean_input(string $data): string
 {
     $data = trim($data);
     $data = stripslashes($data);
@@ -407,5 +407,7 @@ mysqli_close($conn);
         <?php endif; ?>
 
     </main>
+
 </body>
+
 </html>

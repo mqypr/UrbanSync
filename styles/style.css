@@ -438,6 +438,7 @@ footer {
 
 
 /* PAGE SPECIFIC STYLES */
+
 /* apply.html styles */
 
 .apply-form-section {
@@ -618,7 +619,9 @@ footer {
 }
 
 /* jobs.html style stuff */
+
 /* The Aside html navigation page */
+
 #JobsPage {
   background-color: var(--bg-main);
 }
