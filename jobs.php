@@ -2,14 +2,21 @@
 session_start();
 require_once './settings.php';
 
-$sql = "SELECT * FROM opened_jobs LIMIT 1";
-$result = mysqli_query($conn, $sql);
 
-if(!$result){
+// job content data
+$content_sql = "SELECT * FROM opened_jobs LIMIT 1";
+$content_result = mysqli_query($conn, $content_sql);
+
+
+// aside bar data
+$side_sql = "SELECT * FROM opened_jobs";
+$side_result = mysqli_query($conn, $side_sql);
+
+if(!$side_result || !$content_result){
     die("Query Failed: " . mysqli_error($conn));
 }
 
-$job = mysqli_fetch_assoc($result);
+$job_content = mysqli_fetch_assoc($content_result);
 
 ?>
 
@@ -48,6 +55,10 @@ $job = mysqli_fetch_assoc($result);
             <h1 style="color:white;">Jobs</h1>
 
             <div class="JobContainer">
+
+                <!-- Loop through every row of the table and create sections  -->
+                <?php while($jobrow = mysqli_fetch_assoc($side_result)) { ?>
+                
                 
                 <a href="" target=""> <!--bm1-->
                     <section class="JobSection">
@@ -57,7 +68,7 @@ $job = mysqli_fetch_assoc($result);
 
                             <?php 
                                 // We echo the title of the job
-                                echo htmlspecialchars($job["title"]) 
+                                echo htmlspecialchars($jobrow["title"]) 
                             ?>
 
                         </h2>
@@ -68,7 +79,7 @@ $job = mysqli_fetch_assoc($result);
                             <?php 
 
                                 // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
-                                $salary = explode("^" , $job["salary"]);
+                                $salary = explode("^" , $jobrow["salary"]);
 
                                 // We echo the first element in $salary array
                                 echo ("$" . htmlspecialchars($salary[0]));
@@ -91,7 +102,7 @@ $job = mysqli_fetch_assoc($result);
                             
                             <?php 
                             
-                                echo htmlspecialchars($job["short_description"]);
+                                echo htmlspecialchars($jobrow["short_description"]);
 
                             ?>
 
@@ -99,8 +110,10 @@ $job = mysqli_fetch_assoc($result);
                         </p>
 
                     </section>
-                    
+
                 </a>
+
+                <?php } ?>
 
             </div>
         </aside>
@@ -118,7 +131,7 @@ $job = mysqli_fetch_assoc($result);
 
                         <?php 
                             // We echo the title of the job
-                            echo htmlspecialchars($job["title"]) 
+                            echo htmlspecialchars($job_content["title"]) 
                         ?>
                         
                     </h2>
@@ -129,7 +142,7 @@ $job = mysqli_fetch_assoc($result);
                         <?php 
 
                             // We echo the reference number of the job
-                            echo htmlspecialchars($job["reference_number"]) 
+                            echo htmlspecialchars($job_content["reference_number"]) 
                         ?>   
 
                     </h3>
@@ -140,7 +153,7 @@ $job = mysqli_fetch_assoc($result);
                         <?php 
 
                             // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
-                            $salary = explode("^" , $job["salary"]);
+                            $salary = explode("^" , $job_content["salary"]);
 
                             // We echo the first element in $salary array
                             echo ("$" . htmlspecialchars($salary[0]));
@@ -168,7 +181,7 @@ $job = mysqli_fetch_assoc($result);
                         <?php
                             
                             // We echo job into the information content 
-                            echo htmlspecialchars($job["title"]);
+                            echo htmlspecialchars($job_content["title"]);
 
                         ?>
 
@@ -182,7 +195,7 @@ $job = mysqli_fetch_assoc($result);
                         <?php 
 
                             // Because the varchar stored in reporting_line is seperated by a ^, we split the salary into an array and remove ^
-                            $reporting_line = explode("^" , $job["reporting_line"]);
+                            $reporting_line = explode("^" , $job_content["reporting_line"]);
 
                             // For every item inside of $reporting_line we print it's corresponding element within a list tag
                             foreach ($reporting_line as $rep)
@@ -205,7 +218,7 @@ $job = mysqli_fetch_assoc($result);
                         <?php 
 
                                 // Because the varchar stored in responsobilities is seperated by a ^, we split the salary into an array and remove ^
-                                $responsobilities = explode("^" , $job["responsobilities"]);
+                                $responsobilities = explode("^" , $job_content["responsobilities"]);
 
                                 // For every item inside of $responsobilities we print it's corresponding element within a list tag
                                 foreach ($responsobilities as $res)
@@ -227,7 +240,7 @@ $job = mysqli_fetch_assoc($result);
                         <?php 
 
                                 // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
-                                $requirements = explode("^" , $job["requirements"]);
+                                $requirements = explode("^" , $job_content["requirements"]);
 
                                 // For every item inside of $requirements we print it's corresponding element within a list tag
                                 foreach ($requirements as $req)

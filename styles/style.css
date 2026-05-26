@@ -585,9 +585,10 @@ footer {
   float: right;
   width: 30%;
   min-width: 20rem;
-  height: 80vh;
+  max-height: 100vh - 10rem;
   padding: 1.5rem;
   background-image: linear-gradient(to bottom, var(--accent), var(--accent-hover));
+  overflow: hidden;
 }
 
 /* heading in the job aside bar */
@@ -605,6 +606,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: auto;
 }
 
 .JobContainer a {
