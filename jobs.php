@@ -4,7 +4,20 @@ require_once './settings.php';
 
 
 // job content data
-$content_sql = "SELECT * FROM opened_jobs LIMIT 1";
+if (isset($_GET["ref"])) {
+
+    // Get the superglobal variable "ref" and convert it into a int
+    $selected_ref = intval($_GET["ref"]);
+
+    $content_sql = "SELECT * FROM opened_jobs
+                    WHERE reference_number = $selected_ref
+                    LIMIT 1";
+
+} else {
+    $content_sql = "SELECT * FROM opened_jobs LIMIT 1";
+}
+
+// store the table data to $content_result
 $content_result = mysqli_query($conn, $content_sql);
 
 
@@ -60,8 +73,10 @@ $job_content = mysqli_fetch_assoc($content_result);
                 <!-- Loop through every row of the table and create sections  -->
                 <?php while($jobrow = mysqli_fetch_assoc($side_result)) { ?>
                 
-                
-                <a href="" target=""> <!--bm1-->
+
+                <!-- Set ref for loading correct content when clicked -->
+                <a href="jobs.php?ref=<?php echo htmlspecialchars($jobrow["reference_number"]); ?>">
+
                     <section class="JobSection">
 
                         <!-- Title  -->
@@ -201,7 +216,7 @@ $job_content = mysqli_fetch_assoc($content_result);
                                 {
 
                                     //echo the item within $reporting_line within html list tags
-                                    echo("<li>$rep</li>");
+                                    echo("<li>" . htmlspecialchars($rep) . "</li>");
 
                                 }
                         
@@ -222,7 +237,7 @@ $job_content = mysqli_fetch_assoc($content_result);
                                     {
 
                                         //echo the item within $responsobilities within html list tags
-                                        echo("<li>$res</li>");
+                                        echo("<li>" . htmlspecialchars($res) . "</li>");
 
                                     }
                             
@@ -243,16 +258,12 @@ $job_content = mysqli_fetch_assoc($content_result);
                                     {
 
                                         //echo the item within $requirements within html list tags
-                                        echo("<li>$req</li>");
+                                        echo("<li>" . htmlspecialchars($req) . "</li>");
 
                                     }
                             
                             ?>
-                    
-                    
-                        <!-- <li>Effective communication for team collaboration</li>
-                        <li>High adaptability to new technologies</li>
-                        <li>A methodical approach to debugging and creating responsive, accessible websites</li>
+
                     </ul>
 
                 </section>
