@@ -12,6 +12,7 @@ require_once './settings.php';
   <link rel="stylesheet" href="./styles/style.css">
   <title>Home - UrbanSync</title>
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
   <meta name="keywords" content="UrbanSync, infrastructure analytics, B2B, urban planning, infrastructure improvement">
@@ -171,27 +172,27 @@ require_once './settings.php';
 
     <!-- PROJECTS -->
     <section class="index-projects">
-      <h2>Past Projects </h2>
+      <h2>Past Projects</h2>
       <div class="projects-carousel">
         <?php foreach ($projects as $project): ?>
-          <div class='carousel-cards'>
-            <p><?= htmlspecialchars($project['completed']) ?></p>
-            <h3><?= htmlspecialchars($project['title']) ?></h3>
-            <p><?= htmlspecialchars($project['description']) ?></p>
-            <figure>
-              <img src="<?= htmlspecialchars($project['image_path']) ?>" alt="project picture">
-              <figcaption>Location: <?= htmlspecialchars($project['location']) ?></figcaption>
-            </figure>
-
-
+          <div class="carousel-cards"
+            style="background-image: url('<?= htmlspecialchars($project['image_path']) ?>')">
+            <div class="carousel-card-content">
+              <p class="carousel-card-date"><?= htmlspecialchars($project['completed']) ?></p>
+              <h3 class="carousel-card-title"><?= htmlspecialchars($project['title']) ?></h3>
+              <p class="carousel-card-desc"><?= htmlspecialchars($project['description']) ?></p>
+            </div>
           </div>
         <?php endforeach; ?>
-        <!-- dots to represent where the carousel is at -->
       </div>
-
-      <div class='search-bar'>
-
-      </div>
+      <form class="project-searchbar" action="" method="get">
+        <input class="searchbar-input" type="text" name="project_search"
+          placeholder="Search Projects..."
+          value="<?= htmlspecialchars($_GET['project_search'] ?? '') ?>">
+        <button class="searchbar-btn" type="submit" aria-label="Search">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
     </section>
 
     <!-- FOOTNOTE -->

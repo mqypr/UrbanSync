@@ -2,15 +2,14 @@
 // about.php
 // This page connects to the database and displays group member contributions.
 
-// Include database settings
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_start();
 require_once("settings.php");
-
-// Connect to the database
-$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
 // Check connection
 if (!$conn) {
-    die("<p>Database connection failed. Please check settings.php.</p>");
+  die("<p>Database connection failed. Please check settings.php.</p>");
 }
 
 // Select all records from the about_contributions table
@@ -20,14 +19,14 @@ $result = mysqli_query($conn, $query);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="About page for UrbanSync group project">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>About - UrbanSync</title>
-
-  <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css">
 
   <!-- Embedded CSS example -->
   <style>
@@ -115,182 +114,166 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <body>
+  <!--HEADER-->
+  <?php include "./header.inc" ?>
 
-<header class="navbar">
-  <div class="navbar-container">
+  <main>
+    <div class="about-container">
 
-    <div class="logo">
-      <img src="Group photo.jpg" class="logo-pic" alt="UrbanSync logo">
-    </div>
+      <section class="about-section">
+        <!-- Inline CSS example -->
+        <h1 style="letter-spacing: 1px;">UrbanSync</h1>
+        <p>This page introduces our group and loads member contributions from the database.</p>
+      </section>
 
-    <nav>
-      <ul class="navbar-link">
-        <li><a class="navbar-link-item-a" href="index.php">Home</a></li>
-        <li><a class="navbar-link-item-a" href="jobs.php">Job Description</a></li>
-        <li><a class="navbar-link-item-a" href="apply.php">Apply</a></li>
-        <li><a class="navbar-link-item-a" href="about.php">About</a></li>
-      </ul>
-    </nav>
+      <section class="about-section">
+        <h2>Group Information</h2>
+        <ul>
+          <li><strong>Group Name:</strong> UrbanSync</li>
+          <li>
+            <strong>Class Day and Time:</strong>
+            <ul>
+              <li>Thursday</li>
+              <li>4:30 PM - 6:30 PM</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
 
-  </div>
-</header>
+      <section class="about-section">
+        <h2>Member Contributions from Database</h2>
 
-<main>
-  <div class="about-container">
+        <table class="member-table">
+          <caption>UrbanSync Member Contributions</caption>
+          <tr>
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Project 1 Contribution</th>
+            <th>Project 2 Contribution</th>
+          </tr>
 
-    <section class="about-section">
-      <!-- Inline CSS example -->
-      <h1 style="letter-spacing: 1px;">UrbanSync</h1>
-      <p>This page introduces our group and loads member contributions from the database.</p>
-    </section>
-
-    <section class="about-section">
-      <h2>Group Information</h2>
-      <ul>
-        <li><strong>Group Name:</strong> UrbanSync</li>
-        <li>
-          <strong>Class Day and Time:</strong>
-          <ul>
-            <li>Thursday</li>
-            <li>4:30 PM - 6:30 PM</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <section class="about-section">
-      <h2>Member Contributions from Database</h2>
-
-      <table class="member-table">
-        <caption>UrbanSync Member Contributions</caption>
-        <tr>
-          <th>Name</th>
-          <th>Student ID</th>
-          <th>Project 1 Contribution</th>
-          <th>Project 2 Contribution</th>
-        </tr>
-
-        <?php
-        if ($result && mysqli_num_rows($result) > 0) {
+          <?php
+          if ($result && mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
-                echo "<td><span class='student-id'>" . htmlspecialchars($row["student_id"]) . "</span></td>";
-                echo "<td>" . htmlspecialchars($row["first_project"]) . "</td>";
-                echo "<td>" . htmlspecialchars($row["second_project"]) . "</td>";
-                echo "</tr>";
+              echo "<tr>";
+              echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
+              echo "<td><span class='student-id'>" . htmlspecialchars($row["student_id"]) . "</span></td>";
+              echo "<td>" . htmlspecialchars($row["first_project"]) . "</td>";
+              echo "<td>" . htmlspecialchars($row["second_project"]) . "</td>";
+              echo "</tr>";
             }
-        } else {
+          } else {
             echo "<tr>";
             echo "<td colspan='4'>No contribution data found in the database.</td>";
             echo "</tr>";
-        }
-        ?>
-      </table>
-    </section>
+          }
+          ?>
+        </table>
+      </section>
 
-    <section class="about-section">
-      <h2>Member Contributions and Quotes</h2>
+      <section class="about-section">
+        <h2>Member Contributions and Quotes</h2>
 
-      <dl>
-        <dt>MD Areen Chowdhury</dt>
-        <dd>Developed about.html in Project 1 and converted it to about.php in Project 2.</dd>
-        <dd>"কি অবস্থা" — "What's up"</dd>
+        <dl>
+          <dt>MD Areen Chowdhury</dt>
+          <dd>Developed about.html in Project 1 and converted it to about.php in Project 2.</dd>
+          <dd>"কি অবস্থা" — "What's up"</dd>
 
-        <dt>Reach Peng</dt>
-        <dd>Developed index.html in Project 1 and updated the home page in Project 2.</dd>
-        <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
+          <dt>Reach Peng</dt>
+          <dd>Developed index.html in Project 1 and updated the home page in Project 2.</dd>
+          <dd>"ជីវិតគឺល្អ" — "Life is good"</dd>
 
-        <dt>Liron Roshain Joanic Willathgamuwa</dt>
-        <dd>Developed apply.html in Project 1 and updated the apply page in Project 2.</dd>
-        <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
+          <dt>Liron Roshain Joanic Willathgamuwa</dt>
+          <dd>Developed apply.html in Project 1 and updated the apply page in Project 2.</dd>
+          <dd>"ජීවිතය ලස්සනයි" — "Life is beautiful"</dd>
 
-        <dt>Dylan Kelly</dt>
-        <dd>Developed jobs.html in Project 1 and updated the jobs page in Project 2.</dd>
-        <dd>"No worries mate" — "Everything is fine"</dd>
-      </dl>
-    </section>
+          <dt>Dylan Kelly</dt>
+          <dd>Developed jobs.html in Project 1 and updated the jobs page in Project 2.</dd>
+          <dd>"No worries mate" — "Everything is fine"</dd>
+        </dl>
+      </section>
 
-    <section class="about-section">
-      <h2>Fun Facts</h2>
+      <section class="about-section">
+        <h2>Fun Facts</h2>
 
-      <table class="member-table">
-        <caption>Group Member Fun Facts</caption>
-        <tr>
-          <th>Name</th>
-          <th>Hometown</th>
-          <th>Job</th>
-          <th>Favourite Snack</th>
-        </tr>
+        <table class="member-table">
+          <caption>Group Member Fun Facts</caption>
+          <tr>
+            <th>Name</th>
+            <th>Hometown</th>
+            <th>Job</th>
+            <th>Favourite Snack</th>
+          </tr>
 
-        <tr>
-          <td>MD Areen Chowdhury</td>
-          <td>Dhaka, Bangladesh</td>
-          <td>BOH, Hospitality</td>
-          <td>Pizza slice</td>
-        </tr>
+          <tr>
+            <td>MD Areen Chowdhury</td>
+            <td>Dhaka, Bangladesh</td>
+            <td>BOH, Hospitality</td>
+            <td>Pizza slice</td>
+          </tr>
 
-        <tr>
-          <td>Reach Peng</td>
-          <td>Phnom Penh, Cambodia</td>
-          <td>Casual Worker, Hungry Jack's</td>
-          <td>Popcorn</td>
-        </tr>
+          <tr>
+            <td>Reach Peng</td>
+            <td>Phnom Penh, Cambodia</td>
+            <td>Casual Worker, Hungry Jack's</td>
+            <td>Popcorn</td>
+          </tr>
 
-        <tr>
-          <td>Liron Roshain Joanic Willathgamuwa</td>
-          <td>Wattala, Sri Lanka</td>
-          <td>Cyber Security Specialist</td>
-          <td>Lasagna</td>
-        </tr>
+          <tr>
+            <td>Liron Roshain Joanic Willathgamuwa</td>
+            <td>Wattala, Sri Lanka</td>
+            <td>Cyber Security Specialist</td>
+            <td>Lasagna</td>
+          </tr>
 
-        <tr>
-          <td>Dylan Kelly</td>
-          <td>Watchupga, VIC, Australia</td>
-          <td>Farm Hand</td>
-          <td>Scones</td>
-        </tr>
-      </table>
-    </section>
+          <tr>
+            <td>Dylan Kelly</td>
+            <td>Watchupga, VIC, Australia</td>
+            <td>Farm Hand</td>
+            <td>Scones</td>
+          </tr>
+        </table>
+      </section>
 
-    <section class="about-section">
-      <h2>Group Photo</h2>
+      <section class="about-section">
+        <h2>Group Photo</h2>
 
-      <figure>
-        <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
-        <figcaption>UrbanSync Group</figcaption>
-      </figure>
-    </section>
+        <figure>
+          <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+          <figcaption>UrbanSync Group</figcaption>
+        </figure>
+      </section>
 
-  </div>
-</main>
-
-<footer>
-  <div class="footer-container">
-
-    <div class="footer-column">
-      <h3 class="footer-column-title">Pages</h3>
-      <p class="footer-column-item"><a href="index.php">Home</a></p>
-      <p class="footer-column-item"><a href="jobs.php">Job Description</a></p>
-      <p class="footer-column-item"><a href="apply.php">Apply</a></p>
-      <p class="footer-column-item"><a href="about.php">About</a></p>
     </div>
+  </main>
 
-    <div class="footer-column">
-      <h3 class="footer-column-title">Resources</h3>
-      <p class="footer-column-item"><a href="#">Github Repository</a></p>
-      <p class="footer-column-item"><a href="#">Jira</a></p>
+  <footer>
+    <div class="footer-container">
+
+      <div class="footer-column">
+        <h3 class="footer-column-title">Pages</h3>
+        <p class="footer-column-item"><a href="index.php">Home</a></p>
+        <p class="footer-column-item"><a href="jobs.php">Job Description</a></p>
+        <p class="footer-column-item"><a href="apply.php">Apply</a></p>
+        <p class="footer-column-item"><a href="about.php">About</a></p>
+      </div>
+
+      <div class="footer-column">
+        <h3 class="footer-column-title">Resources</h3>
+        <p class="footer-column-item"><a href="#">Github Repository</a></p>
+        <p class="footer-column-item"><a href="#">Jira</a></p>
+      </div>
+
+      <div class="footer-column">
+        <h3 class="footer-column-title">Contact Us</h3>
+        <p class="footer-column-item"><a href="mailto:your@email.com">Email</a></p>
+      </div>
+
     </div>
-
-    <div class="footer-column">
-      <h3 class="footer-column-title">Contact Us</h3>
-      <p class="footer-column-item"><a href="mailto:your@email.com">Email</a></p>
-    </div>
-
-  </div>
-</footer>
+  </footer>
 
 </body>
+
 </html>
 
 <?php

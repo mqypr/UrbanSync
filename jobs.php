@@ -30,6 +30,7 @@ $job_content = mysqli_fetch_assoc($content_result);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Job Application - UrbanSync</title>
     <link rel="icon" type="image/x-icon" href="./images/logo.ico">
     <meta charset="UTF-8">
@@ -46,7 +47,7 @@ $job_content = mysqli_fetch_assoc($content_result);
 <body id="JobsPage">
 
     <?php include "header.inc"; ?>
-    
+
 
     <div class="jobs-layout">
 
@@ -76,22 +77,21 @@ $job_content = mysqli_fetch_assoc($content_result);
                         <!-- Salary -->
                         <p>
 
-                            <?php 
+                            <?php
 
                                 // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
                                 $salary = explode("^" , $jobrow["salary"]);
 
-                                // We echo the first element in $salary array
-                                echo ("$" . htmlspecialchars($salary[0]));
+                            // We echo the first element in $salary array
+                            echo ("$" . htmlspecialchars($salary[0]));
 
-                                // If there is a second element within the array, echo this also
-                                if(isset($salary[1]))
-                                {
-                                    echo("  - $" . htmlspecialchars($salary[1]));
-                                }
+                            // If there is a second element within the array, echo this also
+                            if (isset($salary[1])) {
+                                echo ("  - $" . htmlspecialchars($salary[1]));
+                            }
 
-                                // If there is only 1 element, we will echo 1 number; example $60,000
-                                // If there are 2 elements however, we will echo both; example $60,000 - $70,000
+                            // If there is only 1 element, we will echo 1 number; example $60,000
+                            // If there are 2 elements however, we will echo both; example $60,000 - $70,000
 
                             ?>
 
@@ -111,6 +111,7 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                     </section>
 
+
                 </a>
 
                 <?php } ?>
@@ -126,20 +127,20 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                 <section id="JobTitle">
 
-                <!-- Title of the opened job -->
-                    <h2> 
+                    <!-- Title of the opened job -->
+                    <h2>
 
                         <?php 
                             // We echo the title of the job
                             echo htmlspecialchars($job_content["title"]) 
                         ?>
-                        
-                    </h2>
-                    
-                    <!-- Reference number for the opened job -->
-                    <h3> 
 
-                        <?php 
+                    </h2>
+
+                    <!-- Reference number for the opened job -->
+                    <h3>
+
+                        <?php
 
                             // We echo the reference number of the job
                             echo htmlspecialchars($job_content["reference_number"]) 
@@ -148,24 +149,23 @@ $job_content = mysqli_fetch_assoc($content_result);
                     </h3>
 
                     <!-- Listed salary for job title -->
-                    <p> 
+                    <p>
 
-                        <?php 
+                        <?php
 
                             // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
                             $salary = explode("^" , $job_content["salary"]);
 
-                            // We echo the first element in $salary array
-                            echo ("$" . htmlspecialchars($salary[0]));
+                        // We echo the first element in $salary array
+                        echo ("$" . htmlspecialchars($salary[0]));
 
-                            // If there is a second element within the array, echo this also
-                            if(isset($salary[1]))
-                            {
-                                echo("  - $" . htmlspecialchars($salary[1]));
-                            }
+                        // If there is a second element within the array, echo this also
+                        if (isset($salary[1])) {
+                            echo ("  - $" . htmlspecialchars($salary[1]));
+                        }
 
-                            // If there is only 1 element, we will echo 1 number; example $60,000
-                            // If there are 2 elements however, we will echo both; example $60,000 - $70,000
+                        // If there is only 1 element, we will echo 1 number; example $60,000
+                        // If there are 2 elements however, we will echo both; example $60,000 - $70,000
 
                         ?>
 
@@ -189,7 +189,6 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                     <!-- Key Reporting Line -->
                     <h2>Key Reporting Line</h2>
-
                     <ol id="JobReportingLine">
 
                         <?php 
@@ -210,9 +209,7 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                     </ol>
 
-                    <!-- Key Responsobilities -->
                     <h2>Key Responsibilities</h2>
-
                     <ol id="JobResponsobilities">
                         
                         <?php 
@@ -232,8 +229,7 @@ $job_content = mysqli_fetch_assoc($content_result);
                             ?>
 
                     </ol>
-                    
-                    <!-- Personal Requirements -->
+
                     <h2>Personal Requirements</h2>
                     <ul id="JobPersonalRequirements">
                         
@@ -256,12 +252,12 @@ $job_content = mysqli_fetch_assoc($content_result);
                     
                         <!-- <li>Effective communication for team collaboration</li>
                         <li>High adaptability to new technologies</li>
-                        <li>A methodical approach to debugging and creating responsive, accessible websites</li> -->
+                        <li>A methodical approach to debugging and creating responsive, accessible websites</li>
                     </ul>
 
                 </section>
-
             </article>
+
 
         </main>
 
