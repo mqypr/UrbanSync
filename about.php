@@ -2,11 +2,10 @@
 // about.php
 // This page connects to the database and displays group member contributions.
 
-// Include database settings
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_start();
 require_once("settings.php");
-
-// Connect to the database
-$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
 // Check connection
 if (!$conn) {
@@ -28,9 +27,6 @@ $result = mysqli_query($conn, $query);
   <link rel="stylesheet" href="./styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>About - UrbanSync</title>
-
-  <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css">
 
   <!-- Embedded CSS example -->
   <style>
@@ -118,25 +114,8 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <body>
-
-  <header class="navbar">
-    <div class="navbar-container">
-
-      <div class="logo">
-        <img src="Group photo.jpg" class="logo-pic" alt="UrbanSync logo">
-      </div>
-
-      <nav>
-        <ul class="navbar-link">
-          <li><a class="navbar-link-item-a" href="index.php">Home</a></li>
-          <li><a class="navbar-link-item-a" href="jobs.php">Job Description</a></li>
-          <li><a class="navbar-link-item-a" href="apply.php">Apply</a></li>
-          <li><a class="navbar-link-item-a" href="about.php">About</a></li>
-        </ul>
-      </nav>
-
-    </div>
-  </header>
+  <!--HEADER-->
+  <?php include "./header.inc" ?>
 
   <main>
     <div class="about-container">
