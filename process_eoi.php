@@ -1,32 +1,35 @@
 <?php
 
-// connect settings file
 require_once("settings.php");
 
-// clean user input
-function clean_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
-// stop direct access
+/* stop direct access */
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: apply.php");
     exit();
 }
 
-// connect to database
+/* dark mode */
+$darkMode = $_COOKIE['dark_mode'] ?? '0';
+
+/* connect database */
 $conn = mysqli_connect($host, $db_user, $db_pass, $database);
 
-// check connection
+/* check connection */
 if (!$conn) {
     die("Database connection failed");
 }
 
-// create eoi table if it does not exist
+/* clean input */
+function clean_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+
+    return $data;
+}
+
+/* create table if not exists */
 $table = "CREATE TABLE IF NOT EXISTS eoi (
     EOInumber INT AUTO_INCREMENT PRIMARY KEY,
     jobRef VARCHAR(5),
@@ -47,184 +50,364 @@ $table = "CREATE TABLE IF NOT EXISTS eoi (
 
 mysqli_query($conn, $table);
 
-// get and clean form data
-$jobRef = clean_input($_POST["jobRef"]);
-$firstName = clean_input($_POST["firstName"]);
-$lastName = clean_input($_POST["lastName"]);
-$dob = clean_input($_POST["dob"]);
-$gender = clean_input($_POST["gender"]);
-$address = clean_input($_POST["address"]);
-$suburb = clean_input($_POST["suburb"]);
-$state = clean_input($_POST["state"]);
-$postcode = clean_input($_POST["postcode"]);
-$email = clean_input($_POST["email"]);
-$phone = clean_input($_POST["phone"]);
-
-$otherSkills = "";
-
-if (isset($_POST["otherSkills"])) {
-    $otherSkills = clean_input($_POST["otherSkills"]);
-}
+/* get form data */
+$jobRef = clean_input($_POST["jobRef"] ?? "");
+$firstName = clean_input($_POST["firstName"] ?? "");
+$lastName = clean_input($_POST["lastName"] ?? "");
+$dob = clean_input($_POST["dob"] ?? "");
+$gender = clean_input($_POST["gender"] ?? "");
+$address = clean_input($_POST["address"] ?? "");
+$suburb = clean_input($_POST["suburb"] ?? "");
+$state = clean_input($_POST["state"] ?? "");
+$postcode = clean_input($_POST["postcode"] ?? "");
+$email = clean_input($_POST["email"] ?? "");
+$phone = clean_input($_POST["phone"] ?? "");
 
 $skills = "";
+$otherSkills = "";
 
 if (isset($_POST["skills"])) {
     $skills = implode(", ", $_POST["skills"]);
     $skills = clean_input($skills);
 }
 
-// validation
-$errors = "";
+if (isset($_POST["otherSkills"])) {
+    $otherSkills = clean_input($_POST["otherSkills"]);
+}
+
+/* validation */
+$errors = [];
 
 if (!preg_match("/^[A-Za-z0-9]{5}$/", $jobRef)) {
-    $errors .= "<p>Job Reference must be 5 letters or numbers.</p>";
+    $errors[] = "Job Reference must be 5 letters or numbers.";
 }
 
 if (!preg_match("/^[A-Za-z]{1,20}$/", $firstName)) {
-    $errors .= "<p>First Name must only contain letters and max 20 characters.</p>";
+    $errors[] = "First Name must only contain letters and max 20 characters.";
 }
 
 if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
-    $errors .= "<p>Last Name must only contain letters and max 20 characters.</p>";
+    $errors[] = "Last Name must only contain letters and max 20 characters.";
 }
 
 if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $dob)) {
-    $errors .= "<p>Date of Birth must be in dd/mm/yyyy format.</p>";
+    $errors[] = "Date of Birth must be in dd/mm/yyyy format.";
 }
 
 if ($gender == "") {
-    $errors .= "<p>Gender is required.</p>";
+    $errors[] = "Gender is required.";
 }
 
 if ($address == "" || strlen($address) > 40) {
-    $errors .= "<p>Street Address is required and must be max 40 characters.</p>";
+    $errors[] = "Street Address is required and max 40 characters.";
 }
 
 if ($suburb == "" || strlen($suburb) > 40) {
-    $errors .= "<p>Suburb is required and must be max 40 characters.</p>";
+    $errors[] = "Suburb is required and max 40 characters.";
 }
 
 if ($state == "") {
-    $errors .= "<p>State is required.</p>";
+    $errors[] = "State is required.";
 }
 
 if (!preg_match("/^[0-9]{4}$/", $postcode)) {
-    $errors .= "<p>Postcode must be 4 numbers.</p>";
+    $errors[] = "Postcode must be 4 numbers.";
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors .= "<p>Email is not valid.</p>";
+    $errors[] = "Email is not valid.";
 }
 
 if (!preg_match("/^[0-9]{8,12}$/", $phone)) {
-    $errors .= "<p>Phone number must be 8 to 12 numbers.</p>";
+    $errors[] = "Phone number must be 8 to 12 numbers.";
 }
 
-// show errors
-if ($errors != "") {
+$success = false;
+$eoiNumber = "";
 
-    echo "
-    <!DOCTYPE html>
-    <html lang='en'>
-    <head>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <link rel='stylesheet' href='./styles/style.css'>
-        <title>Form Error</title>
-    </head>
-    <body>
-        <main>
-            <section class='apply-form-section'>
-                <h1>Form Error</h1>
-                $errors
-                <p><a href='apply.php'>Go Back</a></p>
-            </section>
-        </main>
-    </body>
-    </html>
-    ";
-} else {
+/* insert if no errors */
+if (empty($errors)) {
 
-    // insert data
     $query = "INSERT INTO eoi
-    (jobRef, firstName, lastName, dob, gender, address, suburb, state, postcode, email, phone, skills, otherSkills)
+    (
+        jobRef,
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        suburb,
+        state,
+        postcode,
+        email,
+        phone,
+        skills,
+        otherSkills
+    )
     VALUES
-    ('$jobRef', '$firstName', '$lastName', '$dob', '$gender', '$address', '$suburb', '$state', '$postcode', '$email', '$phone', '$skills', '$otherSkills')";
+    (
+        '$jobRef',
+        '$firstName',
+        '$lastName',
+        '$dob',
+        '$gender',
+        '$address',
+        '$suburb',
+        '$state',
+        '$postcode',
+        '$email',
+        '$phone',
+        '$skills',
+        '$otherSkills'
+    )";
 
     $result = mysqli_query($conn, $query);
 
     if ($result) {
 
+        $success = true;
+
         $eoiNumber = mysqli_insert_id($conn);
 
-        echo "
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <link rel='stylesheet' href='./styles/style.css'>
-            <title>Application Success</title>
-
-            <style>
-                body {
-                    background-color: #EBF4F6;
-                }
-
-                .message-box {
-                    max-width: 800px;
-                    margin: 80px auto;
-                    background-color: white;
-                    padding: 40px;
-                    border-radius: 28px;
-                    border: 1px solid #d4e9ec;
-                    box-shadow: 0 20px 35px -12px rgba(9, 99, 126, 0.2);
-                    text-align: center;
-                }
-
-                .message-box h1 {
-                    color: #09637E;
-                    font-size: 2rem;
-                    margin-bottom: 20px;
-                }
-
-                .message-box p {
-                    color: #1A3A47;
-                    font-size: 20px;
-                    margin-bottom: 15px;
-                }
-
-                .back-button {
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 12px 28px;
-                    background-color: #09637E;
-                    color: white;
-                    border-radius: 25px;
-                    text-decoration: none;
-                    font-weight: bold;
-                }
-
-                .back-button:hover {
-                    background-color: #088395;
-                }
-            </style>
-        </head>
-
-        <body>
-            <div class='message-box'>
-                <h1>Application Submitted Successfully</h1>
-                <p>Your EOI Number is: $eoiNumber</p>
-                <p>Status: New</p>
-                <a href='apply.php' class='back-button'>Back to Apply Page</a>
-            </div>
-        </body>
-        </html>
-        ";
     } else {
-        echo "<p>Error inserting record.</p>";
+
+        $errors[] = "Error inserting record.";
     }
 }
 
-// close database
+/* close database */
 mysqli_close($conn);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Application Submitted</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        <?php
+
+        if ($darkMode === '1') {
+
+            $backgroundImage = './styles/images/index-bg-dark.jpeg';
+
+            $cardBackground = 'rgba(0, 0, 0, 0.72)';
+
+            $titleColor = 'white';
+
+            $subtitleColor = 'rgba(255,255,255,0.65)';
+
+            $buttonColor = '#088395';
+
+            $buttonHover = '#09637e';
+
+            $shadow = '0 25px 80px rgba(0,0,0,0.45)';
+
+        } else {
+
+            $backgroundImage = './styles/images/index-bg.jpeg';
+
+            $cardBackground = 'rgba(255,255,255,0.92)';
+
+            $titleColor = '#09637e';
+
+            $subtitleColor = '#1a3a47';
+
+            $buttonColor = '#09637e';
+
+            $buttonHover = '#088395';
+
+            $shadow = '0 20px 35px -12px rgba(9,99,126,0.2)';
+        }
+
+        ?>
+
+        body {
+
+            min-height: 100vh;
+
+            background-image: url("<?php echo $backgroundImage; ?>");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-attachment: fixed;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            padding: 14px 20px 60px;
+        }
+
+        .page-card {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            background: <?php echo $cardBackground; ?>;
+
+            border-radius: 28px;
+
+            padding: 55px 50px;
+
+            box-shadow: <?php echo $shadow; ?>;
+
+            text-align: center;
+
+            backdrop-filter: blur(8px);
+        }
+
+        .logo {
+
+            width: 86px;
+
+            height: 86px;
+
+            border-radius: 50%;
+
+            border: 2px solid #cfe3e6;
+
+            margin-bottom: 34px;
+        }
+
+        h1 {
+
+            color: <?php echo $titleColor; ?>;
+
+            font-size: 42px;
+
+            font-weight: 800;
+
+            margin-bottom: 24px;
+
+            line-height: 1.2;
+        }
+
+        .subtitle {
+
+            color: <?php echo $subtitleColor; ?>;
+
+            font-size: 28px;
+
+            margin-bottom: 28px;
+        }
+
+        .button {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 18px 42px;
+
+            background-color: <?php echo $buttonColor; ?>;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 16px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .button:hover {
+
+            background-color: <?php echo $buttonHover; ?>;
+        }
+
+        .error-text {
+
+            color: #ff4d4d;
+
+            font-size: 22px;
+
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 768px) {
+
+            .page-card {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .subtitle {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="page-card">
+
+        <img src="./images/logo.png" class="logo" alt="UrbanSync Logo">
+
+        <?php if ($success): ?>
+
+            <h1>Application Submitted Successfully</h1>
+
+            <p class="subtitle">
+                Your EOI Number is: <?php echo $eoiNumber; ?>
+            </p>
+
+            <p class="subtitle">
+                Status: New
+            </p>
+
+            <a href="apply.php" class="button">
+                Back to Apply Page
+            </a>
+
+        <?php else: ?>
+
+            <h1>Form Error</h1>
+
+            <?php
+
+            foreach ($errors as $error) {
+                echo "<p class='error-text'>$error</p>";
+            }
+
+            ?>
+
+            <a href="apply.php" class="button">
+                Back to Apply Page
+            </a>
+
+        <?php endif; ?>
+
+    </main>
+
+</body>
+
+</html>

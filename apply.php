@@ -9,53 +9,52 @@ require_once './settings.php';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Apply - UrbanSync</title>
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
   <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
 
   <style>
-    main {
-      max-width: 1200px;
-      margin: 3rem auto;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+    .navbar {
+      background: none;
     }
 
-    @media (max-width: 768px) {
-      main {
-        margin: 2rem auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
+    .navbar-link-item,
+    label.navbar-link-vert-item {
+      color: white;
+    }
 
-      .apply-form-section {
-        padding: 1.5rem;
-      }
-
-      .apply-form-section h1 {
-        font-size: 1.6rem;
-      }
-
-      .dob-wrapper {
-        flex-direction: column;
-        gap: 8px;
-      }
+    .menu-toggle-input:checked~.navbar-link-item,
+    .menu-toggle-input:checked~label.navbar-link-item,
+    .navbar-settings-dropdown,
+    .navbar-link-item:hover,
+    .navbar-settings:hover .navbar-link-item {
+      background: rgba(220, 239, 241, 0.2);
+      border: none;
+      box-shadow: 0 8px 24px var(--shadow);
     }
   </style>
 </head>
 
-<body>
+<body class="s-body <?php echo (($_COOKIE['dark_mode'] ?? '0') === '1') ? 'dark-mode' : ''; ?>">
+
   <!-- Header & Navbar -->
   <?php include "header.inc" ?>
 
-  <main>
-    <section class="apply-form-section">
-      <h1 style="color: #09637e;">Job Application Form</h1>
-      <form action="process_eoi.php" method="POST" novalidate>
+  <main class="account-main">
+
+    <section class="apply-form-section apply-card">
+
+      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
+
+      <h1 class="account-title">Job Application Form</h1>
+
+      <p class="account-subtitle">
+        Apply for a position at UrbanSync
+      </p>
+
+      <form class="account-form" action="process_eoi.php" method="POST" novalidate>
 
         <!-- Job Reference Number -->
         <label for="jobRef">Job Reference Number:</label>
@@ -96,6 +95,7 @@ require_once './settings.php';
             <label for="other">Other</label>
           </div>
         </fieldset>
+
         <br>
 
         <!-- Street Address -->
@@ -121,6 +121,7 @@ require_once './settings.php';
           <option value="TAS">TAS</option>
           <option value="ACT">ACT</option>
         </select>
+
         <br><br>
 
         <!-- Postcode -->
@@ -136,6 +137,8 @@ require_once './settings.php';
         <!-- Phone Number -->
         <label for="phone">Phone Number:</label>
         <input type="tel" id="phone" name="phone" pattern="[0-9]{8,12}" placeholder="Phone number" required>
+
+        <br><br>
 
         <!-- Skill List -->
         <fieldset>
@@ -160,23 +163,29 @@ require_once './settings.php';
             <input type="checkbox" id="skill4" name="skills[]" value="Project Management">
             <label for="skill4">Project Management</label>
           </div>
+
         </fieldset>
+
         <br>
 
         <!-- Other Skills -->
         <label for="otherSkills">Other Skills:</label>
         <textarea id="otherSkills" name="otherSkills" rows="4" cols="50"></textarea>
+
         <br><br>
 
         <!-- Submit Button -->
         <input type="submit" value="Submit Application">
 
       </form>
+
     </section>
+
   </main>
 
-  <!--FOOTER-->
+  <!-- FOOTER -->
   <?php include "footer.inc" ?>
+
 </body>
 
 </html>

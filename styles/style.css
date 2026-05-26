@@ -441,15 +441,28 @@ footer {
 /* apply.html styles */
 
 .apply-form-section {
-  background-color: white;
+  background-color: var(--opacity-layer);
   border-radius: 28px;
   padding: 2.5rem;
-  border: 1px solid #d4e9ec;
-  box-shadow: 0 20px 35px -12px rgba(9, 99, 126, 0.2);
+  border: 1px solid var(--bg-tertiary);
+  box-shadow: 0 20px 35px -12px var(--shadow);
+}
+
+.apply-card {
+  width: 90%;
+  max-width: 1100px;
+
+  background-color: var(--opacity-layer);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--shadow);
+
+  padding: 2.5rem 2rem;
+
+  text-align: center;
 }
 
 .apply-form-section h1 {
-  color: #09637e;
+  color: var(--text-main);
   font-size: 2rem;
   text-align: center;
   font-weight: 700;
@@ -463,7 +476,7 @@ footer {
   content: '';
   width: 80px;
   height: 4px;
-  background-color: #088395;
+  background-color: var(--accent);
   border-radius: 2px;
   position: absolute;
   bottom: 0;
@@ -477,10 +490,14 @@ footer {
   gap: 1.2rem;
 }
 
+.apply-form-section label,
+.apply-form-section legend {
+  color: var(--text-main);
+}
+
 .apply-form-section label {
   display: inline-block;
   font-weight: 600;
-  color: #09637e;
   font-size: 0.9rem;
   margin-bottom: 0.2rem;
 }
@@ -490,10 +507,11 @@ footer {
 .apply-form-section textarea {
   width: 100%;
   padding: 0.8rem 1rem;
-  border: 1.5px solid #cfe3e6;
+  border: 1.5px solid var(--bg-tertiary);
   border-radius: 14px;
   font-size: 0.95rem;
-  background-color: #fefefe;
+  background-color: var(--bg-main);
+  color: var(--text-main);
   transition: 0.2s;
 }
 
@@ -501,28 +519,26 @@ footer {
 .apply-form-section select:focus,
 .apply-form-section textarea:focus {
   outline: none;
-  border-color: #088395;
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(8, 131, 149, 0.15);
 }
 
 .apply-form-section fieldset {
-  border: 1.5px solid #cfe3e6;
+  border: 1.5px solid var(--bg-tertiary);
   border-radius: 18px;
   padding: 1rem 1.2rem;
   margin: 0.5rem 0;
 }
 
 .apply-form-section legend {
-  color: #09637e;
   font-weight: 700;
-  background-color: white;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
 }
 
 .apply-form-section fieldset label {
   font-weight: 500;
-  color: #2c5f6b;
+  color: var(--text-main);
   margin-left: 0.3rem;
   margin-right: 1rem;
 }
@@ -537,7 +553,7 @@ footer {
   width: auto;
   margin-right: 0.3rem;
   transform: scale(1.05);
-  accent-color: #088395;
+  accent-color: var(--accent);
 }
 
 .apply-form-section input[type="submit"] {
@@ -558,7 +574,7 @@ footer {
 .apply-form-section input[type="submit"]:hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(9, 99, 126, 0.3);
+  box-shadow: 0 8px 18px var(--shadow);
 }
 
 .apply-form-section textarea {
@@ -587,7 +603,7 @@ footer {
 
 .dob-hint {
   font-size: 12px;
-  color: #7ab3b2;
+  color: var(--text-secondary);
   margin-top: 5px;
 }
 
@@ -595,8 +611,9 @@ footer {
   display: none;
 }
 
-.apply-form-section input::placeholder {
-  color: #b8d4d8;
+.apply-form-section input::placeholder,
+.apply-form-section textarea::placeholder {
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
