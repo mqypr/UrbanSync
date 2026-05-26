@@ -187,5 +187,4 @@ require_once './settings.php';
   <?php include "footer.inc" ?>
 
 </body>
-
 </html>
