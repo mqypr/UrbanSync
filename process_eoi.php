@@ -1,4 +1,7 @@
+```php
 <?php
+
+session_start();
 
 require_once("settings.php");
 
@@ -58,100 +61,121 @@ if (isset($_POST["otherSkills"])) {
 $errors = [];
 
 if (!preg_match("/^[A-Za-z0-9]{5}$/", $jobRef)) {
-    $errors[] = "Job Reference must be 5 letters or numbers.";
+    $errors["jobRef"] = "Job Reference must be 5 letters or numbers.";
 }
 
 if (!preg_match("/^[A-Za-z]{1,20}$/", $firstName)) {
-    $errors[] = "First Name must only contain letters and max 20 characters.";
+    $errors["firstName"] = "First Name must only contain letters and max 20 characters.";
 }
 
 if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
-    $errors[] = "Last Name must only contain letters and max 20 characters.";
+    $errors["lastName"] = "Last Name must only contain letters and max 20 characters.";
 }
 
 if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $dob)) {
-    $errors[] = "Date of Birth must be in dd/mm/yyyy format.";
+    $errors["dob"] = "Date of Birth must be in dd/mm/yyyy format.";
 }
 
 if ($gender == "") {
-    $errors[] = "Gender is required.";
+    $errors["gender"] = "Gender is required.";
 }
 
 if ($address == "" || strlen($address) > 40) {
-    $errors[] = "Street Address is required and max 40 characters.";
+    $errors["address"] = "Street Address is required and max 40 characters.";
 }
 
 if ($suburb == "" || strlen($suburb) > 40) {
-    $errors[] = "Suburb is required and max 40 characters.";
+    $errors["suburb"] = "Suburb is required and max 40 characters.";
 }
 
 if ($state == "") {
-    $errors[] = "State is required.";
+    $errors["state"] = "State is required.";
 }
 
 if (!preg_match("/^[0-9]{4}$/", $postcode)) {
-    $errors[] = "Postcode must be 4 numbers.";
+    $errors["postcode"] = "Postcode must be 4 numbers.";
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = "Email is not valid.";
+    $errors["email"] = "Email is not valid.";
 }
 
 if (!preg_match("/^[0-9]{8,12}$/", $phone)) {
-    $errors[] = "Phone number must be 8 to 12 numbers.";
+    $errors["phone"] = "Phone number must be 8 to 12 numbers.";
+}
+
+/* if errors redirect back */
+if (!empty($errors)) {
+
+    $_SESSION['errors'] = $errors;
+
+    $_SESSION['old'] = [
+        'jobRef' => $jobRef,
+        'firstName' => $firstName,
+        'lastName' => $lastName,
+        'dob' => $dob,
+        'gender' => $gender,
+        'address' => $address,
+        'suburb' => $suburb,
+        'state' => $state,
+        'postcode' => $postcode,
+        'email' => $email,
+        'phone' => $phone,
+        'otherSkills' => $otherSkills
+    ];
+
+    header("Location: apply.php");
+    exit();
 }
 
 $success = false;
 $eoiNumber = "";
 
 /* insert if no errors */
-if (empty($errors)) {
+$query = "INSERT INTO eoi
+(
+    jobRef,
+    firstName,
+    lastName,
+    dob,
+    gender,
+    address,
+    suburb,
+    state,
+    postcode,
+    email,
+    phone,
+    skills,
+    otherSkills
+)
+VALUES
+(
+    '$jobRef',
+    '$firstName',
+    '$lastName',
+    '$dob',
+    '$gender',
+    '$address',
+    '$suburb',
+    '$state',
+    '$postcode',
+    '$email',
+    '$phone',
+    '$skills',
+    '$otherSkills'
+)";
 
-    $query = "INSERT INTO eoi
-    (
-        jobRef,
-        firstName,
-        lastName,
-        dob,
-        gender,
-        address,
-        suburb,
-        state,
-        postcode,
-        email,
-        phone,
-        skills,
-        otherSkills
-    )
-    VALUES
-    (
-        '$jobRef',
-        '$firstName',
-        '$lastName',
-        '$dob',
-        '$gender',
-        '$address',
-        '$suburb',
-        '$state',
-        '$postcode',
-        '$email',
-        '$phone',
-        '$skills',
-        '$otherSkills'
-    )";
+$result = mysqli_query($conn, $query);
 
-    $result = mysqli_query($conn, $query);
+if ($result) {
 
-    if ($result) {
+    $success = true;
 
-        $success = true;
+    $eoiNumber = mysqli_insert_id($conn);
 
-        $eoiNumber = mysqli_insert_id($conn);
+} else {
 
-    } else {
-
-        $errors[] = "Error inserting record.";
-    }
+    die("Error inserting record.");
 }
 
 /* close database */
@@ -317,30 +341,6 @@ mysqli_close($conn);
             background-color: <?php echo $buttonHover; ?>;
         }
 
-        .error-text {
-
-            color: #ff4d4d;
-
-            font-size: 22px;
-
-            margin-bottom: 18px;
-        }
-
-        @media (max-width: 768px) {
-
-            .page-card {
-                padding: 40px 24px;
-            }
-
-            h1 {
-                font-size: 34px;
-            }
-
-            .subtitle {
-                font-size: 20px;
-            }
-        }
-
     </style>
 
 </head>
@@ -351,42 +351,23 @@ mysqli_close($conn);
 
         <img src="./images/logo.png" class="logo" alt="UrbanSync Logo">
 
-        <?php if ($success): ?>
+        <h1>Application Submitted Successfully</h1>
 
-            <h1>Application Submitted Successfully</h1>
+        <p class="subtitle">
+            Your EOI Number is: <?php echo $eoiNumber; ?>
+        </p>
 
-            <p class="subtitle">
-                Your EOI Number is: <?php echo $eoiNumber; ?>
-            </p>
+        <p class="subtitle">
+            Status: New
+        </p>
 
-            <p class="subtitle">
-                Status: New
-            </p>
-
-            <a href="apply.php" class="button">
-                Back to Apply Page
-            </a>
-
-        <?php else: ?>
-
-            <h1>Form Error</h1>
-
-            <?php
-
-            foreach ($errors as $error) {
-                echo "<p class='error-text'>$error</p>";
-            }
-
-            ?>
-
-            <a href="apply.php" class="button">
-                Back to Apply Page
-            </a>
-
-        <?php endif; ?>
+        <a href="apply.php" class="button">
+            Back to Apply Page
+        </a>
 
     </main>
 
 </body>
 
 </html>
+```
