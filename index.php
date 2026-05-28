@@ -1,7 +1,62 @@
 <?php
 session_start();
 require_once './settings.php';
+/* ── Search logic ── */
+$search = '';
+$search_results = [];
+$searched = false;
+$search_field = ''; // which field matched
+
+if (isset($_GET['project_search'])) {
+  $search   = trim($_GET['project_search']);
+  $search   = htmlspecialchars(strip_tags($search));
+  $search   = substr($search, 0, 100);
+  $searched = true;
+
+  if (!empty($search)) {
+    $stmt = mysqli_prepare(
+      $conn,
+      "SELECT id, title, description, location, category, completed, image_path
+       FROM projects
+       WHERE CONCAT_WS(' ', title, description, location, category) LIKE ?
+       ORDER BY completed DESC"
+    );
+    $term = "%$search%";
+    mysqli_stmt_bind_param($stmt, "s", $term);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    while ($row = mysqli_fetch_assoc($result)) {
+      $search_results[] = $row;
+    }
+    mysqli_stmt_close($stmt);
+  }
+}
+
+/* ── Detect which field matched (for extra info display) ── */
+function get_match_field($project, $search)
+{
+  if (empty($search)) return null;
+  $s = strtolower($search);
+  if (stripos($project['title'], $s) !== false) return null; // title match — no extra needed
+  if (!empty($project['completed']) && stripos($project['completed'], $s) !== false)
+    return ['label' => 'Completed', 'value' => date('d/m/Y', strtotime($project['completed']))];
+  if (!empty($project['location']) && stripos($project['location'], $s) !== false)
+    return ['label' => 'Location', 'value' => $project['location']];
+  if (!empty($project['category']) && stripos($project['category'], $s) !== false)
+    return ['label' => 'Category', 'value' => $project['category']];
+  if (!empty($project['description']) && stripos($project['description'], $s) !== false)
+    return ['label' => 'Completed', 'value' => !empty($project['completed']) ? date('d/m/Y', strtotime($project['completed'])) : '—'];
+  return null;
+}
+
+/* ── Always fetch all projects for carousel ── */
+$all_result = mysqli_query($conn, "SELECT * FROM projects ORDER BY completed DESC");
+$projects = [];
+while ($row = mysqli_fetch_assoc($all_result)) {
+  $projects[] = $row;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,12 +72,6 @@ require_once './settings.php';
   <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
   <meta name="keywords" content="UrbanSync, infrastructure analytics, B2B, urban planning, infrastructure improvement">
   <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
-
-  <meta property="og:title" content="UrbanSync">
-  <meta property="og:description" content="making streets faster and safer">
-  <meta property="og:image" content="assets/images/hero-preview.jpg">
-  <meta property="og:url" content="https://mqypr.github.io/UrbanSync/">
-  <meta property="og:type" content="website">
   <style>
     .navbar {
       background: none;
@@ -171,28 +220,74 @@ require_once './settings.php';
     </section>
 
     <!-- PROJECTS -->
-    <section class="index-projects">
-      <h2>Past Projects</h2>
-      <div class="projects-carousel">
-        <?php foreach ($projects as $project): ?>
-          <div class="carousel-cards"
-            style="background-image: url('<?= htmlspecialchars($project['image_path']) ?>')">
-            <div class="carousel-card-content">
-              <p class="carousel-card-date"><?= htmlspecialchars($project['completed']) ?></p>
-              <h3 class="carousel-card-title"><?= htmlspecialchars($project['title']) ?></h3>
-              <p class="carousel-card-desc"><?= htmlspecialchars($project['description']) ?></p>
+    <section class="index-projects" id="projects">
+      <div class="projects-wrapper">
+        <h2>Past Projects</h2>
+
+        <!-- ── Carousel ── -->
+        <div class="projects-carousel">
+          <?php foreach ($projects as $project): ?>
+            <div class="carousel-cards"
+              id="project-<?= $project['id'] ?>"
+              style="background-image: url('<?= htmlspecialchars($project['image_path']) ?>')">
+              <div class="carousel-card-content">
+                <p class="carousel-card-date"><?= htmlspecialchars($project['completed']) ?></p>
+                <h3 class="carousel-card-title"><?= htmlspecialchars($project['title']) ?></h3>
+                <p class="carousel-card-desc"><?= htmlspecialchars($project['description']) ?></p>
+              </div>
             </div>
-          </div>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- ── Search ── -->
+        <div class="searchbar-wrapper" id="searchbar">
+
+          <form class="project-searchbar" action="#searchbar" method="get">
+            <input class="searchbar-input" type="text" name="project_search"
+              placeholder="<?= $searched && empty($search_results)
+                              ? 'No results for "' . htmlspecialchars($search) . '"'
+                              : 'Search Projects...' ?>"
+              value="<?= ($searched && empty($search_results))
+                        ? ''
+                        : htmlspecialchars($search) ?>">
+            <button class="searchbar-btn" type="submit" aria-label="Search">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+
+          <?php if ($searched && !empty($search_results)): ?>
+            <div class="search-results">
+
+              <?php foreach ($search_results as $i => $r):
+                $extra = get_match_field($r, $search);
+              ?>
+                <?php if ($i > 0): ?><div class="search-result-divider"></div><?php endif; ?>
+
+                <a class="search-result-item" href="#project-<?= $r['id'] ?>">
+
+                  <div class="search-result-thumb"
+                    style="<?= !empty($r['image_path']) ? "background-image: url('" . htmlspecialchars($r['image_path']) . "')" : '' ?>">
+                    <?php if (empty($r['image_path'])): ?>
+                      <?= htmlspecialchars(substr($r['title'], 0, 2)) ?>
+                    <?php endif; ?>
+                  </div>
+
+                  <span class="search-result-title"><?= htmlspecialchars($r['title']) ?></span>
+
+                  <?php if ($extra): ?>
+                    <span class="search-result-extra">
+                      <?= htmlspecialchars($extra['label']) ?>: <?= htmlspecialchars($extra['value']) ?>
+                    </span>
+                  <?php endif; ?>
+
+                </a>
+              <?php endforeach; ?>
+
+            </div>
+          <?php endif; ?>
+
+        </div>
       </div>
-      <form class="project-searchbar" action="" method="get">
-        <input class="searchbar-input" type="text" name="project_search"
-          placeholder="Search Projects..."
-          value="<?= htmlspecialchars($_GET['project_search'] ?? '') ?>">
-        <button class="searchbar-btn" type="submit" aria-label="Search">
-          <i class="fa fa-search"></i>
-        </button>
-      </form>
     </section>
 
     <!-- FOOTNOTE -->

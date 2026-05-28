@@ -200,7 +200,9 @@ function pw_class($test)
           <!-- Verification code -->
           <label class="signup-label" for="verify_code">Verification Code</label>
           <input class="signup-input" type="text" id="verify_code" name="verify_code"
-            placeholder="6-digit code" maxlength="6" required>
+            placeholder="6-digit code" value="<?= htmlspecialchars($_POST['verify_code'] ?? '') ?>"
+            maxlength="6"
+            required>
 
           <!-- Phone -->
           <label class="signup-label" for="phone">Phone Number</label>

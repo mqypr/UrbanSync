@@ -1039,18 +1039,22 @@ footer {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.project-searchbar {
-  display: flex;
-  align-items: center;
-  background: var(--index-searchbar);
-  border-radius: 999px;
-  gap: 0.5rem;
+.searchbar-wrapper {
   max-width: 500px;
   width: calc(100% - 5rem);
   margin: 2rem auto 0;
   position: sticky;
   bottom: 2rem;
+  z-index: 100;
+}
 
+.project-searchbar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-tertiary);
+  border-radius: 999px;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .searchbar-input {
