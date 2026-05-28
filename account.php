@@ -1,4 +1,6 @@
 <?php
+/* EXTRA FEATURE: User authentication system with session management,
+   password hashing (password_verify/password_hash), and account page */
 session_start();
 require_once './settings.php';
 $errors   = [];

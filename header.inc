@@ -1,4 +1,5 @@
-<?php $is_dark = ($_COOKIE['dark_mode'] ?? '0') === '1'; ?>
+<?php /* EXTRA FEATURE: Dark/light mode toggle persisted via cookie */
+$is_dark = ($_COOKIE['dark_mode'] ?? '0') === '1'; ?>
 
 <header>
   <!-- hidden light/dark -->

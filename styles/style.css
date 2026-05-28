@@ -1137,7 +1137,7 @@ footer {
   background: var(--bg-tertiary);
   border-radius: 16px;
   padding: 1rem 1.25rem;
-  transition: opacity 0.2s;
+  transition: 0.2s;
 }
 
 .search-result-card:hover {
@@ -1172,7 +1172,6 @@ footer {
   font-weight: 600;
   margin: 0 0 0.3rem;
   color: var(--text-main);
-  font-family: var(--main-font);
 }
 
 .search-result-desc {
@@ -1180,14 +1179,12 @@ footer {
   color: var(--text-secondary);
   margin: 0 0 0.5rem;
   line-height: 1.5;
-  font-family: var(--main-font);
 }
 
 .search-result-location {
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin: 0;
-  font-family: var(--main-font);
 }
 
 .search-result-location .fa {
@@ -1198,7 +1195,7 @@ footer {
 .search-results-wrapper {
   max-width: 500px;
   width: calc(100% - 5rem);
-  margin: 2rem auto 0;
+  margin: 1rem auto 0;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;

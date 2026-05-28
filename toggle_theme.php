@@ -1,6 +1,7 @@
 <?php
 require_once 'settings.php';
 
+/* EXTRA FEATURE: Dark/light mode toggle persisted via cookie */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $current = $_COOKIE['dark_mode'] ?? '0';
   $new = $current === '1' ? '0' : '1';

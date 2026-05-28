@@ -6,6 +6,7 @@ $search_results = [];
 $searched = false;
 $search_field = '';
 
+/* fetching matching search objects */
 if (isset($_GET['project_search'])) {
   $search   = trim($_GET['project_search']);
   $search   = htmlspecialchars(strip_tags($search));
@@ -196,6 +197,7 @@ if (isset($_GET['project_search'])) {
     </section>
 
     <!-- PROJECTS -->
+    <!-- EXTRA FEATURE: Horizontally scrollable snap carousel loaded from DB -->
     <section class="index-projects" id="projects">
       <div class="projects-wrapper">
         <h2>Past Projects</h2>
@@ -216,11 +218,12 @@ if (isset($_GET['project_search'])) {
         </div>
 
         <!-- ── Search ── -->
-
+        <!-- EXTRA FEATURE: Live project search using prepared statements,
+   displays results with category, date, and location -->
         <div class="searchbar-wrapper" id="searchbar">
           <form class="project-searchbar" action="#searchbar" method="get">
             <input class="searchbar-input" type="text" name="project_search"
-              placeholder="<?= ($searched && empty($search_results)) ? 'No results for "' . htmlspecialchars($search) . '"' : 'Search projects...' ?>"
+              placeholder="<?= ($searched && empty($search_results)) ? 'No results for &quot;' . $search . '&quot;' : 'Search projects...' ?>"
               value="<?= ($searched && empty($search_results)) ? '' : htmlspecialchars($search) ?>"
               autocomplete="off">
             <button class="searchbar-btn" type="submit" aria-label="Search">
