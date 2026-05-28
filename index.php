@@ -1,7 +1,39 @@
 <?php
 session_start();
 require_once './settings.php';
+$search = '';
+$search_results = [];
+$searched = false;
+$search_field = '';
+
+/* fetching matching search objects */
+if (isset($_GET['project_search'])) {
+  $search   = trim($_GET['project_search']);
+  $search   = htmlspecialchars(strip_tags($search));
+  $search   = substr($search, 0, 100);
+  $searched = true;
+
+  if (!empty($search)) {
+    $stmt = mysqli_prepare(
+      $conn,
+      "SELECT id, title, description, location, category, completed, image_path
+       FROM projects
+       WHERE CONCAT_WS(' ', title, description, location, category) LIKE ?
+       ORDER BY completed DESC"
+    );
+    $term = "%$search%";
+    mysqli_stmt_bind_param($stmt, "s", $term);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    while ($row = mysqli_fetch_assoc($result)) {
+      $search_results[] = $row;
+    }
+    mysqli_stmt_close($stmt);
+  }
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,12 +49,6 @@ require_once './settings.php';
   <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
   <meta name="keywords" content="UrbanSync, infrastructure analytics, B2B, urban planning, infrastructure improvement">
   <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
-
-  <meta property="og:title" content="UrbanSync">
-  <meta property="og:description" content="making streets faster and safer">
-  <meta property="og:image" content="assets/images/hero-preview.jpg">
-  <meta property="og:url" content="https://mqypr.github.io/UrbanSync/">
-  <meta property="og:type" content="website">
   <style>
     .navbar {
       background: none;
@@ -171,28 +197,57 @@ require_once './settings.php';
     </section>
 
     <!-- PROJECTS -->
-    <section class="index-projects">
-      <h2>Past Projects</h2>
-      <div class="projects-carousel">
-        <?php foreach ($projects as $project): ?>
-          <div class="carousel-cards"
-            style="background-image: url('<?= htmlspecialchars($project['image_path']) ?>')">
-            <div class="carousel-card-content">
-              <p class="carousel-card-date"><?= htmlspecialchars($project['completed']) ?></p>
-              <h3 class="carousel-card-title"><?= htmlspecialchars($project['title']) ?></h3>
-              <p class="carousel-card-desc"><?= htmlspecialchars($project['description']) ?></p>
+    <!-- EXTRA FEATURE: Horizontally scrollable snap carousel loaded from DB -->
+    <section class="index-projects" id="projects">
+      <div class="projects-wrapper">
+        <h2>Past Projects</h2>
+
+        <!-- ── Carousel ── -->
+        <div class="projects-carousel">
+          <?php foreach ($projects as $project): ?>
+            <div class="carousel-cards"
+              id="project-<?= $project['id'] ?>"
+              style="background-image: url('<?= htmlspecialchars($project['image_path']) ?>')">
+              <div class="carousel-card-content">
+                <p class="carousel-card-date"><?= htmlspecialchars($project['completed']) ?></p>
+                <h3 class="carousel-card-title"><?= htmlspecialchars($project['title']) ?></h3>
+                <p class="carousel-card-desc"><?= htmlspecialchars($project['description']) ?></p>
+              </div>
             </div>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- ── Search ── -->
+        <!-- EXTRA FEATURE: Live project search using prepared statements,
+   displays results with category, date, and location -->
+        <div class="searchbar-wrapper" id="searchbar">
+          <form class="project-searchbar" action="#searchbar" method="get">
+            <input class="searchbar-input" type="text" name="project_search"
+              placeholder="<?= ($searched && empty($search_results)) ? 'No results for &quot;' . $search . '&quot;' : 'Search projects...' ?>"
+              value="<?= ($searched && empty($search_results)) ? '' : htmlspecialchars($search) ?>"
+              autocomplete="off">
+            <button class="searchbar-btn" type="submit" aria-label="Search">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+        </div>
+        <?php if ($searched && !empty($search_results)): ?>
+          <div class="search-results-wrapper">
+            <p class="search-status">Showing results for <strong>"<?= htmlspecialchars($search) ?>"</strong></p>
+            <?php foreach ($search_results as $r): ?>
+              <div class="search-result-card">
+                <div class="search-result-meta">
+                  <span class="search-result-category"><?= htmlspecialchars($r['category']) ?></span>
+                  <span class="search-result-date"><?= htmlspecialchars($r['completed']) ?></span>
+                </div>
+                <h3 class="search-result-title"><?= htmlspecialchars($r['title']) ?></h3>
+                <p class="search-result-desc"><?= htmlspecialchars($r['description']) ?></p>
+                <p class="search-result-location"><i class="fa fa-map-marker"></i> <?= htmlspecialchars($r['location']) ?></p>
+              </div>
+            <?php endforeach; ?>
           </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
       </div>
-      <form class="project-searchbar" action="" method="get">
-        <input class="searchbar-input" type="text" name="project_search"
-          placeholder="Search Projects..."
-          value="<?= htmlspecialchars($_GET['project_search'] ?? '') ?>">
-        <button class="searchbar-btn" type="submit" aria-label="Search">
-          <i class="fa fa-search"></i>
-        </button>
-      </form>
     </section>
 
     <!-- FOOTNOTE -->

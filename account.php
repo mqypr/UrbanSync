@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+/* EXTRA FEATURE: User authentication system with session management,
+   password hashing (password_verify/password_hash), and account page */
 session_start();
 require_once './settings.php';
 $errors   = [];
