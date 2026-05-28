@@ -13,19 +13,15 @@ if (isset($_POST['login'])) {
     $stmt = mysqli_prepare($conn, "SELECT id, password, first_name FROM users WHERE email = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_store_result($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    if (mysqli_stmt_num_rows($stmt) === 1) {
-      $id              = 0;
-      $hashed_password = '';
-      $first_name      = '';
-      mysqli_stmt_bind_result($stmt, $id, $hashed_password, $first_name);
-      mysqli_stmt_fetch($stmt);
+    if (mysqli_num_rows($result) === 1) {
+      $row = mysqli_fetch_assoc($result);
 
-      if (password_verify($input_password, $hashed_password)) {
-        $_SESSION['user_id']    = $id;
+      if (password_verify($input_password, $row['password'])) {
+        $_SESSION['user_id']    = $row['id'];
         $_SESSION['email']      = $email;
-        $_SESSION['first_name'] = $first_name;
+        $_SESSION['first_name'] = $row['first_name'];
         mysqli_stmt_close($stmt);
         header("Location: ./index.php");
         exit;
@@ -35,7 +31,6 @@ if (isset($_POST['login'])) {
     } else {
       $error = "Incorrect email or password.";
     }
-
     mysqli_stmt_close($stmt);
   } else {
     $error = "Please fill in all fields.";
