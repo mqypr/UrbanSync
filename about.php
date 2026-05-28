@@ -239,7 +239,7 @@ $result = mysqli_query($conn, $query);
         <h2>Group Photo</h2>
 
         <figure>
-          <img src="Group photo.jpg" alt="UrbanSync group photo" width="300">
+          <img src="group-photo.jpg" alt="UrbanSync group photo" width="300">
           <figcaption>UrbanSync Group</figcaption>
         </figure>
       </section>
@@ -248,28 +248,7 @@ $result = mysqli_query($conn, $query);
   </main>
 
   <footer>
-    <div class="footer-container">
-
-      <div class="footer-column">
-        <h3 class="footer-column-title">Pages</h3>
-        <p class="footer-column-item"><a href="index.php">Home</a></p>
-        <p class="footer-column-item"><a href="jobs.php">Job Description</a></p>
-        <p class="footer-column-item"><a href="apply.php">Apply</a></p>
-        <p class="footer-column-item"><a href="about.php">About</a></p>
-      </div>
-
-      <div class="footer-column">
-        <h3 class="footer-column-title">Resources</h3>
-        <p class="footer-column-item"><a href="#">Github Repository</a></p>
-        <p class="footer-column-item"><a href="#">Jira</a></p>
-      </div>
-
-      <div class="footer-column">
-        <h3 class="footer-column-title">Contact Us</h3>
-        <p class="footer-column-item"><a href="mailto:your@email.com">Email</a></p>
-      </div>
-
-    </div>
+    <?php include "./footer.inc" ?>
   </footer>
 
 </body>
