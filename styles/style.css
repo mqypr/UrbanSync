@@ -796,13 +796,12 @@ footer {
 /* intro section */
 
 .index-intro {
+  margin: 7rem auto;
+  width: calc(100% - 5rem);
+  max-width: 1300px;
   border: none;
   border-radius: 2rem;
   background-color: var(--bg-secondary);
-  margin-top: 7rem;
-  margin-bottom: 7rem;
-  margin-left: 5rem;
-  margin-right: 5rem;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
@@ -1641,11 +1640,13 @@ footer {
   }
 
   .index-intro {
-    max-width: 600px;
     flex-direction: column;
     align-self: center;
-    margin: auto;
+    margin: 7rem auto;
+    width: calc(100% - 4rem);
+    max-width: 500px;
   }
+
 
   .index-intro-vid {
     padding: 0;
