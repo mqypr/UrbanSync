@@ -2,8 +2,6 @@
 // about.php
 // This page connects to the database and displays group member contributions.
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 session_start();
 require_once("settings.php");
 
