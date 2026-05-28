@@ -29,27 +29,6 @@ function clean_input(string $data): string
     return $data;
 }
 
-/* create table if not exists */
-$table = "CREATE TABLE IF NOT EXISTS eoi (
-    EOInumber INT AUTO_INCREMENT PRIMARY KEY,
-    jobRef VARCHAR(5),
-    firstName VARCHAR(20),
-    lastName VARCHAR(20),
-    dob VARCHAR(10),
-    gender VARCHAR(10),
-    address VARCHAR(40),
-    suburb VARCHAR(40),
-    state VARCHAR(5),
-    postcode VARCHAR(4),
-    email VARCHAR(100),
-    phone VARCHAR(12),
-    skills TEXT,
-    otherSkills TEXT,
-    status ENUM('New', 'Current', 'Final') DEFAULT 'New'
-)";
-
-mysqli_query($conn, $table);
-
 /* get form data */
 $jobRef = clean_input($_POST["jobRef"] ?? "");
 $firstName = clean_input($_POST["firstName"] ?? "");
