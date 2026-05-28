@@ -216,27 +216,34 @@ if (isset($_GET['project_search'])) {
         </div>
 
         <!-- ── Search ── -->
-        <div class="searchbar-wrapper" id="searchbar">
 
+        <div class="searchbar-wrapper" id="searchbar">
           <form class="project-searchbar" action="#searchbar" method="get">
             <input class="searchbar-input" type="text" name="project_search"
-              placeholder="<?= $searched && empty($search_results)
-                              ? 'No results for "' . htmlspecialchars($search) . '"'
-                              : 'Search Projects...' ?>"
-              value="<?= ($searched && empty($search_results))
-                        ? ''
-                        : htmlspecialchars($search) ?>">
+              placeholder="<?= ($searched && empty($search_results)) ? 'No results for "' . htmlspecialchars($search) . '"' : 'Search projects...' ?>"
+              value="<?= ($searched && empty($search_results)) ? '' : htmlspecialchars($search) ?>"
+              autocomplete="off">
             <button class="searchbar-btn" type="submit" aria-label="Search">
               <i class="fa fa-search"></i>
             </button>
           </form>
-
-          <?php if ($searched && !empty($search_results)): ?>
-            <div class="search-results">
-            </div>
-          <?php endif; ?>
-
         </div>
+        <?php if ($searched && !empty($search_results)): ?>
+          <div class="search-results-wrapper">
+            <p class="search-status">Showing results for <strong>"<?= htmlspecialchars($search) ?>"</strong></p>
+            <?php foreach ($search_results as $r): ?>
+              <div class="search-result-card">
+                <div class="search-result-meta">
+                  <span class="search-result-category"><?= htmlspecialchars($r['category']) ?></span>
+                  <span class="search-result-date"><?= htmlspecialchars($r['completed']) ?></span>
+                </div>
+                <h3 class="search-result-title"><?= htmlspecialchars($r['title']) ?></h3>
+                <p class="search-result-desc"><?= htmlspecialchars($r['description']) ?></p>
+                <p class="search-result-location"><i class="fa fa-map-marker"></i> <?= htmlspecialchars($r['location']) ?></p>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
       </div>
     </section>
 
