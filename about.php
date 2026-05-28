@@ -6,8 +6,6 @@ session_start();
 
 require_once("settings.php");
 
-// Connect to database
-$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
 // Check connection
 if (!$conn) {
@@ -294,7 +292,7 @@ $result = mysqli_query($conn, $query);
         <h2>Group Photo</h2>
 
         <figure>
-          <img src="group-photo.jpg" alt="UrbanSync group photo" width="300">
+          <img src="./images/group-photo.jpg" alt="UrbanSync group photo" width="300">
           <figcaption>UrbanSync Group</figcaption>
         </figure>
       </section>
@@ -302,9 +300,7 @@ $result = mysqli_query($conn, $query);
     </div>
   </main>
 
-  <footer>
-    <?php include "./footer.inc" ?>
-  </footer>
+  <?php include "./footer.inc" ?>
 
 </body>
 
