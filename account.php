@@ -7,6 +7,16 @@ $success = false;
 $code_sent = false;
 $code_error = '';
 
+$user = [
+  "first_name" => "",
+  "last_name" => "",
+  "dob" => "",
+  "gender" => "",
+  "email" => "",
+  "phone_code" => "+61",
+  "phone" => ""
+];
+
 /* Auth guard */
 if (!isset($_SESSION['user_id']) && !isset($_SESSION["manager"])) {
   header('Location: ./login.php');
@@ -36,7 +46,7 @@ if (!empty($_SESSION['changed'])) {
 }
 
 /* fetch latest user row */
-function fetch_user($conn, $id)
+function fetch_user(mysqli $conn, int $id): array
 {
   $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, email, phone_code, phone FROM users WHERE id = ?");
   mysqli_stmt_bind_param($s, "i", $id);
@@ -44,6 +54,19 @@ function fetch_user($conn, $id)
   $r = mysqli_stmt_get_result($s);
   $row = mysqli_fetch_assoc($r);
   mysqli_stmt_close($s);
+
+  if (!$row) {
+    return [
+      "first_name" => "",
+      "last_name" => "",
+      "dob" => "",
+      "gender" => "",
+      "email" => "",
+      "phone_code" => "+61",
+      "phone" => ""
+    ];
+  }
+
   return $row;
 }
 
@@ -197,7 +220,7 @@ $attempted = isset($_POST['save_all']);
 $new_pw_display = $_POST['new_password'] ?? '';
 $conf_pw_display = $_POST['confirm_new_password'] ?? '';
 
-function pw_class($test)
+function pw_class(bool $test): string
 {
   return $test ? 'pw-rule-pass' : 'pw-rule-fail';
 }
@@ -215,6 +238,36 @@ function pw_class($test)
   <link rel="icon" type="image/x-icon" href="/images/logo.ico">
 </head>
 
+<style>
+
+    .navbar {
+      background: none;
+    }
+
+    .navbar-link-item,
+    label.navbar-link-vert-item {
+      color: white;
+    }
+
+    .menu-toggle-input:checked~.navbar-link-item,
+    .menu-toggle-input:checked~label.navbar-link-item,
+    .navbar-settings-dropdown,
+    .navbar-link-item:hover,
+    .navbar-settings:hover .navbar-link-item {
+      background: rgba(220, 239, 241, 0.2);
+      border: none;
+      box-shadow: 0 8px 24px var(--shadow);
+    }
+
+    .error-text {
+      color: #ff4d4d;
+      font-size: 14px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+  </style>
+  
 <body class='s-body'>
 
 <?php include "./header.inc" ?>
