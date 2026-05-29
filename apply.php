@@ -77,9 +77,30 @@ unset($_SESSION['old']);
 
         <!-- Job Reference Number -->
         <label for="jobRef">Job Reference Number:</label>
-        <input type="text" id="jobRef" name="jobRef"
-          value="<?php echo htmlspecialchars($old['jobRef'] ?? ''); ?>"
-          pattern="[A-Za-z0-9]{5}" required>
+
+        <select id="jobRef" name="jobRef" required>
+
+          <option value="">Select Job Reference</option>
+
+          <?php
+          $jobQuery = "SELECT reference_number FROM opened_jobs ORDER BY reference_number ASC";
+          $jobResult = mysqli_query($conn, $jobQuery);
+
+          while ($jobRow = mysqli_fetch_assoc($jobResult)) {
+
+            $selected = "";
+
+            if (($old['jobRef'] ?? '') == $jobRow['reference_number']) {
+              $selected = "selected";
+            }
+
+            echo "<option value='" . htmlspecialchars($jobRow['reference_number']) . "' $selected>";
+            echo htmlspecialchars($jobRow['reference_number']);
+            echo "</option>";
+          }
+          ?>
+
+        </select>
 
         <?php
         if (isset($errors["jobRef"])) {
