@@ -47,7 +47,7 @@ $phone = clean_input($_POST["phone"] ?? "");
 
 $skills = "";
 $otherSkills = "";
-
+    
 if (isset($_POST["skills"])) {
     $skills = implode(", ", $_POST["skills"]);
     $skills = clean_input($skills);
@@ -184,7 +184,7 @@ mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">     
 
 <head>
 

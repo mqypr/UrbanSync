@@ -1,4 +1,3 @@
-```php
 <?php
 session_start();
 require_once './settings.php';
@@ -315,4 +314,3 @@ unset($_SESSION['old']);
 </body>
 
 </html>
-```
