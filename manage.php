@@ -125,6 +125,7 @@ mysqli_stmt_close($stmt);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage EOIs - UrbanSync</title>
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/x-icon" href="/images/logo.ico">
 
     <style>
@@ -252,145 +253,146 @@ mysqli_stmt_close($stmt);
 
 <body class="s-body <?php echo (($_COOKIE['dark_mode'] ?? '0') === '1') ? 'dark-mode' : ''; ?>">
 
-<?php include "header.inc"; ?>
+    <?php include "header.inc"; ?>
 
-<main class="account-main">
+    <main class="account-main">
 
-    <section class="apply-form-section apply-card">
+        <section class="apply-form-section apply-card">
 
-        <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
+            <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
 
-        <h1 class="account-title">Manage EOIs</h1>
+            <h1 class="account-title">Manage EOIs</h1>
 
-        <p class="account-subtitle">
-            HR Manager Panel
-        </p>
+            <p class="account-subtitle">
+                HR Manager Panel
+            </p>
 
-        <?php
-        if ($message != "") {
-            echo "<p class='manage-message'>" . htmlspecialchars($message) . "</p>";
-        }
-        ?>
+            <?php
+            if ($message != "") {
+                echo "<p class='manage-message'>" . htmlspecialchars($message) . "</p>";
+            }
+            ?>
 
-        <div class="manage-dashboard">
+            <div class="manage-dashboard">
 
-            <div class="manage-grid">
+                <div class="manage-grid">
 
-                <div class="manage-box">
+                    <div class="manage-box">
 
-                    <h2>Search EOIs</h2>
+                        <h2>Search EOIs</h2>
 
-                    <form class="account-form" method="get" action="manage.php">
+                        <form class="account-form" method="get" action="manage.php">
 
-                        <label for="jobRef">Job Reference</label>
-                        <input type="text" id="jobRef" name="jobRef"
-                            value="<?php echo htmlspecialchars($_GET["jobRef"] ?? ""); ?>">
+                            <label for="jobRef">Job Reference</label>
+                            <input type="text" id="jobRef" name="jobRef"
+                                value="<?php echo htmlspecialchars($_GET["jobRef"] ?? ""); ?>">
 
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName"
-                            value="<?php echo htmlspecialchars($_GET["firstName"] ?? ""); ?>">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName"
+                                value="<?php echo htmlspecialchars($_GET["firstName"] ?? ""); ?>">
 
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName"
-                            value="<?php echo htmlspecialchars($_GET["lastName"] ?? ""); ?>">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName"
+                                value="<?php echo htmlspecialchars($_GET["lastName"] ?? ""); ?>">
 
-                        <label for="sort">Sort By</label>
-                        <select id="sort" name="sort">
-                            <option value="EOInumber" <?php if ($sort == "EOInumber") echo "selected"; ?>>EOI Number</option>
-                            <option value="jobRef" <?php if ($sort == "jobRef") echo "selected"; ?>>Job Reference</option>
-                            <option value="firstName" <?php if ($sort == "firstName") echo "selected"; ?>>First Name</option>
-                            <option value="lastName" <?php if ($sort == "lastName") echo "selected"; ?>>Last Name</option>
-                            <option value="status" <?php if ($sort == "status") echo "selected"; ?>>Status</option>
-                        </select>
+                            <label for="sort">Sort By</label>
+                            <select id="sort" name="sort">
+                                <option value="EOInumber" <?php if ($sort == "EOInumber") echo "selected"; ?>>EOI Number</option>
+                                <option value="jobRef" <?php if ($sort == "jobRef") echo "selected"; ?>>Job Reference</option>
+                                <option value="firstName" <?php if ($sort == "firstName") echo "selected"; ?>>First Name</option>
+                                <option value="lastName" <?php if ($sort == "lastName") echo "selected"; ?>>Last Name</option>
+                                <option value="status" <?php if ($sort == "status") echo "selected"; ?>>Status</option>
+                            </select>
 
-                        <input type="submit" name="search" value="Search / List EOIs">
+                            <input type="submit" name="search" value="Search / List EOIs">
 
-                    </form>
+                        </form>
+
+                    </div>
+
+                    <div class="manage-box">
+
+                        <h2>Delete EOIs by Job Reference</h2>
+
+                        <form class="account-form" method="post" action="manage.php">
+
+                            <label for="deleteJobRef">Job Reference</label>
+                            <input type="text" id="deleteJobRef" name="deleteJobRef" required>
+
+                            <input type="submit" name="delete_by_job" value="Delete EOIs">
+
+                        </form>
+
+                    </div>
 
                 </div>
 
-                <div class="manage-box">
+                <div class="manage-table-wrapper">
 
-                    <h2>Delete EOIs by Job Reference</h2>
+                    <table class="manage-table">
 
-                    <form class="account-form" method="post" action="manage.php">
+                        <tr>
+                            <th>EOI Number</th>
+                            <th>Job Ref</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Change Status</th>
+                        </tr>
 
-                        <label for="deleteJobRef">Job Reference</label>
-                        <input type="text" id="deleteJobRef" name="deleteJobRef" required>
+                        <?php
+                        if (empty($results)) {
+                            echo "<tr><td colspan='7'>No EOIs found.</td></tr>";
+                        }
 
-                        <input type="submit" name="delete_by_job" value="Delete EOIs">
+                        foreach ($results as $row) {
+                        ?>
 
-                    </form>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row["EOInumber"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["jobRef"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["firstName"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["lastName"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["email"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["status"]); ?></td>
+
+                                <td>
+                                    <form class="manage-small-form" method="post" action="manage.php">
+
+                                        <input type="hidden" name="eoiId"
+                                            value="<?php echo htmlspecialchars($row["EOInumber"]); ?>">
+
+                                        <select name="newStatus">
+                                            <option value="New" <?php if ($row["status"] == "New") echo "selected"; ?>>New</option>
+                                            <option value="Current" <?php if ($row["status"] == "Current") echo "selected"; ?>>Current</option>
+                                            <option value="Final" <?php if ($row["status"] == "Final") echo "selected"; ?>>Final</option>
+                                        </select>
+
+                                        <button type="submit" name="update_status" value="1">
+                                            Update
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+
+                        <?php
+                        }
+                        ?>
+
+                    </table>
 
                 </div>
 
             </div>
 
-            <div class="manage-table-wrapper">
+        </section>
 
-                <table class="manage-table">
+    </main>
 
-                    <tr>
-                        <th>EOI Number</th>
-                        <th>Job Ref</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Change Status</th>
-                    </tr>
-
-                    <?php
-                    if (empty($results)) {
-                        echo "<tr><td colspan='7'>No EOIs found.</td></tr>";
-                    }
-
-                    foreach ($results as $row) {
-                    ?>
-
-                    <tr>
-                        <td><?php echo htmlspecialchars($row["EOInumber"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["jobRef"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["firstName"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["lastName"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["email"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["status"]); ?></td>
-
-                        <td>
-                            <form class="manage-small-form" method="post" action="manage.php">
-
-                                <input type="hidden" name="eoiId"
-                                    value="<?php echo htmlspecialchars($row["EOInumber"]); ?>">
-
-                                <select name="newStatus">
-                                    <option value="New" <?php if ($row["status"] == "New") echo "selected"; ?>>New</option>
-                                    <option value="Current" <?php if ($row["status"] == "Current") echo "selected"; ?>>Current</option>
-                                    <option value="Final" <?php if ($row["status"] == "Final") echo "selected"; ?>>Final</option>
-                                </select>
-
-                                <button type="submit" name="update_status" value="1">
-                                    Update
-                                </button>
-
-                            </form>
-                        </td>
-                    </tr>
-
-                    <?php
-                    }
-                    ?>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-<?php include "footer.inc"; ?>
+    <?php include "footer.inc"; ?>
 
 </body>
+
 </html>
