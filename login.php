@@ -1,64 +1,57 @@
 <?php
 session_start();
 require_once './settings.php';
-
 $error = '';
 
 if (isset($_POST['login'])) {
-
-  $email = trim($_POST['email']);
+  $email          = trim($_POST['email']);
   $input_password = $_POST['password'];
 
-  if (!empty($email) && !empty($input_password)) {
+  if (empty($email) || empty($input_password)) {
+    $error = "Please fill in all fields.";
+  } else {
 
-    /* manager login */
-    if ($email == "admin" && $input_password == "admin") {
-
-      $_SESSION["manager"] = true;
-
-      header("Location: ./manage.php");
-      exit;
-    }
-
-    /* normal user login */
-    $stmt = mysqli_prepare($conn, "SELECT id, password, first_name FROM users WHERE email = ?");
-
+    /* ── Manager login ── */
+    $stmt = mysqli_prepare($conn, "SELECT id, password FROM manager_users WHERE username = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
-
     mysqli_stmt_execute($stmt);
-
     $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) === 1) {
-
       $row = mysqli_fetch_assoc($result);
-
       if (password_verify($input_password, $row['password'])) {
-
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['email'] = $email;
-        $_SESSION['first_name'] = $row['first_name'];
-
+        session_regenerate_id(true);
+        $_SESSION['manager']    = true;
+        $_SESSION['manager_id'] = $row['id'];
         mysqli_stmt_close($stmt);
-
-        header("Location: ./index.php");
+        header("Location: ./manage.php");
         exit;
-
-      } else {
-
-        $error = "Incorrect email or password.";
       }
-
-    } else {
-
-      $error = "Incorrect email or password.";
     }
-
     mysqli_stmt_close($stmt);
 
-  } else {
+    /* ── Normal user login ── */
+    $stmt = mysqli_prepare($conn, "SELECT id, password, first_name FROM users WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    $error = "Please fill in all fields.";
+    if (mysqli_num_rows($result) === 1) {
+      $row = mysqli_fetch_assoc($result);
+      if (password_verify($input_password, $row['password'])) {
+        session_regenerate_id(true);
+        $_SESSION['user_id']    = $row['id'];
+        $_SESSION['email']      = $email;
+        $_SESSION['first_name'] = $row['first_name'];
+        mysqli_stmt_close($stmt);
+        header("Location: ./index.php");
+        exit;
+      }
+    }
+    mysqli_stmt_close($stmt);
+
+    /* ── Both failed ── */
+    $error = "Incorrect email or password.";
   }
 }
 ?>
@@ -83,91 +76,88 @@ if (isset($_POST['login'])) {
 </head>
 
 <style>
-        .navbar {
-            background: none;
-        }
+  .navbar {
+    background: none;
+  }
 
-        .navbar-link-item,
-        label.navbar-link-vert-item {
-            color: white;
-        }
+  .navbar-link-item,
+  label.navbar-link-vert-item {
+    color: white;
+  }
 
-        .menu-toggle-input:checked~.navbar-link-item,
-        .menu-toggle-input:checked~label.navbar-link-item,
-        .navbar-settings-dropdown,
-        .navbar-link-item:hover,
-        .navbar-settings:hover .navbar-link-item {
-            background: rgba(220, 239, 241, 0.2);
-            border: none;
-            box-shadow: 0 8px 24px var(--shadow);
-        }
-        
-    </style>
+  .menu-toggle-input:checked~.navbar-link-item,
+  .menu-toggle-input:checked~label.navbar-link-item,
+  .navbar-settings-dropdown,
+  .navbar-link-item:hover,
+  .navbar-settings:hover .navbar-link-item {
+    background: rgba(220, 239, 241, 0.2);
+    border: none;
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+</style>
 
 <body class='s-body'>
 
-<?php include "./header.inc" ?>
+  <?php include "./header.inc" ?>
 
-<main class="login-main">
+  <main class="login-main">
 
-  <div class="login-card">
+    <div class="login-card">
 
-    <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
+      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
 
-    <h1 class="login-title">Sign In</h1>
+      <h1 class="login-title">Sign In</h1>
 
-    <p class="login-subtitle">Welcome back to UrbanSync</p>
+      <p class="login-subtitle">Welcome back to UrbanSync</p>
 
-    <form class="login-form" action="" method="post">
+      <form class="login-form" action="" method="post">
 
-      <?php if ($error): ?>
-        <p class="login-error"><?= htmlspecialchars($error) ?></p>
-      <?php endif; ?>
+        <?php if ($error): ?>
+          <p class="login-error"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
 
-      <label class="login-label" for="email">Email / Admin</label>
+        <label class="login-label" for="email">Email / Username</label>
 
-      <input
-        class="login-input"
-        type="text"
-        id="email"
-        name="email"
-        placeholder="Enter your email or admin"
-        value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
-        required
-      >
+        <input
+          class="login-input"
+          type="text"
+          id="email"
+          name="email"
+          placeholder="Enter your email or username"
+          value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+          required>
 
-      <label class="login-label" for="password">Password</label>
+        <label class="login-label" for="password">Password</label>
 
-      <input
-        class="login-input"
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Enter your password"
-        required
-      >
+        <input
+          class="login-input"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required>
 
-      <button class="login-button" type="submit" name="login" value="1">
-        Sign In
-      </button>
+        <button class="login-button" type="submit" name="login" value="1">
+          Sign In
+        </button>
 
-    </form>
+      </form>
 
-    <p class="login-register">
+      <p class="login-register">
 
-      Not registered?
+        Not registered?
 
-      <a class="login-register-link" href="./signup.php">
-        Create an account
-      </a>
+        <a class="login-register-link" href="./signup.php">
+          Create an account
+        </a>
 
-    </p>
+      </p>
 
-  </div>
+    </div>
 
-</main>
+  </main>
 
-<?php include "footer.inc" ?>
+  <?php include "footer.inc" ?>
 
 </body>
 
