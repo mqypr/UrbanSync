@@ -292,7 +292,7 @@ $result = mysqli_query($conn, $query);
         <h2>Group Photo</h2>
 
         <figure>
-          <img src="./images/group-photo.jpg" alt="UrbanSync group photo" width="300">
+          <img src="./images/group_photo.jpeg" alt="UrbanSync group photo" width="300">
           <figcaption>UrbanSync Group</figcaption>
         </figure>
       </section>

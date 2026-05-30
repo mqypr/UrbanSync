@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 28, 2026 at 03:14 AM
+-- Generation Time: May 30, 2026 at 09:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,7 +32,7 @@ CREATE TABLE `about_contributions` (
   `name` varchar(100) DEFAULT NULL,
   `student_id` varchar(20) DEFAULT NULL,
   `first_project` varchar(255) DEFAULT NULL,
-  `second_project` varchar(255) DEFAULT NULL
+  `second_project` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -41,9 +41,85 @@ CREATE TABLE `about_contributions` (
 
 INSERT INTO `about_contributions` (`id`, `name`, `student_id`, `first_project`, `second_project`) VALUES
 (1, 'MD Areen Chowdhury', '105693861', 'Developed about.html page for Project 1', 'Converted about.html to about.php and loaded member contributions from the database'),
-(2, 'Reach Peng', '106382377', 'Developed index.html page for Project 1', 'Updated index page for Project 2'),
+(2, 'Reach Peng', '106382377', 'Developed index.html page for Project 1', 'Updated index page for Project 2\nBuilt the DB-driven projects carousel on the home page, loading project data dynamically from MySQL\nImplemented the project search feature on the home page using prepared statements to prevent SQL injection\nDesigned and implemented the dark/light mode toggle system persisted via cookies across all pages\nBuilt the user authentication system including login.php, signup.php, and account.php with password hashing\nImplemented the sticky search bar UI with result cards showing category, date, location, and description\nManaged and maintained the overall CSS design system including CSS variables, dark/light theming, responsive layout, and component styles\nSet up and structured the MySQL database including the projects table and users table\nWrote and maintained settings.php for centralised database connection handling\nHandled security across the site including htmlspecialchars output escaping and prepared statements throughout index.php\n'),
 (3, 'Liron Roshain Joanic Willathgamuwa', '105987496', 'Developed apply.html page for Project 1', 'Updated apply page for Project 2'),
 (4, 'Dylan Kelly', '105332711', 'Developed jobs.html page for Project 1', 'Updated jobs page for Project 2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eoi`
+--
+
+CREATE TABLE `eoi` (
+  `EOInumber` int(11) NOT NULL,
+  `jobRef` varchar(5) DEFAULT NULL,
+  `firstName` varchar(20) DEFAULT NULL,
+  `lastName` varchar(20) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `address` varchar(40) DEFAULT NULL,
+  `suburb` varchar(40) DEFAULT NULL,
+  `state` varchar(5) DEFAULT NULL,
+  `postcode` varchar(4) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(12) DEFAULT NULL,
+  `skills` text DEFAULT NULL,
+  `otherSkills` text DEFAULT NULL,
+  `status` enum('New','Current','Final') DEFAULT 'New'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `eoi`
+--
+
+INSERT INTO `eoi` (`EOInumber`, `jobRef`, `firstName`, `lastName`, `dob`, `gender`, `address`, `suburb`, `state`, `postcode`, `email`, `phone`, `skills`, `otherSkills`, `status`) VALUES
+(1, '42461', 'Liron', 'WILLATHGAMUWA', '25/01/2007', 'Male', '43 Valley Fair Dr, Narre Warren VIC 3805', 'Narre Warren', 'VIC', '3805', 'roshainwillathgamuwa11@gmail.com', '0493857099', 'Programming', '', 'New');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `manager_users`
+--
+
+CREATE TABLE `manager_users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `manager_users`
+--
+
+INSERT INTO `manager_users` (`id`, `username`, `password`) VALUES
+(1, 'admin', '$2y$10$q3FfvBI.6mDnC/rOThttmeqVewO7wbDaBts4shI4DjtX079P7Cvy2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opened_jobs`
+--
+
+CREATE TABLE `opened_jobs` (
+  `reference_number` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `short_description` varchar(1000) NOT NULL,
+  `salary` varchar(20) NOT NULL,
+  `reporting_line` varchar(2000) NOT NULL,
+  `responsobilities` varchar(2000) NOT NULL,
+  `requirements` varchar(2000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `opened_jobs`
+--
+
+INSERT INTO `opened_jobs` (`reference_number`, `title`, `short_description`, `salary`, `reporting_line`, `responsobilities`, `requirements`) VALUES
+(1, 'Frontend Web Developer', 'Build and maintain clean, responsive interfaces for company websites.', '70,000^85,000', 'Engineering Manager^Technical Lead^Product Manager', 'Building front end interfaces^Ensuring accessible and intuitive designs are implemented into the user experience', 'Effective communication for team collaboration^High adaptability to new technologies^A methodical approach to debugging and creating responsive, accessible websites'),
+(2, 'IT Support Officer', 'Provide technical support and help staff resolve hardware and software issues.', '55,000^68,000', 'IT Manager^IT Support Manager^Service Desk Manager', 'Installing, configuring, and maintaining hardware (computers, printers, routers) and software systems^Troubleshooting technical issues to minimize downtime', 'Problem-solving mindset^Excellent communication abilities^Patience'),
+(3, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '62000^74000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics'),
+(10056, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '73,000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics');
 
 -- --------------------------------------------------------
 
@@ -108,6 +184,25 @@ ALTER TABLE `about_contributions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `eoi`
+--
+ALTER TABLE `eoi`
+  ADD PRIMARY KEY (`EOInumber`);
+
+--
+-- Indexes for table `manager_users`
+--
+ALTER TABLE `manager_users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `opened_jobs`
+--
+ALTER TABLE `opened_jobs`
+  ADD PRIMARY KEY (`reference_number`);
+
+--
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
@@ -131,6 +226,24 @@ ALTER TABLE `users`
 --
 ALTER TABLE `about_contributions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `eoi`
+--
+ALTER TABLE `eoi`
+  MODIFY `EOInumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `manager_users`
+--
+ALTER TABLE `manager_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `opened_jobs`
+--
+ALTER TABLE `opened_jobs`
+  MODIFY `reference_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10057;
 
 --
 -- AUTO_INCREMENT for table `projects`
