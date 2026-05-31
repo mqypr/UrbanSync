@@ -1,29 +1,44 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 session_start();
 require_once './settings.php';
-$errors   = [];
-$success  = false;
-$code_sent  = false;
+
+$errors = [];
+$success = false;
+$code_sent = false;
 $code_error = '';
-$user_id  = $_SESSION['user_id'];
+
+$user = [
+  "first_name" => "",
+  "last_name" => "",
+  "dob" => "",
+  "gender" => "",
+  "email" => "",
+  "phone_code" => "+61",
+  "phone" => ""
+];
 
 /* Auth guard */
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) && !isset($_SESSION["manager"])) {
   header('Location: ./login.php');
   exit;
 }
 
+$is_admin = isset($_SESSION["manager"]);
+
+if ($is_admin) {
+  $user_id = (int)$_SESSION["manager_id"];
+} else {
+  $user_id = (int)$_SESSION['user_id'];
+}
+
 /* notification */
-$success = false;
 if (!empty($_SESSION['changed'])) {
   $success = true;
   unset($_SESSION['changed']);
 }
 
 /* fetch latest user row */
-function fetch_user($conn, $id)
+function fetch_user(mysqli $conn, int $id): array
 {
   $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, email, phone_code, phone FROM users WHERE id = ?");
   mysqli_stmt_bind_param($s, "i", $id);
@@ -31,61 +46,97 @@ function fetch_user($conn, $id)
   $r = mysqli_stmt_get_result($s);
   $row = mysqli_fetch_assoc($r);
   mysqli_stmt_close($s);
+
+  if (!$row) {
+    return [
+      "first_name" => "",
+      "last_name" => "",
+      "dob" => "",
+      "gender" => "",
+      "email" => "",
+      "phone_code" => "+61",
+      "phone" => ""
+    ];
+  }
+
   return $row;
 }
 
-$user = fetch_user($conn, $user_id);
+/* fetch latest admin row */
+function fetch_admin(mysqli $conn, int $id): array
+{
+  $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, username AS email, phone_code, phone FROM manager_users WHERE id = ?");
+  mysqli_stmt_bind_param($s, "i", $id);
+  mysqli_stmt_execute($s);
+  $r = mysqli_stmt_get_result($s);
+  $row = mysqli_fetch_assoc($r);
+  mysqli_stmt_close($s);
 
-/* Send verification code */
-if (isset($_POST['send_code'])) {
+  if (!$row) {
+    return [
+      "first_name" => "",
+      "last_name" => "",
+      "dob" => "",
+      "gender" => "",
+      "email" => "",
+      "phone_code" => "",
+      "phone" => ""
+    ];
+  }
+
+  return $row;
+}
+
+if ($is_admin) {
+  $user = fetch_admin($conn, $user_id);
+} else {
+  $user = fetch_user($conn, $user_id);
+}
+
+/* Send verification code - normal users only */
+if (isset($_POST['send_code']) && !$is_admin) {
   $email_for_code = filter_var(trim($_POST['email_for_code']), FILTER_SANITIZE_EMAIL);
 
   if (!filter_var($email_for_code, FILTER_VALIDATE_EMAIL)) {
     $code_error = "Please enter a valid email address before sending a code.";
   } else {
     $code = str_pad(random_int(0, 999999), 6, '2', STR_PAD_LEFT);
-    $_SESSION['verify_code']  = $code;
+    $_SESSION['verify_code'] = $code;
     $_SESSION['verify_email'] = $email_for_code;
-    $_SESSION['code_expiry']  = time() + 600;
+    $_SESSION['code_expiry'] = time() + 600;
     $code_sent = true;
   }
 }
 
-/* ── Save all changes ── */
+/* Save all changes */
 if (isset($_POST['save_all'])) {
-  $first      = trim(ucfirst(strtolower($_POST['first_name'])));
-  $last       = trim(ucfirst(strtolower($_POST['last_name'])));
-  $dob        = $_POST['dob'];
-  $gender     = $_POST['gender'];
-  $new_email  = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+  $first = trim(ucfirst(strtolower($_POST['first_name'])));
+  $last = trim(ucfirst(strtolower($_POST['last_name'])));
+  $dob = $_POST['dob'];
+  $gender = $_POST['gender'];
+  $new_email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
   $phone_code = trim($_POST['phone_code'] ?? '+61');
-  $phone      = trim($_POST['phone']);
-  $cur_pw     = $_POST['current_password']    ?? '';
-  $new_pw     = $_POST['new_password']        ?? '';
-  $conf_pw    = $_POST['confirm_new_password'] ?? '';
+  $phone = trim($_POST['phone']);
+  $cur_pw = $_POST['current_password'] ?? '';
+  $new_pw = $_POST['new_password'] ?? '';
+  $conf_pw = $_POST['confirm_new_password'] ?? '';
 
-  /* Basic field checks */
-  if (empty($first))  $errors[] = "First name is required.";
-  if (empty($last))   $errors[] = "Last name is required.";
-  if (empty($dob))    $errors[] = "Date of birth is required.";
-  if (empty($gender)) $errors[] = "Please select a gender.";
-  if (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email address.";
+  if (empty($first)) $errors[] = "First name is required.";
+  if (empty($last)) $errors[] = "Last name is required.";
+  if (empty($new_email)) $errors[] = "Email / username is required.";
 
-  $check = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
-  mysqli_stmt_bind_param($check, "s", $email);
-  mysqli_stmt_execute($check);
-  mysqli_stmt_store_result($check);
-  if (mysqli_stmt_num_rows($check) > 0) {
-    $errors[] = "An account with that email already exists.";
+  if (!$is_admin) {
+    if (empty($dob)) $errors[] = "Date of birth is required.";
+    if (empty($gender)) $errors[] = "Please select a gender.";
+    if (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email address.";
+    if (empty($phone)) $errors[] = "Phone number is required.";
   }
-  mysqli_stmt_close($check);
 
-  if (empty($phone))  $errors[] = "Phone number is required.";
-
-  /* verification code */
   $email_changed = ($new_email !== $user['email']);
-  if ($email_changed) {
+
+  if (!$is_admin && $email_changed) {
     $entered_code = trim($_POST['verify_code'] ?? '');
+
     if (empty($entered_code)) {
       $errors[] = "Please enter the verification code sent to your new email.";
     } elseif (!isset($_SESSION['verify_code'])) {
@@ -99,59 +150,95 @@ if (isset($_POST['save_all'])) {
     }
   }
 
-  /* Password change */
   $change_pw = !empty($cur_pw) || !empty($new_pw);
+
   if ($change_pw) {
-    $ps = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
+    if ($is_admin) {
+      $ps = mysqli_prepare($conn, "SELECT password FROM manager_users WHERE id = ?");
+    } else {
+      $ps = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
+    }
+
     mysqli_stmt_bind_param($ps, "i", $user_id);
     mysqli_stmt_execute($ps);
     $pr = mysqli_stmt_get_result($ps);
     $pw_row = mysqli_fetch_assoc($pr);
     mysqli_stmt_close($ps);
 
-    if (!password_verify($cur_pw, $pw_row['password'])) {
+    if (!$pw_row || !password_verify($cur_pw, $pw_row['password'])) {
       $errors[] = "Current password is incorrect.";
     } else {
-      if (strlen($new_pw) < 8)            $errors[] = "New password must be at least 8 characters.";
+      if (strlen($new_pw) < 8) $errors[] = "New password must be at least 8 characters.";
       if (!preg_match('/[A-Z]/', $new_pw)) $errors[] = "New password must contain an uppercase letter.";
       if (!preg_match('/[a-z]/', $new_pw)) $errors[] = "New password must contain a lowercase letter.";
       if (!preg_match('/[0-9]/', $new_pw)) $errors[] = "New password must contain a number.";
       if (!preg_match('/[\W_]/', $new_pw)) $errors[] = "New password must contain a symbol.";
-      if ($new_pw !== $conf_pw)            $errors[] = "New passwords do not match.";
+      if ($new_pw !== $conf_pw) $errors[] = "New passwords do not match.";
     }
   }
 
   if (empty($errors)) {
-    if ($change_pw) {
-      $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
-      $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, password=? WHERE id=?");
-      mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
+
+    if ($is_admin) {
+
+      if ($change_pw) {
+        $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
+
+        $upd = mysqli_prepare($conn, "UPDATE manager_users SET first_name=?, last_name=?, dob=?, gender=?, username=?, phone_code=?, phone=?, password=? WHERE id=?");
+
+        mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
+
+      } else {
+
+        $upd = mysqli_prepare($conn, "UPDATE manager_users SET first_name=?, last_name=?, dob=?, gender=?, username=?, phone_code=?, phone=? WHERE id=?");
+
+        mysqli_stmt_bind_param($upd, "sssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
+      }
+
     } else {
-      $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=? WHERE id=?");
-      mysqli_stmt_bind_param($upd, "sssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
+
+      if ($change_pw) {
+        $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
+
+        $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, password=? WHERE id=?");
+
+        mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
+
+      } else {
+
+        $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=? WHERE id=?");
+
+        mysqli_stmt_bind_param($upd, "sssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
+      }
     }
+
     mysqli_stmt_execute($upd);
     mysqli_stmt_close($upd);
 
-    if ($email_changed) {
+    $_SESSION['changed'] = true;
+
+    if (!$is_admin && $email_changed) {
       unset($_SESSION['verify_code'], $_SESSION['verify_email'], $_SESSION['code_expiry']);
     }
-  } else {
-    $_SESSION['changed'] = true;
+
     header("Location: ./account.php");
     exit;
   }
 }
 
-/* -- Signout -- */
+/* Signout */
 if (isset($_POST['signout'])) {
+  unset($_SESSION["manager"]);
+  unset($_SESSION["manager_id"]);
+  session_unset();
   session_destroy();
+
   header("location:./index.php");
   exit;
 }
 
-/* ── Delete account ── */
-if (isset($_POST['delete_account'])) {
+/* Delete account - normal users only */
+if (isset($_POST['delete_account']) && !$is_admin) {
   $del_pw = $_POST['delete_password'] ?? '';
 
   $ps = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
@@ -168,22 +255,24 @@ if (isset($_POST['delete_account'])) {
     mysqli_stmt_bind_param($del, "i", $user_id);
     mysqli_stmt_execute($del);
     mysqli_stmt_close($del);
+
     session_destroy();
-    header('Location: ./index.php?deleted=1'); /*flag*/
+
+    header('Location: ./index.php?deleted=1');
     exit;
   }
 }
 
-/* ── Password rule helper ── */
 $attempted = isset($_POST['save_all']);
-$new_pw_display  = $_POST['new_password']         ?? '';
-$conf_pw_display = $_POST['confirm_new_password']  ?? '';
+$new_pw_display = $_POST['new_password'] ?? '';
+$conf_pw_display = $_POST['confirm_new_password'] ?? '';
 
-function pw_class($test)
+function pw_class(bool $test): string
 {
   return $test ? 'pw-rule-pass' : 'pw-rule-fail';
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -192,158 +281,191 @@ function pw_class($test)
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Account - UrbanSync</title>
-  <link rel="icon" type="image/x-icon" href="/images/logo.ico">
+  <title>Job Application - UrbanSync</title>
+  <link rel="icon" type="image/x-icon" href="./images/logo.ico">
+  <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+  <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
 </head>
 
+<style>
+  .navbar {
+    background: none;
+  }
+
+  .navbar-link-item,
+  label.navbar-link-vert-item {
+    color: white;
+  }
+
+  .menu-toggle-input:checked~.navbar-link-item,
+  .menu-toggle-input:checked~label.navbar-link-item,
+  .navbar-settings-dropdown,
+  .navbar-link-item:hover,
+  .navbar-settings:hover .navbar-link-item {
+    background: rgba(220, 239, 241, 0.2);
+    border: none;
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+
+  .error-text {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+</style>
+
 <body class='s-body'>
-  <?php include "./header.inc" ?>
 
-  <main class="account-main">
-    <div class="account-card">
+<?php include "./header.inc" ?>
 
-      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
+<main class="account-main">
+  <div class="account-card">
+
+    <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
+
+    <?php if ($is_admin): ?>
+      <h1 class="account-title">Admin Account</h1>
+      <p class="account-subtitle">Manage your UrbanSync admin profile</p>
+    <?php else: ?>
       <h1 class="account-title">Account Settings</h1>
       <p class="account-subtitle">Manage your UrbanSync profile</p>
+    <?php endif; ?>
 
-      <?php if ($success): ?>
-        <div class="account-success">Changes saved successfully!</div>
-      <?php endif; ?>
+    <?php if ($success): ?>
+      <div class="account-success">Changes saved successfully!</div>
+    <?php endif; ?>
 
-      <?php if (!empty($errors)): ?>
-        <ul class="account-errors">
-          <?php foreach ($errors as $e): ?>
-            <li><?= htmlspecialchars($e) ?></li>
-          <?php endforeach; ?>
-        </ul>
-      <?php endif; ?>
+    <?php if (!empty($errors)): ?>
+      <ul class="account-errors">
+        <?php foreach ($errors as $e): ?>
+          <li><?= htmlspecialchars($e) ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
 
-      <!-- MAIN SETTINGS FORM -->
-      <form class="account-form" action="" method="post">
+    <form class="account-form" action="" method="post">
 
-        <!-- Personal Info -->
-        <section class="account-section">
-          <h2 class="account-section-title">Personal Information</h2>
+      <section class="account-section">
+        <h2 class="account-section-title">Personal Information</h2>
 
-          <div class="account-row">
-            <div class="account-field">
-              <label class="account-label" for="first_name">First Name</label>
-              <input class="account-input" type="text" id="first_name" name="first_name"
-                placeholder="John"
-                value="<?= htmlspecialchars($_POST['first_name'] ?? $user['first_name']) ?>"
-                required>
-            </div>
-            <div class="account-field">
-              <label class="account-label" for="last_name">Last Name</label>
-              <input class="account-input" type="text" id="last_name" name="last_name"
-                placeholder="Doe"
-                value="<?= htmlspecialchars($_POST['last_name'] ?? $user['last_name']) ?>"
-                required>
-            </div>
-          </div>
-
-          <div class="account-row">
-            <div class="account-field">
-              <label class="account-label" for="dob">Date of Birth</label>
-              <input class="account-input" type="date" id="dob" name="dob"
-                value="<?= htmlspecialchars($_POST['dob'] ?? $user['dob']) ?>"
-                required>
-            </div>
-            <div class="account-field">
-              <label class="account-label" for="gender">Gender</label>
-              <select class="account-input account-select" id="gender" name="gender" required>
-                <option value="" disabled <?= empty($_POST['gender'] ?? $user['gender']) ? 'selected' : '' ?>>Select</option>
-                <option value="male" <?= (($_POST['gender'] ?? $user['gender']) === 'male')       ? 'selected' : '' ?>>Male</option>
-                <option value="female" <?= (($_POST['gender'] ?? $user['gender']) === 'female')     ? 'selected' : '' ?>>Female</option>
-                <option value="other" <?= (($_POST['gender'] ?? $user['gender']) === 'other')      ? 'selected' : '' ?>>Other</option>
-                <option value="prefer_not" <?= (($_POST['gender'] ?? $user['gender']) === 'prefer_not') ? 'selected' : '' ?>>Prefer not to say</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
-        <!-- Contact -->
-        <section class="account-section">
-          <h2 class="account-section-title">Contact Details</h2>
-
-          <!-- Email + Send code -->
-          <label class="account-label" for="email">Email Address</label>
-          <div class="account-email-row">
-            <input class="account-input account-email-input" type="email" id="email" name="email"
-              placeholder="you@email.com"
-              value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>"
+        <div class="account-row">
+          <div class="account-field">
+            <label class="account-label" for="first_name">First Name</label>
+            <input class="account-input" type="text" id="first_name" name="first_name"
+              value="<?= htmlspecialchars($_POST['first_name'] ?? $user['first_name']) ?>"
               required>
+          </div>
+
+          <div class="account-field">
+            <label class="account-label" for="last_name">Last Name</label>
+            <input class="account-input" type="text" id="last_name" name="last_name"
+              value="<?= htmlspecialchars($_POST['last_name'] ?? $user['last_name']) ?>"
+              required>
+          </div>
+        </div>
+
+        <div class="account-row">
+          <div class="account-field">
+            <label class="account-label" for="dob">Date of Birth</label>
+            <input class="account-input" type="date" id="dob" name="dob"
+              value="<?= htmlspecialchars($_POST['dob'] ?? $user['dob']) ?>">
+          </div>
+
+          <div class="account-field">
+            <label class="account-label" for="gender">Gender</label>
+            <select class="account-input account-select" id="gender" name="gender">
+              <option value="" disabled <?= empty($_POST['gender'] ?? $user['gender']) ? 'selected' : '' ?>>Select</option>
+              <option value="male" <?= (($_POST['gender'] ?? $user['gender']) === 'male') ? 'selected' : '' ?>>Male</option>
+              <option value="female" <?= (($_POST['gender'] ?? $user['gender']) === 'female') ? 'selected' : '' ?>>Female</option>
+              <option value="other" <?= (($_POST['gender'] ?? $user['gender']) === 'other') ? 'selected' : '' ?>>Other</option>
+              <option value="prefer_not" <?= (($_POST['gender'] ?? $user['gender']) === 'prefer_not') ? 'selected' : '' ?>>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="account-section">
+        <h2 class="account-section-title">Contact Details</h2>
+
+        <?php if ($is_admin): ?>
+          <label class="account-label" for="email">Username</label>
+        <?php else: ?>
+          <label class="account-label" for="email">Email Address</label>
+        <?php endif; ?>
+
+        <div class="account-email-row">
+          <input class="account-input account-email-input" type="text" id="email" name="email"
+            value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>"
+            required>
+
+          <?php if (!$is_admin): ?>
             <button class="code-btn" type="submit" name="send_code" value="1" formnovalidate>
               Send Code
             </button>
-          </div>
-          <input type="hidden" name="email_for_code"
-            value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>">
-
-          <?php if ($code_sent): ?>
-            <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
           <?php endif; ?>
-          <?php if ($code_error): ?>
-            <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
-          <?php endif; ?>
+        </div>
 
+        <input type="hidden" name="email_for_code"
+          value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>">
+
+        <?php if ($code_sent): ?>
+          <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
+        <?php endif; ?>
+
+        <?php if ($code_error): ?>
+          <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
+        <?php endif; ?>
+
+        <?php if (!$is_admin): ?>
           <p class="account-hint">Only required if you are changing your email address.</p>
 
           <label class="account-label" for="verify_code">Verification Code</label>
           <input class="account-input" type="text" id="verify_code" name="verify_code"
             placeholder="6-digit code" maxlength="6">
+        <?php endif; ?>
 
-          <!-- Phone -->
-          <label class="account-label" for="phone">Phone Number</label>
-          <div class="account-phone-row">
-            <input class="account-input account-phone-prefix" type="text" name="phone_code"
-              placeholder="+61"
-              value="<?= htmlspecialchars($_POST['phone_code'] ?? $user['phone_code']) ?>"
-              maxlength="5">
-            <input class="account-input account-phone-input" type="tel" id="phone" name="phone"
-              placeholder="4XXXXXXXX"
-              value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone']) ?>"
-              required>
-          </div>
-        </section>
+        <label class="account-label" for="phone">Phone Number</label>
 
-        <!-- ── Password ── -->
-        <section class="account-section">
-          <h2 class="account-section-title">Change Password</h2>
-          <p class="account-hint">Leave these blank to keep your current password.</p>
+        <div class="account-phone-row">
+          <input class="account-input account-phone-prefix" type="text" name="phone_code"
+            value="<?= htmlspecialchars($_POST['phone_code'] ?? $user['phone_code']) ?>"
+            maxlength="5">
 
-          <label class="account-label" for="current_password">Current Password</label>
-          <input class="account-input" type="password" id="current_password" name="current_password" autocomplete="off"
-            placeholder="Your current password">
+          <input class="account-input account-phone-input" type="tel" id="phone" name="phone"
+            value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone']) ?>">
+        </div>
+      </section>
 
-          <label class="account-label" for="new_password">New Password</label>
-          <input class="account-input" type="password" id="new_password" name="new_password" autocomplete="new-password"
-            placeholder="Create a new password">
+      <section class="account-section">
+        <h2 class="account-section-title">Change Password</h2>
+        <p class="account-hint">Leave these blank to keep your current password.</p>
 
-          <ul class="pw-rules">
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8)               : '' ?>">At least 8 characters</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display))     : '' ?>">Uppercase letter (A-Z)</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display))     : '' ?>">Lowercase letter (a-z)</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display))     : '' ?>">Number (0-9)</li>
-            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[\W_]/', $new_pw_display))     : '' ?>">Symbol (!@#$...)</li>
-          </ul>
+        <label class="account-label" for="current_password">Current Password</label>
+        <input class="account-input" type="password" id="current_password" name="current_password">
 
-          <label class="account-label" for="confirm_new_password">Confirm New Password</label>
-          <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password" autocomplete="new-password"
-            placeholder="Repeat your new password">
-          <?php if ($attempted && !empty($new_pw_display)): ?>
-            <li class="pw-rule <?= ($new_pw_display === $conf_pw_display) ? 'pw_rule-pass' : 'pw-rule-fail' ?>">
-              <?= ($new_pw_display === $conf_pw_display) ? 'Passwords match' : 'Passwords do not match' ?>
-            </li>
-          <?php endif; ?>
-        </section>
+        <label class="account-label" for="new_password">New Password</label>
+        <input class="account-input" type="password" id="new_password" name="new_password">
 
-        <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
-        <button class="account-signout-btn" name="signout" value="1">Signout</button>
+        <ul class="pw-rules">
+          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8) : '' ?>">At least 8 characters</li>
+          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display)) : '' ?>">Uppercase letter (A-Z)</li>
+          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display)) : '' ?>">Lowercase letter (a-z)</li>
+          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display)) : '' ?>">Number (0-9)</li>
+          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[\W_]/', $new_pw_display)) : '' ?>">Symbol (!@#$...)</li>
+        </ul>
 
-      </form>
+        <label class="account-label" for="confirm_new_password">Confirm New Password</label>
+        <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password">
+      </section>
 
-      <!-- danger zone -->
+      <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
+
+      <button class="account-signout-btn" name="signout" value="1">Signout</button>
+
+    </form>
+
+    <?php if (!$is_admin): ?>
       <section class="account-danger-zone">
         <h2 class="account-danger-title">Danger Zone</h2>
         <p class="account-danger-desc">
@@ -356,19 +478,22 @@ function pw_class($test)
 
           <form class="account-danger-form" action="" method="post">
             <label class="account-label" for="delete_password">Confirm your password to continue</label>
+
             <input class="account-input account-danger-input" type="password"
               name="delete_password" placeholder="Enter your password" required>
+
             <button class="account-danger-btn" type="submit" name="delete_account" value="1">
               Yes, permanently delete my account
             </button>
           </form>
         </details>
       </section>
+    <?php endif; ?>
 
-    </div><!-- /account-card -->
-  </main>
+  </div>
+</main>
 
-  <?php include "footer.inc" ?>
+<?php include "footer.inc" ?>
+
 </body>
-
 </html>
