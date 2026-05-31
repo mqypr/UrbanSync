@@ -12,7 +12,6 @@ if (isset($_GET["ref"])) {
     $content_sql = "SELECT * FROM opened_jobs
                     WHERE reference_number = $selected_ref
                     LIMIT 1";
-
 } else {
     $content_sql = "SELECT * FROM opened_jobs LIMIT 1";
 }
@@ -25,7 +24,7 @@ $content_result = mysqli_query($conn, $content_sql);
 $side_sql = "SELECT * FROM opened_jobs";
 $side_result = mysqli_query($conn, $side_sql);
 
-if(!$side_result || !$content_result){
+if (!$side_result || !$content_result) {
     die("Query Failed: " . mysqli_error($conn));
 }
 
@@ -64,70 +63,83 @@ $job_content = mysqli_fetch_assoc($content_result);
 
     <div class="jobs-layout">
 
+        <!-- Aside bar Collapse Button Input -->
+        <input type="checkbox" id="JobNavToggle" class="JobNavToggle">
+
+
         <!-- Job Aside Navigation Box -->
         <aside id="JobNav">
-            <h1 style="color:white;">Jobs</h1>
+            
+            <div id="JobNavHeader">
+
+                <h1 style="color:white;">Jobs</h1>
+
+                <!-- Aside bar collapse button -->
+                <label for="JobNavToggle" class="JobNavToggleButton">☰</label>
+                
+            </div>
+
 
             <div class="JobContainer">
 
                 <!-- Loop through every row of the table and create sections  -->
-                <?php while($jobrow = mysqli_fetch_assoc($side_result)) { ?>
-                
+                <?php while ($jobrow = mysqli_fetch_assoc($side_result)) { ?>
 
-                <!-- Set ref for loading correct content when clicked -->
-                <a href="jobs.php?ref=<?php echo htmlspecialchars($jobrow["reference_number"]); ?>">
 
-                    <section class="JobSection">
+                    <!-- Set ref for loading correct content when clicked -->
+                    <a href="jobs.php?ref=<?php echo htmlspecialchars($jobrow["reference_number"]); ?>">
 
-                        <!-- Title  -->
-                        <h2>
+                        <section class="JobSection">
 
-                            <?php 
+                            <!-- Title  -->
+                            <h2>
+
+                                <?php
                                 // We echo the title of the job
-                                echo htmlspecialchars($jobrow["title"]) 
-                            ?>
+                                echo htmlspecialchars($jobrow["title"])
+                                ?>
 
-                        </h2>
+                            </h2>
 
-                        <!-- Salary -->
-                        <p>
+                            <!-- Salary -->
+                            <p>
 
-                            <?php
+                                <?php
 
                                 // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
-                                $salary = explode("^" , $jobrow["salary"]);
+                                $salary = explode("^", $jobrow["salary"]);
 
-                            // We echo the first element in $salary array
-                            echo ("$" . htmlspecialchars($salary[0]));
+                                // We echo the first element in $salary array
+                                echo ("$" . htmlspecialchars($salary[0]));
 
-                            // If there is a second element within the array, echo this also
-                            if (isset($salary[1])) {
-                                echo ("  - $" . htmlspecialchars($salary[1]));
-                            }
+                                // If there is a second element within the array, echo this also
+                                if (isset($salary[1])) {
+                                    echo ("  - $" . htmlspecialchars($salary[1]));
+                                }
 
-                            // If there is only 1 element, we will echo 1 number; example $60,000
-                            // If there are 2 elements however, we will echo both; example $60,000 - $70,000
+                                // If there is only 1 element, we will echo 1 number; example $60,000
+                                // If there are 2 elements however, we will echo both; example $60,000 - $70,000
 
-                            ?>
+                                ?>
 
-                        </p>
+                            </p>
 
-                        <!-- Short Description -->
-                        <p>
-                            
-                            <?php 
-                            
+                            <!-- Short Description -->
+                            <p>
+
+                                <?php
+
                                 echo htmlspecialchars($jobrow["short_description"]);
 
-                            ?>
+                                ?>
 
 
-                        </p>
+                            </p>
 
-                    </section>
+                        </section>
 
 
-                </a>
+                    </a>
 
                 <?php } ?>
 
@@ -145,9 +157,9 @@ $job_content = mysqli_fetch_assoc($content_result);
                     <!-- Title of the opened job -->
                     <h2>
 
-                        <?php 
-                            // We echo the title of the job
-                            echo htmlspecialchars($job_content["title"]) 
+                        <?php
+                        // We echo the title of the job
+                        echo htmlspecialchars($job_content["title"])
                         ?>
 
                     </h2>
@@ -157,9 +169,9 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                         <?php
 
-                            // We echo the reference number of the job
-                            echo htmlspecialchars($job_content["reference_number"]) 
-                        ?>   
+                        // We echo the reference number of the job
+                        echo htmlspecialchars($job_content["reference_number"])
+                        ?>
 
                     </h3>
 
@@ -168,8 +180,8 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                         <?php
 
-                            // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
-                            $salary = explode("^" , $job_content["salary"]);
+                        // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
+                        $salary = explode("^", $job_content["salary"]);
 
                         // We echo the first element in $salary array
                         echo ("$" . htmlspecialchars($salary[0]));
@@ -192,11 +204,11 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                     <!-- Job Title -->
                     <h2>
-                    
+
                         <?php
-                            
-                            // We echo job into the information content 
-                            echo htmlspecialchars($job_content["title"]);
+
+                        // We echo job into the information content 
+                        echo htmlspecialchars($job_content["title"]);
 
                         ?>
 
@@ -206,63 +218,57 @@ $job_content = mysqli_fetch_assoc($content_result);
                     <h2>Key Reporting Line</h2>
                     <ol id="JobReportingLine">
 
-                        <?php 
+                        <?php
 
-                            // Because the varchar stored in reporting_line is seperated by a ^, we split the salary into an array and remove ^
-                            $reporting_line = explode("^" , $job_content["reporting_line"]);
+                        // Because the varchar stored in reporting_line is seperated by a ^, we split the salary into an array and remove ^
+                        $reporting_line = explode("^", $job_content["reporting_line"]);
 
-                            // For every item inside of $reporting_line we print it's corresponding element within a list tag
-                            foreach ($reporting_line as $rep)
-                                {
+                        // For every item inside of $reporting_line we print it's corresponding element within a list tag
+                        foreach ($reporting_line as $rep) {
 
-                                    //echo the item within $reporting_line within html list tags
-                                    echo("<li>" . htmlspecialchars($rep) . "</li>");
+                            //echo the item within $reporting_line within html list tags
+                            echo ("<li>" . htmlspecialchars($rep) . "</li>");
+                        }
 
-                                }
-                        
                         ?>
 
                     </ol>
 
                     <h2>Key Responsibilities</h2>
                     <ol id="JobResponsobilities">
-                        
-                        <?php 
 
-                                // Because the varchar stored in responsobilities is seperated by a ^, we split the salary into an array and remove ^
-                                $responsobilities = explode("^" , $job_content["responsobilities"]);
+                        <?php
 
-                                // For every item inside of $responsobilities we print it's corresponding element within a list tag
-                                foreach ($responsobilities as $res)
-                                    {
+                        // Because the varchar stored in responsobilities is seperated by a ^, we split the salary into an array and remove ^
+                        $responsobilities = explode("^", $job_content["responsobilities"]);
 
-                                        //echo the item within $responsobilities within html list tags
-                                        echo("<li>" . htmlspecialchars($res) . "</li>");
+                        // For every item inside of $responsobilities we print it's corresponding element within a list tag
+                        foreach ($responsobilities as $res) {
 
-                                    }
-                            
-                            ?>
+                            //echo the item within $responsobilities within html list tags
+                            echo ("<li>" . htmlspecialchars($res) . "</li>");
+                        }
+
+                        ?>
 
                     </ol>
 
                     <h2>Personal Requirements</h2>
                     <ul id="JobPersonalRequirements">
-                        
-                        <?php 
 
-                                // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
-                                $requirements = explode("^" , $job_content["requirements"]);
+                        <?php
 
-                                // For every item inside of $requirements we print it's corresponding element within a list tag
-                                foreach ($requirements as $req)
-                                    {
+                        // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
+                        $requirements = explode("^", $job_content["requirements"]);
 
-                                        //echo the item within $requirements within html list tags
-                                        echo("<li>" . htmlspecialchars($req) . "</li>");
+                        // For every item inside of $requirements we print it's corresponding element within a list tag
+                        foreach ($requirements as $req) {
 
-                                    }
-                            
-                            ?>
+                            //echo the item within $requirements within html list tags
+                            echo ("<li>" . htmlspecialchars($req) . "</li>");
+                        }
+
+                        ?>
 
                     </ul>
 
