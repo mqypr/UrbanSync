@@ -289,9 +289,25 @@ mysqli_stmt_close($stmt);
 
                         <form class="account-form" method="get" action="manage.php">
 
-                            <label for="jobRef">Job Reference</label>
-                            <input type="text" id="jobRef" name="jobRef"
-                                value="<?php echo htmlspecialchars($_GET["jobRef"] ?? ""); ?>">
+                            <!-- Job Reference Number -->
+                            <label for="jobRef">Job Reference Number:</label>
+                            <select id="jobRef" name="jobRef" required>
+                                <option value="">Select Job Reference</option>
+                                <?php
+                                $jobQuery = "SELECT reference_number FROM opened_jobs ORDER BY reference_number ASC";
+                                $jobResult = mysqli_query($conn, $jobQuery);
+
+                                while ($jobRow = mysqli_fetch_assoc($jobResult)) {
+                                    $selected = "";
+                                    if (($_GET['jobRef'] ?? '') == $jobRow['reference_number']) {
+                                        $selected = "selected";
+                                    }
+                                    echo "<option value='" . htmlspecialchars($jobRow['reference_number']) . "' $selected>";
+                                    echo htmlspecialchars($jobRow['reference_number']);
+                                    echo "</option>";
+                                }
+                                ?>
+                            </select>
 
                             <label for="firstName">First Name</label>
                             <input type="text" id="firstName" name="firstName"
@@ -323,7 +339,18 @@ mysqli_stmt_close($stmt);
                         <form class="account-form" method="post" action="manage.php">
 
                             <label for="deleteJobRef">Job Reference</label>
-                            <input type="text" id="deleteJobRef" name="deleteJobRef" required>
+                            <select id="deleteJobRef" name="deleteJobRef" required>
+                                <option value="">Select Job Reference</option>
+                                <?php
+                                $jobQuery = "SELECT reference_number FROM opened_jobs ORDER BY reference_number ASC";
+                                $jobResult = mysqli_query($conn, $jobQuery);
+                                while ($jobRow = mysqli_fetch_assoc($jobResult)) {
+                                    echo "<option value='" . htmlspecialchars($jobRow['reference_number']) . "'>";
+                                    echo htmlspecialchars($jobRow['reference_number']);
+                                    echo "</option>";
+                                }
+                                ?>
+                            </select>
 
                             <input type="submit" name="delete_by_job" value="Delete EOIs">
 
