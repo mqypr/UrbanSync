@@ -538,15 +538,21 @@ footer {
 }
 
 .apply-form-section fieldset label {
+  display: inline;
   font-weight: 500;
   color: var(--text-main);
-  margin-left: 0.3rem;
-  margin-right: 1rem;
+  margin-left: 0.4rem;
+  margin-right: 0;
 }
 
-.apply-form-section fieldset input {
+.apply-form-section fieldset input[type="checkbox"] {
   width: auto;
-  margin-right: 0.2rem;
+  margin: 0 0.6rem 0 0;
+  vertical-align: middle;
+}
+
+.apply-form-section fieldset br {
+  display: block;
 }
 
 .apply-form-section input[type="radio"],
@@ -562,7 +568,7 @@ footer {
   border: none;
   color: white;
   background-color: var(--accent);
-  padding: 1rem 2rem;
+  padding: rem 2rem;
   font-size: 1.1rem;
   font-weight: 700;
   border-radius: 40px;

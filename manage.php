@@ -252,6 +252,41 @@ mysqli_stmt_close($stmt);
                 flex-direction: column;
                 align-items: stretch;
             }
+            .manage-box {
+                background-color: rgba(9, 99, 126, 0.04);
+                border: 1.5px solid rgba(9, 99, 126, 0.3);
+                border-radius: 18px;
+                padding: 1.5rem;
+                text-align: left;
+
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
+            .manage-box input,
+            .manage-box select,
+            .manage-box textarea {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .manage-box input[type="submit"],
+            .manage-box button {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+
+                padding: 0.9rem 1rem;
+
+                font-size: 1rem;
+                text-align: center;
+
+                white-space: normal;
+                overflow-wrap: break-word;
+            }
             
         }
     </style>

@@ -21,6 +21,31 @@ if (!$conn) {
     die("Database connection failed");
 }
 
+/* create EOI table automatically if it does not exist */
+
+$create_eoi_table = "
+CREATE TABLE IF NOT EXISTS eoi (
+
+    EOInumber INT AUTO_INCREMENT PRIMARY KEY,
+    jobRef VARCHAR(5) NOT NULL,
+    firstName VARCHAR(20) NOT NULL,
+    lastName VARCHAR(20) NOT NULL,
+    dob VARCHAR(10) NOT NULL,
+    gender VARCHAR(20) NOT NULL,
+    address VARCHAR(40) NOT NULL,
+    suburb VARCHAR(40) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    postcode VARCHAR(4) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(12) NOT NULL,
+    skills TEXT,
+    otherSkills TEXT,
+    status VARCHAR(20) NOT NULL DEFAULT 'New'
+)
+";
+
+mysqli_query($conn, $create_eoi_table);
+
 /* clean input */
 function clean_input(string $data): string
 {
@@ -131,40 +156,50 @@ $success = false;
 $eoiNumber = "";
 
 /* insert if no errors */
-$query = "INSERT INTO eoi
-(
-    jobRef,
-    firstName,
-    lastName,
-    dob,
-    gender,
-    address,
-    suburb,
-    state,
-    postcode,
-    email,
-    phone,
-    skills,
-    otherSkills
-)
-VALUES
-(
-    '$jobRef',
-    '$firstName',
-    '$lastName',
-    '$dob',
-    '$gender',
-    '$address',
-    '$suburb',
-    '$state',
-    '$postcode',
-    '$email',
-    '$phone',
-    '$skills',
-    '$otherSkills'
-)";
 
-$result = mysqli_query($conn, $query);
+$stmt = mysqli_prepare(
+    $conn,
+    "INSERT INTO eoi
+    (
+        jobRef,
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        suburb,
+        state,
+        postcode,
+        email,
+        phone,
+        skills,
+        otherSkills
+    )
+    VALUES
+    (
+        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+    )"
+);
+
+mysqli_stmt_bind_param(
+    $stmt,
+    "sssssssssssss",
+    $jobRef,
+    $firstName,
+    $lastName,
+    $dob,
+    $gender,
+    $address,
+    $suburb,
+    $state,
+    $postcode,
+    $email,
+    $phone,
+    $skills,
+    $otherSkills
+);
+
+$result = mysqli_stmt_execute($stmt);
 
 if ($result) {
 
@@ -176,6 +211,8 @@ if ($result) {
 
     die("Error inserting record.");
 }
+
+mysqli_stmt_close($stmt);
 
 /* close database */
 mysqli_close($conn);
