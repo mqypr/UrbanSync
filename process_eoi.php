@@ -1,4 +1,3 @@
-```php
 <?php
 
 session_start();
@@ -60,8 +59,8 @@ if (isset($_POST["otherSkills"])) {
 /* validation */
 $errors = [];
 
-if (!preg_match("/^[A-Za-z0-9]{5}$/", $jobRef)) {
-    $errors["jobRef"] = "Job Reference must be 5 letters or numbers.";
+if (empty($jobRef)) {
+    $errors["jobRef"] = "Please select a Job Reference.";
 }
 
 if (!preg_match("/^[A-Za-z]{1,20}$/", $firstName)) {
@@ -189,155 +188,101 @@ mysqli_close($conn);
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Job Application - UrbanSync</title>
+    <link rel="icon" type="image/x-icon" href="./images/logo.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+    <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
 
     <title>Application Submitted</title>
 
     <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         <?php
 
         if ($darkMode === '1') {
-
             $backgroundImage = './styles/images/index-bg-dark.jpeg';
-
             $cardBackground = 'rgba(0, 0, 0, 0.72)';
-
             $titleColor = 'white';
-
             $subtitleColor = 'rgba(255,255,255,0.65)';
-
             $buttonColor = '#088395';
-
             $buttonHover = '#09637e';
-
             $shadow = '0 25px 80px rgba(0,0,0,0.45)';
 
         } else {
-
             $backgroundImage = './styles/images/index-bg.jpeg';
-
             $cardBackground = 'rgba(255,255,255,0.92)';
-
             $titleColor = '#09637e';
-
             $subtitleColor = '#1a3a47';
-
             $buttonColor = '#09637e';
-
             $buttonHover = '#088395';
-
             $shadow = '0 20px 35px -12px rgba(9,99,126,0.2)';
         }
 
         ?>
 
         body {
-
             min-height: 100vh;
-
             background-image: url("<?php echo $backgroundImage; ?>");
-
             background-size: cover;
-
             background-position: center;
-
             background-attachment: fixed;
-
             display: flex;
-
             justify-content: center;
-
             align-items: flex-start;
-
             padding: 14px 20px 60px;
         }
 
         .page-card {
-
             width: 100%;
-
             max-width: 900px;
-
             background: <?php echo $cardBackground; ?>;
-
             border-radius: 28px;
-
             padding: 55px 50px;
-
             box-shadow: <?php echo $shadow; ?>;
-
             text-align: center;
-
             backdrop-filter: blur(8px);
         }
 
         .logo {
-
             width: 86px;
-
             height: 86px;
-
             border-radius: 50%;
-
             border: 2px solid #cfe3e6;
-
             margin-bottom: 34px;
         }
 
         h1 {
-
             color: <?php echo $titleColor; ?>;
-
             font-size: 42px;
-
             font-weight: 800;
-
             margin-bottom: 24px;
-
             line-height: 1.2;
         }
 
         .subtitle {
-
             color: <?php echo $subtitleColor; ?>;
-
             font-size: 28px;
-
             margin-bottom: 28px;
         }
 
         .button {
-
             display: inline-block;
-
             margin-top: 20px;
-
             padding: 18px 42px;
-
             background-color: <?php echo $buttonColor; ?>;
-
             color: white;
-
             text-decoration: none;
-
             border-radius: 16px;
-
             font-size: 20px;
-
             font-weight: bold;
         }
 
         .button:hover {
-
             background-color: <?php echo $buttonHover; ?>;
         }
 
@@ -370,4 +315,3 @@ mysqli_close($conn);
 </body>
 
 </html>
-```
