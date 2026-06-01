@@ -781,6 +781,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem;
+  margin: 0 0 1rem 0;
 }
 
 .JobNavHeader h1 {

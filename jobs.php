@@ -131,8 +131,8 @@ $job_content = mysqli_fetch_assoc($content_result);
                     <input type="text" id="JobSearch" name="search" class="JobSearchInput" placeholder="Search by title, salary, reference..." value="<?php echo htmlspecialchars($search); ?>">
 
                     <!-- Search submit button -->
-                    <button type="submit" class="JobSearchButton">
-                        <i class="fa fa-search"></i>
+                    <button type="submit" class="JobSearchButton" aria-label="Search jobs">
+                        <i class="fa fa-search" aria-hidden="true"></i>
                     </button>
 
                 </div>
@@ -334,19 +334,38 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                         </ol>
 
-                        <h2>Personal Requirements</h2>
-                        <ul id="JobPersonalRequirements">
+                        <h2>Recommended Requirements</h2>
+                        <ul id="JobRecommendedRequirements">
 
                             <?php
 
                             // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
-                            $requirements = explode("^", $job_content["requirements"]);
+                            $rec_requirements = explode("^", $job_content["rec_requirements"]);
 
                             // For every item inside of $requirements we print it's corresponding element within a list tag
-                            foreach ($requirements as $req) {
+                            foreach ($rec_requirements as $rceq) {
 
                                 //echo the item within $requirements within html list tags
-                                echo ("<li>" . htmlspecialchars($req) . "</li>");
+                                echo ("<li>" . htmlspecialchars($rceq) . "</li>");
+                            }
+
+                            ?>
+
+                        </ul>
+
+                        <h2>Required Requirements</h2>
+                        <ul id="JobRequiredRequirements">
+
+                            <?php
+
+                            // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
+                            $req_requirements = explode("^", $job_content["req_requirements"]);
+
+                            // For every item inside of $requirements we print it's corresponding element within a list tag
+                            foreach ($req_requirements as $rqeq) {
+
+                                //echo the item within $requirements within html list tags
+                                echo ("<li>" . htmlspecialchars($rqeq) . "</li>");
                             }
 
                             ?>
