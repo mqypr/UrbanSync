@@ -116,10 +116,31 @@ CREATE TABLE `opened_jobs` (
 --
 
 INSERT INTO `opened_jobs` (`reference_number`, `title`, `short_description`, `salary`, `reporting_line`, `responsobilities`, `requirements`) VALUES
-(1, 'Frontend Web Developer', 'Build and maintain clean, responsive interfaces for company websites.', '70,000^85,000', 'Engineering Manager^Technical Lead^Product Manager', 'Building front end interfaces^Ensuring accessible and intuitive designs are implemented into the user experience', 'Effective communication for team collaboration^High adaptability to new technologies^A methodical approach to debugging and creating responsive, accessible websites'),
-(2, 'IT Support Officer', 'Provide technical support and help staff resolve hardware and software issues.', '55,000^68,000', 'IT Manager^IT Support Manager^Service Desk Manager', 'Installing, configuring, and maintaining hardware (computers, printers, routers) and software systems^Troubleshooting technical issues to minimize downtime', 'Problem-solving mindset^Excellent communication abilities^Patience'),
-(3, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '62000^74000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics'),
-(10056, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '73,000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics');
+(10056, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '73,000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics'),
+(12878, 'Frontend Web Developer', 'Build and maintain clean, responsive interfaces for company websites.', '70,000^85,000', 'Engineering Manager^Technical Lead^Product Manager', 'Building front end interfaces^Ensuring accessible and intuitive designs are implemented into the user experience', 'Effective communication for team collaboration^High adaptability to new technologies^A methodical approach to debugging and creating responsive, accessible websites'),
+(14332, 'IT Support Officer', 'Provide technical support and help staff resolve hardware and software issues.', '55,000^68,000', 'IT Manager^IT Support Manager^Service Desk Manager', 'Installing, configuring, and maintaining hardware (computers, printers, routers) and software systems^Troubleshooting technical issues to minimize downtime', 'Problem-solving mindset^Excellent communication abilities^Patience'),
+(33987, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '62000^74000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `opened_jobs`
+--
+ALTER TABLE `opened_jobs`
+  ADD PRIMARY KEY (`reference_number`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `opened_jobs`
+--
+ALTER TABLE `opened_jobs`
+  MODIFY `reference_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33988;
+COMMIT;
 
 -- --------------------------------------------------------
 
