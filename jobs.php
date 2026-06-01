@@ -23,27 +23,37 @@ if ($search !== "") {
     // We escape the search so special characters do not break the SQL query
     $safe_search = mysqli_real_escape_string($conn, $search);
 
-    // We search through the main job columns for anything matching the search
-    $search_sql = " WHERE title LIKE '%$safe_search%'
-                    OR short_description LIKE '%$safe_search%'
-                    OR salary LIKE '%$safe_search%'
-                    OR reporting_line LIKE '%$safe_search%'
-                    OR responsobilities LIKE '%$safe_search%'
-                    OR requirements LIKE '%$safe_search%'
-                    OR CAST(reference_number AS CHAR) LIKE '%$safe_search%'";
+        // We search through the main job columns for anything matching the search
+    $search_sql = " WHERE (
+                title LIKE '%$safe_search%'
+                OR short_description LIKE '%$safe_search%'
+                OR salary LIKE '%$safe_search%'
+                OR reporting_line LIKE '%$safe_search%'
+                OR responsobilities LIKE '%$safe_search%'
+                OR rec_requirements LIKE '%$safe_search%'
+                OR req_requirements LIKE '%$safe_search%'
+                OR CAST(reference_number AS CHAR) LIKE '%$safe_search%'
+            )";
 }
 
 
 // job content data
 if (isset($_GET["ref"])) {
 
-    // Get the superglobal variable "ref" and convert it into an int
     $selected_ref = intval($_GET["ref"]);
 
-    // We select the job that matches the reference number clicked by the user
-    $content_sql = "SELECT * FROM opened_jobs
-                    WHERE reference_number = $selected_ref
-                    LIMIT 1";
+    // If a search is active, only allow showing the ref job if it matches the search too
+    if ($search_sql !== "") {
+        $content_sql = "SELECT * FROM opened_jobs
+                        $search_sql
+                        AND reference_number = $selected_ref
+                        LIMIT 1";
+    } else {
+        $content_sql = "SELECT * FROM opened_jobs
+                        WHERE reference_number = $selected_ref
+                        LIMIT 1";
+    }
+
 } else {
 
     // If no job has been clicked, we load the first job from the search results
@@ -89,6 +99,12 @@ $job_content = mysqli_fetch_assoc($content_result);
     <link rel="icon" type="image/x-icon" href="./images/logo.ico">
     <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
     <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
+    <style>
+        #JobNavHeader h1 {
+        color: white;
+        }
+
+    </style>
 
 </head>
 
