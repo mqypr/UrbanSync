@@ -13,9 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 /* dark mode */
 $darkMode = $_COOKIE['dark_mode'] ?? '0';
 
-/* connect database */
-$conn = mysqli_connect($host, $db_user, $db_pass, $database);
-
 /* check connection */
 if (!$conn) {
     die("Database connection failed");
@@ -30,7 +27,7 @@ CREATE TABLE IF NOT EXISTS eoi (
     jobRef VARCHAR(5) NOT NULL,
     firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20) NOT NULL,
-    dob VARCHAR(10) NOT NULL,
+    dob DATE NOT NULL,
     gender VARCHAR(20) NOT NULL,
     address VARCHAR(40) NOT NULL,
     suburb VARCHAR(40) NOT NULL,
@@ -71,7 +68,7 @@ $phone = clean_input($_POST["phone"] ?? "");
 
 $skills = "";
 $otherSkills = "";
-    
+
 if (isset($_POST["skills"])) {
     $skills = implode(", ", $_POST["skills"]);
     $skills = clean_input($skills);
@@ -96,8 +93,8 @@ if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
     $errors["lastName"] = "Last Name must only contain letters and max 20 characters.";
 }
 
-if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $dob)) {
-    $errors["dob"] = "Date of Birth must be in dd/mm/yyyy format.";
+if (empty($dob)) {
+    $errors["dob"] = "Date of Birth is required.";
 }
 
 if ($gender == "") {
@@ -134,19 +131,20 @@ if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
 
     $_SESSION['old'] = [
-        'jobRef' => $jobRef,
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-        'dob' => $dob,
-        'gender' => $gender,
-        'address' => $address,
-        'suburb' => $suburb,
-        'state' => $state,
-        'postcode' => $postcode,
-        'email' => $email,
-        'phone' => $phone,
-        'otherSkills' => $otherSkills
-    ];
+    'jobRef' => $jobRef,
+    'firstName' => $firstName,
+    'lastName' => $lastName,
+    'dob' => $dob,
+    'gender' => $gender,
+    'address' => $address,
+    'suburb' => $suburb,
+    'state' => $state,
+    'postcode' => $postcode,
+    'email' => $email,
+    'phone' => $phone,
+    'otherSkills' => $otherSkills,
+    'skills' => $_POST['skills'] ?? []
+];
 
     header("Location: apply.php");
     exit();
@@ -206,7 +204,6 @@ if ($result) {
     $success = true;
 
     $eoiNumber = mysqli_insert_id($conn);
-
 } else {
 
     die("Error inserting record.");
@@ -220,7 +217,7 @@ mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">     
+<html lang="en">
 
 <head>
 
@@ -230,8 +227,6 @@ mysqli_close($conn);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Job Application - UrbanSync</title>
     <link rel="icon" type="image/x-icon" href="./images/logo.ico">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
     <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
@@ -249,7 +244,6 @@ mysqli_close($conn);
             $buttonColor = '#088395';
             $buttonHover = '#09637e';
             $shadow = '0 25px 80px rgba(0,0,0,0.45)';
-
         } else {
             $backgroundImage = './styles/images/index-bg.jpeg';
             $cardBackground = 'rgba(255,255,255,0.92)';
@@ -260,9 +254,7 @@ mysqli_close($conn);
             $shadow = '0 20px 35px -12px rgba(9,99,126,0.2)';
         }
 
-        ?>
-
-        body {
+        ?>body {
             min-height: 100vh;
             background-image: url("<?php echo $backgroundImage; ?>");
             background-size: cover;
@@ -322,7 +314,6 @@ mysqli_close($conn);
         .button:hover {
             background-color: <?php echo $buttonHover; ?>;
         }
-
     </style>
 
 </head>
@@ -332,7 +323,6 @@ mysqli_close($conn);
     <main class="page-card">
 
         <img src="./images/logo.png" class="logo" alt="UrbanSync Logo">
-
         <h1>Application Submitted Successfully</h1>
 
         <p class="subtitle">

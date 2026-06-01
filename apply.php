@@ -17,19 +17,16 @@ unset($_SESSION['old']);
 
 <head>
   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Job Application - UrbanSync</title>
-    <link rel="icon" type="image/x-icon" href="./images/logo.ico">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
-    <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
-    
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Job Application - UrbanSync</title>
+  <link rel="icon" type="image/x-icon" href="./images/logo.ico">
+  <meta name="description"
+    content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+  <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
 
+  <style>
     .navbar {
       background: none;
     }
@@ -55,7 +52,6 @@ unset($_SESSION['old']);
       margin-top: 5px;
       margin-bottom: 10px;
     }
-
   </style>
 </head>
 
@@ -141,11 +137,9 @@ unset($_SESSION['old']);
         <br><br>
 
         <!-- Date of Birth -->
-        <label for="dob">Date of Birth (dd/mm/yyyy):</label>
-        <input type="text" id="dob" name="dob"
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob"
           value="<?php echo htmlspecialchars($old['dob'] ?? ''); ?>"
-          pattern="\d{2}/\d{2}/\d{4}"
-          placeholder="dd/mm/yyyy"
           required>
 
         <?php
@@ -289,26 +283,29 @@ unset($_SESSION['old']);
 
         <!-- Skill List -->
         <fieldset>
-
           <legend>Skills:</legend>
 
           <div class="option-row">
-            <input type="checkbox" id="skill1" name="skills[]" value="Programming">
+            <input type="checkbox" id="skill1" name="skills[]" value="Programming"
+              <?php if (in_array("Programming", $old['skills'] ?? [])) echo "checked"; ?>>
             <label for="skill1">Programming</label>
           </div>
 
           <div class="option-row">
-            <input type="checkbox" id="skill2" name="skills[]" value="Networking">
+            <input type="checkbox" id="skill2" name="skills[]" value="Networking"
+              <?php if (in_array("Networking", $old['skills'] ?? [])) echo "checked"; ?>>
             <label for="skill2">Networking</label>
           </div>
 
           <div class="option-row">
-            <input type="checkbox" id="skill3" name="skills[]" value="Data Analysis">
+            <input type="checkbox" id="skill3" name="skills[]" value="Data Analysis"
+              <?php if (in_array("Data Analysis", $old['skills'] ?? [])) echo "checked"; ?>>
             <label for="skill3">Data Analysis</label>
           </div>
 
           <div class="option-row">
-            <input type="checkbox" id="skill4" name="skills[]" value="Project Management">
+            <input type="checkbox" id="skill4" name="skills[]" value="Project Management"
+              <?php if (in_array("Project Management", $old['skills'] ?? [])) echo "checked"; ?>>
             <label for="skill4">Project Management</label>
           </div>
 
