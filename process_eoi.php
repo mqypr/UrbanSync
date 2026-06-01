@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS eoi (
     jobRef VARCHAR(5) NOT NULL,
     firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20) NOT NULL,
-    dob VARCHAR(10) NOT NULL,
+    dob DATE NOT NULL,
     gender VARCHAR(20) NOT NULL,
     address VARCHAR(40) NOT NULL,
     suburb VARCHAR(40) NOT NULL,
@@ -93,8 +93,8 @@ if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
     $errors["lastName"] = "Last Name must only contain letters and max 20 characters.";
 }
 
-if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $dob)) {
-    $errors["dob"] = "Date of Birth must be in dd/mm/yyyy format.";
+if (empty($dob)) {
+    $errors["dob"] = "Date of Birth is required.";
 }
 
 if ($gender == "") {
@@ -131,19 +131,20 @@ if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
 
     $_SESSION['old'] = [
-        'jobRef' => $jobRef,
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-        'dob' => $dob,
-        'gender' => $gender,
-        'address' => $address,
-        'suburb' => $suburb,
-        'state' => $state,
-        'postcode' => $postcode,
-        'email' => $email,
-        'phone' => $phone,
-        'otherSkills' => $otherSkills
-    ];
+    'jobRef' => $jobRef,
+    'firstName' => $firstName,
+    'lastName' => $lastName,
+    'dob' => $dob,
+    'gender' => $gender,
+    'address' => $address,
+    'suburb' => $suburb,
+    'state' => $state,
+    'postcode' => $postcode,
+    'email' => $email,
+    'phone' => $phone,
+    'otherSkills' => $otherSkills,
+    'skills' => $_POST['skills'] ?? []
+];
 
     header("Location: apply.php");
     exit();
