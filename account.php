@@ -28,6 +28,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['manager'])) {
 
 $is_admin = isset($_SESSION['manager']);
 $user_id  = $is_admin ? (int)$_SESSION['manager_id'] : (int)$_SESSION['user_id'];
+$attempted       = isset($_POST['save_all']);
+$new_pw_display  = $_POST['new_password'] ?? '';
+$conf_pw_display = $_POST['confirm_new_password'] ?? '';
 
 /* Signout */
 if (isset($_POST['signout'])) {
@@ -193,10 +196,6 @@ if (!$is_admin) {
       exit;
     }
   }
-
-  $attempted       = isset($_POST['save_all']);
-  $new_pw_display  = $_POST['new_password'] ?? '';
-  $conf_pw_display = $_POST['confirm_new_password'] ?? '';
 }
 function pw_class(bool $test): string
 {
