@@ -2,6 +2,7 @@
 session_start();
 require_once './settings.php';
 
+
 /* Create manager table automatically if it does not exist*/
 
 $create_manager_table = "
