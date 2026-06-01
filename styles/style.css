@@ -653,7 +653,7 @@ footer {
   padding: 1rem;
   text-align: center;
   color: var(--text-secondary);
-  background-image: linear-gradient(to right, color-mix( in srgb , var(--bg-tertiary), black), color-mix( in srgb, var(--bg-secondary), black));
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--bg-tertiary), black), color-mix(in srgb, var(--bg-secondary), black));
   border-radius: 0.75rem;
 }
 
@@ -722,7 +722,7 @@ footer {
 #JobTitle {
   margin: 0 0 1.25rem 0;
   padding: 1rem 1.25rem;
-  background-image: linear-gradient(to right, color-mix( in srgb , var(--bg-tertiary), black), color-mix( in srgb, var(--bg-secondary), black));
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--bg-tertiary), black), color-mix(in srgb, var(--bg-secondary), black));
   border-radius: 0.75rem;
   color: var(--text-main);
 }
@@ -764,21 +764,21 @@ footer {
 
 /* Job Aside Bar collapse Button */
 
-.JobNavToggle{
+.JobNavToggle {
   display: none;
 }
 
-#JobNavHeader{
+#JobNavHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.JobNavHeader h1{
+.JobNavHeader h1 {
   margin: 0;
 }
 
-.JobNavToggleButton{
+.JobNavToggleButton {
   border-radius: .15rem;
   background: white;
   width: 2rem;
@@ -789,14 +789,14 @@ footer {
 
 }
 
-.JobNavToggle:checked ~ #JobNav {
+.JobNavToggle:checked~#JobNav {
   width: 4rem;
   min-width: 4rem;
   padding: 1rem 0.5rem;
 }
 
-.JobNavToggle:checked ~ #JobNav .JobContainer,
-.JobNavToggle:checked ~ #JobNav h1 {
+.JobNavToggle:checked~#JobNav .JobContainer,
+.JobNavToggle:checked~#JobNav h1 {
   display: none;
 }
 
@@ -873,17 +873,17 @@ footer {
     overflow-y: auto;
   }
 
-  .JobNavToggle:checked ~ #JobNav {
+  .JobNavToggle:checked~#JobNav {
     width: 100%;
     min-width: 0;
     padding: 1rem;
   }
 
-  .JobNavToggle:checked ~ #JobNav .JobContainer {
+  .JobNavToggle:checked~#JobNav .JobContainer {
     display: none;
   }
 
-  .JobNavToggle:checked ~ #JobNav h1 {
+  .JobNavToggle:checked~#JobNav h1 {
     display: block;
   }
 }
@@ -1741,8 +1741,9 @@ footer {
 /* Account-only */
 
 .account-signout-btn {
-  margin-top: 1rem;
   background-color: #ff3b30;
+  margin: 1rem auto 0;
+  width: calc(100%);
 }
 
 .account-signout-btn:hover {

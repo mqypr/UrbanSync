@@ -1,120 +1,208 @@
 <?php
 session_start();
+require_once './settings.php';
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
-if (!isset($_SESSION["manager"])) {
-    header("Location: login.php");
-    exit();
-}
+$errors      = [];
+$success     = false;
+$code_sent   = false;
+$code_error  = '';
 
-require_once("settings.php");
-
-$message = "";
-$results = [];
-
-/* delete by job reference */
-if (isset($_POST["delete_by_job"])) {
-    $deleteJobRef = trim($_POST["deleteJobRef"] ?? "");
-
-    if ($deleteJobRef != "") {
-        $query = "DELETE FROM eoi WHERE jobRef = ?";
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "s", $deleteJobRef);
-
-        if (mysqli_stmt_execute($stmt)) {
-            $message = "EOIs deleted successfully.";
-        } else {
-            $message = "Delete failed.";
-        }
-
-        mysqli_stmt_close($stmt);
-    }
-}
-
-/* update status */
-if (isset($_POST["update_status"])) {
-    $eoiId = $_POST["eoiId"] ?? "";
-    $newStatus = $_POST["newStatus"] ?? "";
-
-    if ($eoiId != "" && $newStatus != "") {
-        $query = "UPDATE eoi SET status = ? WHERE EOInumber = ?";
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "si", $newStatus, $eoiId);
-
-        if (mysqli_stmt_execute($stmt)) {
-            $message = "Status updated.";
-        } else {
-            $message = "Update failed.";
-        }
-
-        mysqli_stmt_close($stmt);
-    }
-}
-
-/* sorting */
-$sort = $_GET["sort"] ?? "EOInumber";
-
-$allowedSorts = [
-    "EOInumber",
-    "jobRef",
-    "firstName",
-    "lastName",
-    "status"
+$user = [
+    "first_name" => "",
+    "last_name"  => "",
+    "dob"        => "",
+    "gender"     => "",
+    "email"      => "",
+    "phone_code" => "+61",
+    "phone"      => ""
 ];
 
-if (!in_array($sort, $allowedSorts)) {
-    $sort = "EOInumber";
+/* Auth guard */
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['manager'])) {
+    header('Location: ./login.php');
+    exit;
 }
 
-/* searching */
-$where = "";
-$params = [];
-$types = "";
+$is_admin = isset($_SESSION['manager']);
+$user_id  = $is_admin ? (int)$_SESSION['manager_id'] : (int)$_SESSION['user_id'];
 
-if (isset($_GET["search"])) {
-    $jobRef = trim($_GET["jobRef"] ?? "");
-    $firstName = trim($_GET["firstName"] ?? "");
-    $lastName = trim($_GET["lastName"] ?? "");
-
-    $conditions = [];
-
-    if ($jobRef != "") {
-        $conditions[] = "jobRef = ?";
-        $params[] = $jobRef;
-        $types .= "s";
-    }
-
-    if ($firstName != "") {
-        $conditions[] = "firstName LIKE ?";
-        $params[] = "%" . $firstName . "%";
-        $types .= "s";
-    }
-
-    if ($lastName != "") {
-        $conditions[] = "lastName LIKE ?";
-        $params[] = "%" . $lastName . "%";
-        $types .= "s";
-    }
-
-    if (!empty($conditions)) {
-        $where = " WHERE " . implode(" AND ", $conditions);
-    }
+/* Signout — works for both admin and user */
+if (isset($_POST['signout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ./index.php');
+    exit;
 }
 
-$query = "SELECT * FROM eoi" . $where . " ORDER BY " . $sort;
-$stmt = mysqli_prepare($conn, $query);
+/* Everything below is user-only */
+if (!$is_admin) {
 
-if (!empty($params)) {
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    /* Success notification */
+    if (!empty($_SESSION['changed'])) {
+        $success = true;
+        unset($_SESSION['changed']);
+    }
+
+    /* Fetch user row */
+    function fetch_user(mysqli $conn, int $id): array
+    {
+        $s = mysqli_prepare($conn, "SELECT first_name, last_name, dob, gender, email, phone_code, phone FROM users WHERE id = ?");
+        mysqli_stmt_bind_param($s, "i", $id);
+        mysqli_stmt_execute($s);
+        $r   = mysqli_stmt_get_result($s);
+        $row = mysqli_fetch_assoc($r);
+        mysqli_stmt_close($s);
+
+        return $row ?: [
+            "first_name" => "",
+            "last_name"  => "",
+            "dob"        => "",
+            "gender"     => "",
+            "email"      => "",
+            "phone_code" => "+61",
+            "phone"      => ""
+        ];
+    }
+
+    $user = fetch_user($conn, $user_id);
+
+    /* Send verification code */
+    if (isset($_POST['send_code'])) {
+        $email_for_code = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+
+        if (!filter_var($email_for_code, FILTER_VALIDATE_EMAIL)) {
+            $code_error = "Please enter a valid email address before sending a code.";
+        } else {
+            $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            $_SESSION['verify_code']  = $code;
+            $_SESSION['verify_email'] = $email_for_code;
+            $_SESSION['code_expiry']  = time() + 600;
+            $code_sent = true;
+        }
+    }
+
+    /* Save all changes */
+    if (isset($_POST['save_all'])) {
+        $first      = trim(ucfirst(strtolower($_POST['first_name'])));
+        $last       = trim(ucfirst(strtolower($_POST['last_name'])));
+        $dob        = $_POST['dob'];
+        $gender     = $_POST['gender'];
+        $new_email  = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $phone_code = trim($_POST['phone_code'] ?? '+61');
+        $phone      = trim($_POST['phone']);
+        $cur_pw     = $_POST['current_password'] ?? '';
+        $new_pw     = $_POST['new_password'] ?? '';
+        $conf_pw    = $_POST['confirm_new_password'] ?? '';
+
+        if (empty($first))                                   $errors[] = "First name is required.";
+        if (empty($last))                                    $errors[] = "Last name is required.";
+        if (empty($dob))                                     $errors[] = "Date of birth is required.";
+        if (empty($gender))                                  $errors[] = "Please select a gender.";
+        if (empty($new_email))                               $errors[] = "Email is required.";
+        if (!filter_var($new_email, FILTER_VALIDATE_EMAIL))  $errors[] = "Invalid email address.";
+        if (empty($phone))                                   $errors[] = "Phone number is required.";
+
+        $email_changed = ($new_email !== $user['email']);
+
+        if ($email_changed) {
+            $entered_code = trim($_POST['verify_code'] ?? '');
+
+            if (empty($entered_code)) {
+                $errors[] = "Please enter the verification code sent to your new email.";
+            } elseif (!isset($_SESSION['verify_code'])) {
+                $errors[] = "No verification code was sent. Please request one.";
+            } elseif (time() > $_SESSION['code_expiry']) {
+                $errors[] = "Verification code has expired. Please request a new one.";
+            } elseif ($entered_code !== $_SESSION['verify_code']) {
+                $errors[] = "Incorrect verification code.";
+            } elseif ($_SESSION['verify_email'] !== $new_email) {
+                $errors[] = "Verification code was sent to a different email address.";
+            }
+        }
+
+        $change_pw = !empty($cur_pw) || !empty($new_pw);
+
+        if ($change_pw) {
+            $ps = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
+            mysqli_stmt_bind_param($ps, "i", $user_id);
+            mysqli_stmt_execute($ps);
+            $pr     = mysqli_stmt_get_result($ps);
+            $pw_row = mysqli_fetch_assoc($pr);
+            mysqli_stmt_close($ps);
+
+            if (!$pw_row || !password_verify($cur_pw, $pw_row['password'])) {
+                $errors[] = "Current password is incorrect.";
+            } else {
+                if (strlen($new_pw) < 8)              $errors[] = "New password must be at least 8 characters.";
+                if (!preg_match('/[A-Z]/', $new_pw))  $errors[] = "New password must contain an uppercase letter.";
+                if (!preg_match('/[a-z]/', $new_pw))  $errors[] = "New password must contain a lowercase letter.";
+                if (!preg_match('/[0-9]/', $new_pw))  $errors[] = "New password must contain a number.";
+                if (!preg_match('/[\W_]/', $new_pw))  $errors[] = "New password must contain a symbol.";
+                if ($new_pw !== $conf_pw)             $errors[] = "New passwords do not match.";
+            }
+        }
+
+        if (empty($errors)) {
+            if ($change_pw) {
+                $hashed = password_hash($new_pw, PASSWORD_DEFAULT);
+                $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, password=? WHERE id=?");
+                mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
+            } else {
+                $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=? WHERE id=?");
+                mysqli_stmt_bind_param($upd, "sssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
+            }
+
+            mysqli_stmt_execute($upd);
+            mysqli_stmt_close($upd);
+
+            $_SESSION['changed'] = true;
+
+            if ($email_changed) {
+                unset($_SESSION['verify_code'], $_SESSION['verify_email'], $_SESSION['code_expiry']);
+            }
+
+            header('Location: ./account.php');
+            exit;
+        }
+    }
+
+    /* Delete account */
+    if (isset($_POST['delete_account'])) {
+        $del_pw = $_POST['delete_password'] ?? '';
+
+        $ps = mysqli_prepare($conn, "SELECT password FROM users WHERE id = ?");
+        mysqli_stmt_bind_param($ps, "i", $user_id);
+        mysqli_stmt_execute($ps);
+        $pr     = mysqli_stmt_get_result($ps);
+        $pw_row = mysqli_fetch_assoc($pr);
+        mysqli_stmt_close($ps);
+
+        if (!password_verify($del_pw, $pw_row['password'])) {
+            $errors[] = "Incorrect password. Account was not deleted.";
+        } else {
+            $del = mysqli_prepare($conn, "DELETE FROM users WHERE id = ?");
+            mysqli_stmt_bind_param($del, "i", $user_id);
+            mysqli_stmt_execute($del);
+            mysqli_stmt_close($del);
+
+            session_destroy();
+            header('Location: ./index.php?deleted=1');
+            exit;
+        }
+    }
+} // end !$is_admin
+
+$attempted       = isset($_POST['save_all']);
+$new_pw_display  = $_POST['new_password'] ?? '';
+$conf_pw_display = $_POST['confirm_new_password'] ?? '';
+
+function pw_class(bool $test): string
+{
+    return $test ? 'pw-rule-pass' : 'pw-rule-fail';
 }
-
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-
-while ($row = mysqli_fetch_assoc($result)) {
-    $results[] = $row;
-}
-
-mysqli_stmt_close($stmt);
 ?>
 
 <!DOCTYPE html>
@@ -125,340 +213,213 @@ mysqli_stmt_close($stmt);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Job Application - UrbanSync</title>
+    <title>Account Settings - UrbanSync</title>
     <link rel="icon" type="image/x-icon" href="./images/logo.ico">
-    <meta name="description"
-        content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
-    <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
-
-    <style>
-        .navbar {
-            background: none;
-        }
-
-        .navbar-link-item,
-        label.navbar-link-vert-item {
-            color: white;
-        }
-
-        .menu-toggle-input:checked~.navbar-link-item,
-        .menu-toggle-input:checked~label.navbar-link-item,
-        .navbar-settings-dropdown,
-        .navbar-link-item:hover,
-        .navbar-settings:hover .navbar-link-item {
-            background: rgba(220, 239, 241, 0.2);
-            border: none;
-            box-shadow: 0 8px 24px var(--shadow);
-        }
-
-        .manage-dashboard {
-            width: 100%;
-        }
-
-        .manage-message {
-            background-color: rgba(52, 199, 89, 0.1);
-            border: 1px solid rgba(52, 199, 89, 0.3);
-            color: #34c759;
-            padding: 1rem;
-            border-radius: 14px;
-            margin-bottom: 1.5rem;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .manage-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .manage-box {
-            background-color: rgba(9, 99, 126, 0.04);
-            border: 1.5px solid rgba(9, 99, 126, 0.3);
-            border-radius: 18px;
-            padding: 1.5rem;
-            text-align: left;
-        }
-
-        .manage-box h2 {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--bg-tertiary);
-        }
-
-        .manage-table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            margin-top: 1.5rem;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px var(--shadow);
-        }
-
-        .manage-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: var(--bg-main);
-            min-width: 900px;
-        }
-
-        .manage-table th,
-        .manage-table td {
-            border: 1px solid var(--bg-tertiary);
-            padding: 12px;
-            font-size: 14px;
-            color: var(--text-main);
-            text-align: left;
-        }
-
-        .manage-table th {
-            background-color: var(--accent);
-            color: white;
-            font-weight: bold;
-        }
-
-        .manage-table tr:hover {
-            background-color: var(--bg-secondary);
-        }
-
-        .manage-small-form {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .manage-small-form select {
-            min-width: 110px;
-            padding: 0.6rem;
-        }
-
-        .manage-small-form button {
-            padding: 0.7rem 1rem;
-            border-radius: 12px;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 768px) {
-            .manage-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .manage-small-form {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .manage-box {
-                background-color: rgba(9, 99, 126, 0.04);
-                border: 1.5px solid rgba(9, 99, 126, 0.3);
-                border-radius: 18px;
-                padding: 1.5rem;
-                text-align: left;
-
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-                overflow: hidden;
-            }
-
-            .manage-box input,
-            .manage-box select,
-            .manage-box textarea {
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-            }
-
-            .manage-box input[type="submit"],
-            .manage-box button {
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-
-                padding: 0.9rem 1rem;
-
-                font-size: 1rem;
-                text-align: center;
-
-                white-space: normal;
-                overflow-wrap: break-word;
-            }
-
-        }
-    </style>
+    <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+    <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen">
 </head>
 
-<body class="s-body <?php echo (($_COOKIE['dark_mode'] ?? '0') === '1') ? 'dark-mode' : ''; ?>">
+<style>
+    .navbar {
+        background: none;
+    }
 
-    <?php include "header.inc"; ?>
+    .navbar-link-item,
+    label.navbar-link-vert-item {
+        color: white;
+    }
+
+    .menu-toggle-input:checked~.navbar-link-item,
+    .menu-toggle-input:checked~label.navbar-link-item,
+    .navbar-settings-dropdown,
+    .navbar-link-item:hover,
+    .navbar-settings:hover .navbar-link-item {
+        background: rgba(220, 239, 241, 0.2);
+        border: none;
+        box-shadow: 0 8px 24px var(--shadow);
+    }
+
+    .error-text {
+        color: #ff4d4d;
+        font-size: 14px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body class='s-body'>
+
+    <?php include "./header.inc" ?>
 
     <main class="account-main">
-
-        <section class="apply-form-section apply-card">
+        <div class="account-card">
 
             <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
 
-            <h1 class="account-title">Manage EOIs</h1>
+            <?php if ($is_admin): ?>
 
-            <p class="account-subtitle">
-                HR Manager Panel
-            </p>
+                <h1 class="account-title">Admin Account</h1>
+                <p class="account-subtitle">Manage your UrbanSync admin profile</p>
 
-            <?php
-            if ($message != "") {
-                echo "<p class='manage-message'>" . htmlspecialchars($message) . "</p>";
-            }
-            ?>
+                <form method="post" action="">
+                    <button class="account-signout-btn" type="submit" name="signout" value="1">Sign Out</button>
+                </form>
 
-            <div class="manage-dashboard">
+            <?php else: ?>
 
-                <div class="manage-grid">
+                <h1 class="account-title">Account Settings</h1>
+                <p class="account-subtitle">Manage your UrbanSync profile</p>
 
-                    <div class="manage-box">
+                <?php if ($success): ?>
+                    <div class="account-success">Changes saved successfully!</div>
+                <?php endif; ?>
 
-                        <h2>Search EOIs</h2>
+                <?php if (!empty($errors)): ?>
+                    <ul class="account-errors">
+                        <?php foreach ($errors as $e): ?>
+                            <li><?= htmlspecialchars($e) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
 
-                        <form class="account-form" method="get" action="manage.php">
+                <form class="account-form" action="" method="post">
 
-                            <!-- Job Reference Number -->
-                            <label for="jobRef">Job Reference Number:</label>
-                            <select id="jobRef" name="jobRef" required>
-                                <option value="">Select Job Reference</option>
-                                <?php
-                                $jobQuery = "SELECT reference_number FROM opened_jobs ORDER BY reference_number ASC";
-                                $jobResult = mysqli_query($conn, $jobQuery);
+                    <section class="account-section">
+                        <h2 class="account-section-title">Personal Information</h2>
 
-                                while ($jobRow = mysqli_fetch_assoc($jobResult)) {
-                                    $selected = "";
-                                    if (($_GET['jobRef'] ?? '') == $jobRow['reference_number']) {
-                                        $selected = "selected";
-                                    }
-                                    echo "<option value='" . htmlspecialchars($jobRow['reference_number']) . "' $selected>";
-                                    echo htmlspecialchars($jobRow['reference_number']);
-                                    echo "</option>";
-                                }
-                                ?>
-                            </select>
+                        <div class="account-row">
+                            <div class="account-field">
+                                <label class="account-label" for="first_name">First Name</label>
+                                <input class="account-input" type="text" id="first_name" name="first_name"
+                                    value="<?= htmlspecialchars($_POST['first_name'] ?? $user['first_name']) ?>"
+                                    required>
+                            </div>
 
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName"
-                                value="<?php echo htmlspecialchars($_GET["firstName"] ?? ""); ?>">
+                            <div class="account-field">
+                                <label class="account-label" for="last_name">Last Name</label>
+                                <input class="account-input" type="text" id="last_name" name="last_name"
+                                    value="<?= htmlspecialchars($_POST['last_name'] ?? $user['last_name']) ?>"
+                                    required>
+                            </div>
+                        </div>
 
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName"
-                                value="<?php echo htmlspecialchars($_GET["lastName"] ?? ""); ?>">
+                        <div class="account-row">
+                            <div class="account-field">
+                                <label class="account-label" for="dob">Date of Birth</label>
+                                <input class="account-input" type="date" id="dob" name="dob"
+                                    value="<?= htmlspecialchars($_POST['dob'] ?? $user['dob']) ?>">
+                            </div>
 
-                            <label for="sort">Sort By</label>
-                            <select id="sort" name="sort">
-                                <option value="EOInumber" <?php if ($sort == "EOInumber") echo "selected"; ?>>EOI Number</option>
-                                <option value="jobRef" <?php if ($sort == "jobRef") echo "selected"; ?>>Job Reference</option>
-                                <option value="firstName" <?php if ($sort == "firstName") echo "selected"; ?>>First Name</option>
-                                <option value="lastName" <?php if ($sort == "lastName") echo "selected"; ?>>Last Name</option>
-                                <option value="status" <?php if ($sort == "status") echo "selected"; ?>>Status</option>
-                            </select>
+                            <div class="account-field">
+                                <label class="account-label" for="gender">Gender</label>
+                                <select class="account-input account-select" id="gender" name="gender">
+                                    <option value="" disabled <?= empty($_POST['gender'] ?? $user['gender']) ? 'selected' : '' ?>>Select</option>
+                                    <option value="male" <?= (($_POST['gender'] ?? $user['gender']) === 'male')       ? 'selected' : '' ?>>Male</option>
+                                    <option value="female" <?= (($_POST['gender'] ?? $user['gender']) === 'female')     ? 'selected' : '' ?>>Female</option>
+                                    <option value="other" <?= (($_POST['gender'] ?? $user['gender']) === 'other')      ? 'selected' : '' ?>>Other</option>
+                                    <option value="prefer_not" <?= (($_POST['gender'] ?? $user['gender']) === 'prefer_not') ? 'selected' : '' ?>>Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
 
-                            <input type="submit" name="search" value="Search / List EOIs">
+                    <section class="account-section">
+                        <h2 class="account-section-title">Contact Details</h2>
 
+                        <label class="account-label" for="email">Email Address</label>
+
+                        <div class="account-email-row">
+                            <input class="account-input account-email-input" type="text" id="email" name="email"
+                                value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>"
+                                required>
+
+                            <button class="code-btn" type="submit" name="send_code" value="1" formnovalidate>
+                                Send Code
+                            </button>
+                        </div>
+
+                        <?php if ($code_sent): ?>
+                            <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
+                        <?php endif; ?>
+
+                        <?php if ($code_error): ?>
+                            <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
+                        <?php endif; ?>
+
+                        <p class="account-hint">Only required if you are changing your email address.</p>
+
+                        <label class="account-label" for="verify_code">Verification Code</label>
+                        <input class="account-input" type="text" id="verify_code" name="verify_code"
+                            placeholder="6-digit code" maxlength="6">
+
+                        <label class="account-label" for="phone">Phone Number</label>
+
+                        <div class="account-phone-row">
+                            <input class="account-input account-phone-prefix" type="text" name="phone_code"
+                                value="<?= htmlspecialchars($_POST['phone_code'] ?? $user['phone_code']) ?>"
+                                maxlength="5">
+
+                            <input class="account-input account-phone-input" type="tel" id="phone" name="phone"
+                                value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone']) ?>">
+                        </div>
+                    </section>
+
+                    <section class="account-section">
+                        <h2 class="account-section-title">Change Password</h2>
+                        <p class="account-hint">Leave these blank to keep your current password.</p>
+
+                        <label class="account-label" for="current_password">Current Password</label>
+                        <input class="account-input" type="password" id="current_password" name="current_password">
+
+                        <label class="account-label" for="new_password">New Password</label>
+                        <input class="account-input" type="password" id="new_password" name="new_password">
+
+                        <ul class="pw-rules">
+                            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8) : '' ?>">At least 8 characters</li>
+                            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display)) : '' ?>">Uppercase letter (A-Z)</li>
+                            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display)) : '' ?>">Lowercase letter (a-z)</li>
+                            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display)) : '' ?>">Number (0-9)</li>
+                            <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[\W_]/', $new_pw_display)) : '' ?>">Symbol (!@#$...)</li>
+                        </ul>
+
+                        <label class="account-label" for="confirm_new_password">Confirm New Password</label>
+                        <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password">
+                    </section>
+
+                    <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
+                    <button class="account-signout-btn" type="submit" name="signout" value="1">Sign Out</button>
+
+                </form>
+
+                <section class="account-danger-zone">
+                    <h2 class="account-danger-title">Danger Zone</h2>
+                    <p class="account-danger-desc">
+                        Permanently deletes your account and all associated data.
+                        This action <strong>cannot be undone.</strong>
+                    </p>
+
+                    <details class="account-danger-details">
+                        <summary class="account-danger-summary">Delete my account</summary>
+
+                        <form class="account-danger-form" action="" method="post">
+                            <label class="account-label" for="delete_password">Confirm your password to continue</label>
+
+                            <input class="account-input account-danger-input" type="password"
+                                name="delete_password" placeholder="Enter your password" required>
+
+                            <button class="account-danger-btn" type="submit" name="delete_account" value="1">
+                                Yes, permanently delete my account
+                            </button>
                         </form>
+                    </details>
+                </section>
 
-                    </div>
+            <?php endif; ?>
 
-                    <div class="manage-box">
-
-                        <h2>Delete EOIs by Job Reference</h2>
-
-                        <form class="account-form" method="post" action="manage.php">
-
-                            <label for="deleteJobRef">Job Reference</label>
-                            <select id="deleteJobRef" name="deleteJobRef" required>
-                                <option value="">Select Job Reference</option>
-                                <?php
-                                $jobQuery = "SELECT reference_number FROM opened_jobs ORDER BY reference_number ASC";
-                                $jobResult = mysqli_query($conn, $jobQuery);
-                                while ($jobRow = mysqli_fetch_assoc($jobResult)) {
-                                    echo "<option value='" . htmlspecialchars($jobRow['reference_number']) . "'>";
-                                    echo htmlspecialchars($jobRow['reference_number']);
-                                    echo "</option>";
-                                }
-                                ?>
-                            </select>
-
-                            <input type="submit" name="delete_by_job" value="Delete EOIs">
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-                <div class="manage-table-wrapper">
-
-                    <table class="manage-table">
-
-                        <tr>
-                            <th>EOI Number</th>
-                            <th>Job Ref</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Change Status</th>
-                        </tr>
-
-                        <?php
-                        if (empty($results)) {
-                            echo "<tr><td colspan='7'>No EOIs found.</td></tr>";
-                        }
-
-                        foreach ($results as $row) {
-                        ?>
-
-                            <tr>
-                                <td><?php echo htmlspecialchars($row["EOInumber"]); ?></td>
-                                <td><?php echo htmlspecialchars($row["jobRef"]); ?></td>
-                                <td><?php echo htmlspecialchars($row["firstName"]); ?></td>
-                                <td><?php echo htmlspecialchars($row["lastName"]); ?></td>
-                                <td><?php echo htmlspecialchars($row["email"]); ?></td>
-                                <td><?php echo htmlspecialchars($row["status"]); ?></td>
-
-                                <td>
-                                    <form class="manage-small-form" method="post" action="manage.php">
-
-                                        <input type="hidden" name="eoiId"
-                                            value="<?php echo htmlspecialchars($row["EOInumber"]); ?>">
-
-                                        <select name="newStatus">
-                                            <option value="New" <?php if ($row["status"] == "New") echo "selected"; ?>>New</option>
-                                            <option value="Current" <?php if ($row["status"] == "Current") echo "selected"; ?>>Current</option>
-                                            <option value="Final" <?php if ($row["status"] == "Final") echo "selected"; ?>>Final</option>
-                                        </select>
-
-                                        <button type="submit" name="update_status" value="1">
-                                            Update
-                                        </button>
-
-                                    </form>
-                                </td>
-                            </tr>
-
-                        <?php
-                        }
-                        ?>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </section>
-
+        </div>
     </main>
 
-    <?php include "footer.inc"; ?>
+    <?php include "footer.inc" ?>
 
 </body>
 

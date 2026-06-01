@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once './settings.php';
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 
 $errors = [];
 $success = false;
@@ -87,20 +91,18 @@ function fetch_admin(mysqli $conn, int $id): array
   return $row;
 }
 
-if ($is_admin) {
-  $user = fetch_admin($conn, $user_id);
-} else {
+if (!$is_admin) {
   $user = fetch_user($conn, $user_id);
 }
 
-/* Send verification code - normal users only */
+/* Send verification code */
 if (isset($_POST['send_code']) && !$is_admin) {
   $email_for_code = filter_var(trim($_POST['email_for_code']), FILTER_SANITIZE_EMAIL);
 
   if (!filter_var($email_for_code, FILTER_VALIDATE_EMAIL)) {
     $code_error = "Please enter a valid email address before sending a code.";
   } else {
-    $code = str_pad(random_int(0, 999999), 6, '2', STR_PAD_LEFT);
+    $code = str_pad(random_int(0, 999999), 6, '2', STR_PAD_LEFT); /* cuz 2 is my fav number lol */
     $_SESSION['verify_code'] = $code;
     $_SESSION['verify_email'] = $email_for_code;
     $_SESSION['code_expiry'] = time() + 600;
@@ -187,14 +189,12 @@ if (isset($_POST['save_all'])) {
         $upd = mysqli_prepare($conn, "UPDATE manager_users SET first_name=?, last_name=?, dob=?, gender=?, username=?, phone_code=?, phone=?, password=? WHERE id=?");
 
         mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
-
       } else {
 
         $upd = mysqli_prepare($conn, "UPDATE manager_users SET first_name=?, last_name=?, dob=?, gender=?, username=?, phone_code=?, phone=? WHERE id=?");
 
         mysqli_stmt_bind_param($upd, "sssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $user_id);
       }
-
     } else {
 
       if ($change_pw) {
@@ -203,7 +203,6 @@ if (isset($_POST['save_all'])) {
         $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=?, password=? WHERE id=?");
 
         mysqli_stmt_bind_param($upd, "ssssssssi", $first, $last, $dob, $gender, $new_email, $phone_code, $phone, $hashed, $user_id);
-
       } else {
 
         $upd = mysqli_prepare($conn, "UPDATE users SET first_name=?, last_name=?, dob=?, gender=?, email=?, phone_code=?, phone=? WHERE id=?");
@@ -237,7 +236,7 @@ if (isset($_POST['signout'])) {
   exit;
 }
 
-/* Delete account - normal users only */
+/* Delete account */
 if (isset($_POST['delete_account']) && !$is_admin) {
   $del_pw = $_POST['delete_password'] ?? '';
 
@@ -317,183 +316,181 @@ function pw_class(bool $test): string
 
 <body class='s-body'>
 
-<?php include "./header.inc" ?>
+  <?php include "./header.inc" ?>
 
-<main class="account-main">
-  <div class="account-card">
+  <main class="account-main">
+    <div class="account-card">
 
-    <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
+      <img src="./images/logo.png" class="logo" alt="UrbanSync logo">
 
-    <?php if ($is_admin): ?>
-      <h1 class="account-title">Admin Account</h1>
-      <p class="account-subtitle">Manage your UrbanSync admin profile</p>
-    <?php else: ?>
-      <h1 class="account-title">Account Settings</h1>
-      <p class="account-subtitle">Manage your UrbanSync profile</p>
-    <?php endif; ?>
-
-    <?php if ($success): ?>
-      <div class="account-success">Changes saved successfully!</div>
-    <?php endif; ?>
-
-    <?php if (!empty($errors)): ?>
-      <ul class="account-errors">
-        <?php foreach ($errors as $e): ?>
-          <li><?= htmlspecialchars($e) ?></li>
-        <?php endforeach; ?>
-      </ul>
-    <?php endif; ?>
-
-    <form class="account-form" action="" method="post">
-
-      <section class="account-section">
-        <h2 class="account-section-title">Personal Information</h2>
-
-        <div class="account-row">
-          <div class="account-field">
-            <label class="account-label" for="first_name">First Name</label>
-            <input class="account-input" type="text" id="first_name" name="first_name"
-              value="<?= htmlspecialchars($_POST['first_name'] ?? $user['first_name']) ?>"
-              required>
-          </div>
-
-          <div class="account-field">
-            <label class="account-label" for="last_name">Last Name</label>
-            <input class="account-input" type="text" id="last_name" name="last_name"
-              value="<?= htmlspecialchars($_POST['last_name'] ?? $user['last_name']) ?>"
-              required>
-          </div>
-        </div>
-
-        <div class="account-row">
-          <div class="account-field">
-            <label class="account-label" for="dob">Date of Birth</label>
-            <input class="account-input" type="date" id="dob" name="dob"
-              value="<?= htmlspecialchars($_POST['dob'] ?? $user['dob']) ?>">
-          </div>
-
-          <div class="account-field">
-            <label class="account-label" for="gender">Gender</label>
-            <select class="account-input account-select" id="gender" name="gender">
-              <option value="" disabled <?= empty($_POST['gender'] ?? $user['gender']) ? 'selected' : '' ?>>Select</option>
-              <option value="male" <?= (($_POST['gender'] ?? $user['gender']) === 'male') ? 'selected' : '' ?>>Male</option>
-              <option value="female" <?= (($_POST['gender'] ?? $user['gender']) === 'female') ? 'selected' : '' ?>>Female</option>
-              <option value="other" <?= (($_POST['gender'] ?? $user['gender']) === 'other') ? 'selected' : '' ?>>Other</option>
-              <option value="prefer_not" <?= (($_POST['gender'] ?? $user['gender']) === 'prefer_not') ? 'selected' : '' ?>>Prefer not to say</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <section class="account-section">
-        <h2 class="account-section-title">Contact Details</h2>
-
-        <?php if ($is_admin): ?>
-          <label class="account-label" for="email">Username</label>
-        <?php else: ?>
-          <label class="account-label" for="email">Email Address</label>
+      <?php if ($is_admin): ?>
+        <h1 class="account-title">Admin Account</h1>
+        <p class="account-subtitle">Manage your UrbanSync admin profile</p>
+        <button class="account-signout-btn" name="signout" value="1">Signout</button>
+      <?php else: ?>
+        <h1 class="account-title">Account Settings</h1>
+        <p class="account-subtitle">Manage your UrbanSync profile</p>
+        <?php if ($success): ?>
+          <div class="account-success">Changes saved successfully!</div>
         <?php endif; ?>
 
-        <div class="account-email-row">
-          <input class="account-input account-email-input" type="text" id="email" name="email"
-            value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>"
-            required>
+        <?php if (!empty($errors)): ?>
+          <ul class="account-errors">
+            <?php foreach ($errors as $e): ?>
+              <li><?= htmlspecialchars($e) ?></li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endif; ?>
 
-          <?php if (!$is_admin): ?>
-            <button class="code-btn" type="submit" name="send_code" value="1" formnovalidate>
-              Send Code
-            </button>
+        <form class="account-form" action="" method="post">
+
+          <section class="account-section">
+            <h2 class="account-section-title">Personal Information</h2>
+
+            <div class="account-row">
+              <div class="account-field">
+                <label class="account-label" for="first_name">First Name</label>
+                <input class="account-input" type="text" id="first_name" name="first_name"
+                  value="<?= htmlspecialchars($_POST['first_name'] ?? $user['first_name']) ?>"
+                  required>
+              </div>
+
+              <div class="account-field">
+                <label class="account-label" for="last_name">Last Name</label>
+                <input class="account-input" type="text" id="last_name" name="last_name"
+                  value="<?= htmlspecialchars($_POST['last_name'] ?? $user['last_name']) ?>"
+                  required>
+              </div>
+            </div>
+
+            <div class="account-row">
+              <div class="account-field">
+                <label class="account-label" for="dob">Date of Birth</label>
+                <input class="account-input" type="date" id="dob" name="dob"
+                  value="<?= htmlspecialchars($_POST['dob'] ?? $user['dob']) ?>">
+              </div>
+
+              <div class="account-field">
+                <label class="account-label" for="gender">Gender</label>
+                <select class="account-input account-select" id="gender" name="gender">
+                  <option value="" disabled <?= empty($_POST['gender'] ?? $user['gender']) ? 'selected' : '' ?>>Select</option>
+                  <option value="male" <?= (($_POST['gender'] ?? $user['gender']) === 'male') ? 'selected' : '' ?>>Male</option>
+                  <option value="female" <?= (($_POST['gender'] ?? $user['gender']) === 'female') ? 'selected' : '' ?>>Female</option>
+                  <option value="other" <?= (($_POST['gender'] ?? $user['gender']) === 'other') ? 'selected' : '' ?>>Other</option>
+                  <option value="prefer_not" <?= (($_POST['gender'] ?? $user['gender']) === 'prefer_not') ? 'selected' : '' ?>>Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="account-section">
+            <h2 class="account-section-title">Contact Details</h2>
+
+            <?php if ($is_admin): ?>
+              <label class="account-label" for="email">Username</label>
+            <?php else: ?>
+              <label class="account-label" for="email">Email Address</label>
+            <?php endif; ?>
+
+            <div class="account-email-row">
+              <input class="account-input account-email-input" type="text" id="email" name="email"
+                value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>"
+                required>
+
+              <?php if (!$is_admin): ?>
+                <button class="code-btn" type="submit" name="send_code" value="1" formnovalidate>
+                  Send Code
+                </button>
+              <?php endif; ?>
+            </div>
+
+            <input type="hidden" name="email_for_code"
+              value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>">
+
+            <?php if ($code_sent): ?>
+              <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
+            <?php endif; ?>
+
+            <?php if ($code_error): ?>
+              <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
+            <?php endif; ?>
+
+            <?php if (!$is_admin): ?>
+              <p class="account-hint">Only required if you are changing your email address.</p>
+
+              <label class="account-label" for="verify_code">Verification Code</label>
+              <input class="account-input" type="text" id="verify_code" name="verify_code"
+                placeholder="6-digit code" maxlength="6">
+            <?php endif; ?>
+
+            <label class="account-label" for="phone">Phone Number</label>
+
+            <div class="account-phone-row">
+              <input class="account-input account-phone-prefix" type="text" name="phone_code"
+                value="<?= htmlspecialchars($_POST['phone_code'] ?? $user['phone_code']) ?>"
+                maxlength="5">
+
+              <input class="account-input account-phone-input" type="tel" id="phone" name="phone"
+                value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone']) ?>">
+            </div>
+          </section>
+
+          <section class="account-section">
+            <h2 class="account-section-title">Change Password</h2>
+            <p class="account-hint">Leave these blank to keep your current password.</p>
+
+            <label class="account-label" for="current_password">Current Password</label>
+            <input class="account-input" type="password" id="current_password" name="current_password">
+
+            <label class="account-label" for="new_password">New Password</label>
+            <input class="account-input" type="password" id="new_password" name="new_password">
+
+            <ul class="pw-rules">
+              <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8) : '' ?>">At least 8 characters</li>
+              <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display)) : '' ?>">Uppercase letter (A-Z)</li>
+              <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display)) : '' ?>">Lowercase letter (a-z)</li>
+              <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display)) : '' ?>">Number (0-9)</li>
+              <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[\W_]/', $new_pw_display)) : '' ?>">Symbol (!@#$...)</li>
+            </ul>
+
+            <label class="account-label" for="confirm_new_password">Confirm New Password</label>
+            <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password">
+          </section>
+
+          <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
+          <?php if ((!$is_admin) || ($is_admin)): ?>
+            <button class="account-signout-btn" name="signout" value="1">Signout</button>
           <?php endif; ?>
-        </div>
+        </form>
 
-        <input type="hidden" name="email_for_code"
-          value="<?= htmlspecialchars($_POST['email'] ?? $user['email']) ?>">
+        <section class="account-danger-zone">
+          <h2 class="account-danger-title">Danger Zone</h2>
+          <p class="account-danger-desc">
+            Permanently deletes your account and all associated data.
+            This action <strong>cannot be undone.</strong>
+          </p>
 
-        <?php if ($code_sent): ?>
-          <p class="code-sent">Your code is: <strong><?= $_SESSION['verify_code'] ?></strong> — expires in 10 minutes.</p>
-        <?php endif; ?>
+          <details class="account-danger-details">
+            <summary class="account-danger-summary">Delete my account</summary>
 
-        <?php if ($code_error): ?>
-          <p class="code-error"><?= htmlspecialchars($code_error) ?></p>
-        <?php endif; ?>
+            <form class="account-danger-form" action="" method="post">
+              <label class="account-label" for="delete_password">Confirm your password to continue</label>
 
-        <?php if (!$is_admin): ?>
-          <p class="account-hint">Only required if you are changing your email address.</p>
+              <input class="account-input account-danger-input" type="password"
+                name="delete_password" placeholder="Enter your password" required>
 
-          <label class="account-label" for="verify_code">Verification Code</label>
-          <input class="account-input" type="text" id="verify_code" name="verify_code"
-            placeholder="6-digit code" maxlength="6">
-        <?php endif; ?>
+              <button class="account-danger-btn" type="submit" name="delete_account" value="1">
+                Yes, permanently delete my account
+              </button>
+            </form>
+          </details>
+        </section>
+      <?php endif; ?>
+    </div>
+  </main>
 
-        <label class="account-label" for="phone">Phone Number</label>
-
-        <div class="account-phone-row">
-          <input class="account-input account-phone-prefix" type="text" name="phone_code"
-            value="<?= htmlspecialchars($_POST['phone_code'] ?? $user['phone_code']) ?>"
-            maxlength="5">
-
-          <input class="account-input account-phone-input" type="tel" id="phone" name="phone"
-            value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone']) ?>">
-        </div>
-      </section>
-
-      <section class="account-section">
-        <h2 class="account-section-title">Change Password</h2>
-        <p class="account-hint">Leave these blank to keep your current password.</p>
-
-        <label class="account-label" for="current_password">Current Password</label>
-        <input class="account-input" type="password" id="current_password" name="current_password">
-
-        <label class="account-label" for="new_password">New Password</label>
-        <input class="account-input" type="password" id="new_password" name="new_password">
-
-        <ul class="pw-rules">
-          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(strlen($new_pw_display) >= 8) : '' ?>">At least 8 characters</li>
-          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[A-Z]/', $new_pw_display)) : '' ?>">Uppercase letter (A-Z)</li>
-          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[a-z]/', $new_pw_display)) : '' ?>">Lowercase letter (a-z)</li>
-          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[0-9]/', $new_pw_display)) : '' ?>">Number (0-9)</li>
-          <li class="pw-rule <?= ($attempted && !empty($new_pw_display)) ? pw_class(preg_match('/[\W_]/', $new_pw_display)) : '' ?>">Symbol (!@#$...)</li>
-        </ul>
-
-        <label class="account-label" for="confirm_new_password">Confirm New Password</label>
-        <input class="account-input" type="password" id="confirm_new_password" name="confirm_new_password">
-      </section>
-
-      <button class="account-save-btn" type="submit" name="save_all" value="1">Save Changes</button>
-
-      <button class="account-signout-btn" name="signout" value="1">Signout</button>
-
-    </form>
-
-    <?php if (!$is_admin): ?>
-      <section class="account-danger-zone">
-        <h2 class="account-danger-title">Danger Zone</h2>
-        <p class="account-danger-desc">
-          Permanently deletes your account and all associated data.
-          This action <strong>cannot be undone.</strong>
-        </p>
-
-        <details class="account-danger-details">
-          <summary class="account-danger-summary">Delete my account</summary>
-
-          <form class="account-danger-form" action="" method="post">
-            <label class="account-label" for="delete_password">Confirm your password to continue</label>
-
-            <input class="account-input account-danger-input" type="password"
-              name="delete_password" placeholder="Enter your password" required>
-
-            <button class="account-danger-btn" type="submit" name="delete_account" value="1">
-              Yes, permanently delete my account
-            </button>
-          </form>
-        </details>
-      </section>
-    <?php endif; ?>
-
-  </div>
-</main>
-
-<?php include "footer.inc" ?>
+  <?php include "footer.inc" ?>
 
 </body>
+
 </html>
