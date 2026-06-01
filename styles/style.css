@@ -695,7 +695,7 @@ footer {
 /*Where the content is stored*/
 #JobContent {
   overflow: hidden;
-  padding: 1.5rem;
+  padding: 0rem;
 }
 
 #JobsContentMain {
