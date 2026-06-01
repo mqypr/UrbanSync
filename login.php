@@ -29,16 +29,16 @@ mysqli_query($conn, $create_manager_table);
 /*Create default admin automatically if it does not exist*/
 
 $check_admin = mysqli_prepare(
-    $conn,
-    "SELECT id FROM manager_users WHERE username = ?"
+  $conn,
+  "SELECT id FROM manager_users WHERE username = ?"
 );
 
 $default_admin_username = "admin";
 
 mysqli_stmt_bind_param(
-    $check_admin,
-    "s",
-    $default_admin_username
+  $check_admin,
+  "s",
+  $default_admin_username
 );
 
 mysqli_stmt_execute($check_admin);
@@ -47,14 +47,14 @@ $result = mysqli_stmt_get_result($check_admin);
 
 if (mysqli_num_rows($result) === 0) {
 
-    $hashed_password = password_hash(
-        "password",
-        PASSWORD_DEFAULT
-    );
+  $hashed_password = password_hash(
+    "password",
+    PASSWORD_DEFAULT
+  );
 
-    $insert_admin = mysqli_prepare(
-        $conn,
-        "INSERT INTO manager_users
+  $insert_admin = mysqli_prepare(
+    $conn,
+    "INSERT INTO manager_users
         (
             first_name,
             last_name,
@@ -69,32 +69,32 @@ if (mysqli_num_rows($result) === 0) {
         (
             ?, ?, ?, ?, ?, ?, ?, ?
         )"
-    );
+  );
 
-    $first_name = "Admin";
-    $last_name  = "Manager";
-    $dob        = null;
-    $gender     = "";
-    $username   = "admin";
-    $phone_code = "+61";
-    $phone      = "0400000000";
+  $first_name = "Admin";
+  $last_name  = "Manager";
+  $dob        = null;
+  $gender     = "";
+  $username   = "admin";
+  $phone_code = "+61";
+  $phone      = "0400000000";
 
-    mysqli_stmt_bind_param(
-        $insert_admin,
-        "ssssssss",
-        $first_name,
-        $last_name,
-        $dob,
-        $gender,
-        $username,
-        $phone_code,
-        $phone,
-        $hashed_password
-    );
+  mysqli_stmt_bind_param(
+    $insert_admin,
+    "ssssssss",
+    $first_name,
+    $last_name,
+    $dob,
+    $gender,
+    $username,
+    $phone_code,
+    $phone,
+    $hashed_password
+  );
 
-    mysqli_stmt_execute($insert_admin);
+  mysqli_stmt_execute($insert_admin);
 
-    mysqli_stmt_close($insert_admin);
+  mysqli_stmt_close($insert_admin);
 }
 
 mysqli_stmt_close($check_admin);
@@ -109,7 +109,6 @@ if (isset($_POST['login'])) {
   if (empty($email) || empty($input_password)) {
 
     $error = "Please fill in all fields.";
-
   } else {
 
     /* ── Manager login ── */
@@ -195,41 +194,37 @@ if (isset($_POST['login'])) {
 <head>
 
   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Job Application - UrbanSync</title>
-    <link rel="icon" type="image/x-icon" href="./images/logo.ico">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
-    <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Job Application - UrbanSync</title>
+  <link rel="icon" type="image/x-icon" href="./images/logo.ico">
+  <meta name="description"
+    content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+  <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
+  <style>
+    .navbar {
+      background: none;
+    }
+
+    .navbar-link-item,
+    label.navbar-link-vert-item {
+      color: white;
+    }
+
+    .menu-toggle-input:checked~.navbar-link-item,
+    .menu-toggle-input:checked~label.navbar-link-item,
+    .navbar-settings-dropdown,
+    .navbar-link-item:hover,
+    .navbar-settings:hover .navbar-link-item {
+      background: rgba(220, 239, 241, 0.2);
+      border: none;
+      box-shadow: 0 8px 24px var(--shadow);
+    }
+  </style>
 
 </head>
 
-<style>
-
-  .navbar {
-    background: none;
-  }
-
-  .navbar-link-item,
-  label.navbar-link-vert-item {
-    color: white;
-  }
-
-  .menu-toggle-input:checked~.navbar-link-item,
-  .menu-toggle-input:checked~label.navbar-link-item,
-  .navbar-settings-dropdown,
-  .navbar-link-item:hover,
-  .navbar-settings:hover .navbar-link-item {
-    background: rgba(220, 239, 241, 0.2);
-    border: none;
-    box-shadow: 0 8px 24px var(--shadow);
-  }
-
-</style>
 
 <body class='s-body'>
 
