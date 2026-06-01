@@ -765,7 +765,16 @@ footer {
 /* Job Aside Bar collapse Button */
 
 .JobNavToggle {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 #JobNavHeader {
@@ -789,16 +798,28 @@ footer {
 
 }
 
-.JobNavToggle:checked~#JobNav {
+/* Collapse the aside when the checkbox is checked */
+#JobNavToggle:checked + #JobNav {
   width: 4rem;
   min-width: 4rem;
   padding: 1rem 0.5rem;
+  overflow: hidden;
 }
 
-.JobNavToggle:checked~#JobNav .JobContainer,
-.JobNavToggle:checked~#JobNav h1 {
-  display: none;
+/* Hide contents when collapsed */
+#JobNavToggle:checked + #JobNav .JobSearchForm,
+#JobNavToggle:checked + #JobNav .JobContainer,
+#JobNavToggle:checked + #JobNav h1 {
+  display: none !important;
 }
+
+/* Keep header and 3 line thing visible */
+#JobNavToggle:checked + #JobNav #JobNavHeader {
+  display: flex;
+  justify-content: center;
+}
+
+
 
 .jobs-layout {
   width: 100%;
@@ -845,6 +866,76 @@ footer {
   font-size: 1rem;
 }
 
+/* Job Search Bar */
+
+/* Holds the search bar inside of the job aside */
+.JobSearchForm {
+  padding: 0 1rem 1rem 1rem;
+}
+
+/* Search bar label */
+.JobSearchLabel {
+  display: block;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+}
+
+/* Search bar container */
+.JobSearchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-tertiary);
+  border-radius: 999px;
+  padding: 0.4rem;
+}
+
+/* Search bar text input */
+.JobSearchInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Search bar placeholder text */
+.JobSearchInput::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Search button */
+.JobSearchButton {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 999px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Removes the normal button hover movement for the search button */
+.JobSearchButton:hover {
+  transform: none;
+}
+
+/* Clear search link */
+.JobClearSearch {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: underline;
+}
+
+
 
 /* Accessability for devices with screens smaller then 768px */
 @media (max-width: 768px) {
@@ -873,20 +964,22 @@ footer {
     overflow-y: auto;
   }
 
-  .JobNavToggle:checked~#JobNav {
+  .JobNavToggle:checked + #JobNav {
     width: 100%;
     min-width: 0;
     padding: 1rem;
   }
 
-  .JobNavToggle:checked~#JobNav .JobContainer {
-    display: none;
-  }
+  .JobNavToggle:checked + #JobNav .JobContainer,
+  .JobNavToggle:checked + #JobNav .JobSearchForm {
+  display: none;
+}
 
-  .JobNavToggle:checked~#JobNav h1 {
+  .JobNavToggle:checked + #JobNav h1 {
     display: block;
   }
 }
+
 
 
 /* index.php styles */
