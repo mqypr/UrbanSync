@@ -13,9 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 /* dark mode */
 $darkMode = $_COOKIE['dark_mode'] ?? '0';
 
-/* connect database */
-$conn = mysqli_connect($host, $db_user, $db_pass, $database);
-
 /* check connection */
 if (!$conn) {
     die("Database connection failed");
@@ -71,7 +68,7 @@ $phone = clean_input($_POST["phone"] ?? "");
 
 $skills = "";
 $otherSkills = "";
-    
+
 if (isset($_POST["skills"])) {
     $skills = implode(", ", $_POST["skills"]);
     $skills = clean_input($skills);
@@ -206,7 +203,6 @@ if ($result) {
     $success = true;
 
     $eoiNumber = mysqli_insert_id($conn);
-
 } else {
 
     die("Error inserting record.");
@@ -220,7 +216,7 @@ mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">     
+<html lang="en">
 
 <head>
 
@@ -249,7 +245,6 @@ mysqli_close($conn);
             $buttonColor = '#088395';
             $buttonHover = '#09637e';
             $shadow = '0 25px 80px rgba(0,0,0,0.45)';
-
         } else {
             $backgroundImage = './styles/images/index-bg.jpeg';
             $cardBackground = 'rgba(255,255,255,0.92)';
@@ -260,9 +255,7 @@ mysqli_close($conn);
             $shadow = '0 20px 35px -12px rgba(9,99,126,0.2)';
         }
 
-        ?>
-
-        body {
+        ?>body {
             min-height: 100vh;
             background-image: url("<?php echo $backgroundImage; ?>");
             background-size: cover;
@@ -322,7 +315,6 @@ mysqli_close($conn);
         .button:hover {
             background-color: <?php echo $buttonHover; ?>;
         }
-
     </style>
 
 </head>
