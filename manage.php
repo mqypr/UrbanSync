@@ -324,7 +324,7 @@ mysqli_stmt_close($stmt);
 
                             <!-- Job Reference Number -->
                             <label for="jobRef">Job Reference Number:</label>
-                            <select id="jobRef" name="jobRef" required>
+                            <select id="jobRef" name="jobRef">
                                 <option value="">Select Job Reference</option>
                                 <?php
                                 $jobQuery = "SELECT reference_number FROM opened_jobs ORDER BY reference_number ASC";
