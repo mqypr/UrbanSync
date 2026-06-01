@@ -42,8 +42,29 @@ CREATE TABLE `about_contributions` (
 INSERT INTO `about_contributions` (`id`, `name`, `student_id`, `first_project`, `second_project`) VALUES
 (1, 'MD Areen Chowdhury', '105693861', 'Developed about.html page for Project 1', 'Converted about.html to about.php and loaded member contributions from the database'),
 (2, 'Reach Peng', '106382377', 'Developed index.html page for Project 1', 'Updated index page for Project 2\nBuilt the DB-driven projects carousel on the home page, loading project data dynamically from MySQL\nImplemented the project search feature on the home page using prepared statements to prevent SQL injection\nDesigned and implemented the dark/light mode toggle system persisted via cookies across all pages\nBuilt the user authentication system including login.php, signup.php, and account.php with password hashing\nImplemented the sticky search bar UI with result cards showing category, date, location, and description\nManaged and maintained the overall CSS design system including CSS variables, dark/light theming, responsive layout, and component styles\nSet up and structured the MySQL database including the projects table and users table\nWrote and maintained settings.php for centralised database connection handling\nHandled security across the site including htmlspecialchars output escaping and prepared statements throughout index.php\n'),
-(3, 'Liron Roshain Joanic Willathgamuwa', '105987496', 'Developed apply.html page for Project 1', 'Updated apply page for Project 2'),
+(3, 'Liron Roshain Joanic Willathgamuwa', '105987496', 'Developed apply.html page for Project 1', 'Worked on the Project 2 database integration by creating and structuring the `eoi` MySQL table with all application form fields and status tracking using `New`, `Current`, and `Final` values. Developed `process_eoi.php` to securely handle form submissions, automatically create the table if it did not exist, validate and sanitise all user input on the server side, and insert validated records into the database while displaying the generated `EOInumber` on success. Updated the application form to submit using `POST` and added protection against direct URL access to `process_eoi.php`. Contributed to the manager system in `manage.php` by implementing features to list, search, sort, update, and delete Expression of Interest records. Assisted with maintaining the shared CSS design and responsive layout across the project while also improving site security through prepared statements, session handling, and `htmlspecialchars` escaping throughout the database-driven features.\n'),
 (4, 'Dylan Kelly', '105332711', 'Developed jobs.html page for Project 1', 'Updated jobs page for Project 2');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `about_contributions`
+--
+ALTER TABLE `about_contributions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `about_contributions`
+--
+ALTER TABLE `about_contributions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
 
 -- --------------------------------------------------------
 
