@@ -301,7 +301,7 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                             <?php
 
-                            // Because the varchar stored in reporting_line is seperated by a ^, we split the salary into an array and remove ^
+                            // Because the varchar stored in reporting_line is seperated by a ^, we split the reporting line into an array and remove ^
                             $reporting_line = explode("^", $job_content["reporting_line"]);
 
                             // For every item inside of $reporting_line we print it's corresponding element within a list tag
@@ -339,7 +339,7 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                             <?php
 
-                            // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
+                            // Because the varchar stored in requirements is seperated by a ^, we split the recommended requirements into an array and remove ^
                             $rec_requirements = explode("^", $job_content["rec_requirements"]);
 
                             // For every item inside of $requirements we print it's corresponding element within a list tag
@@ -358,7 +358,7 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                             <?php
 
-                            // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
+                            // Because the varchar stored in requirements is seperated by a ^, we split the required requirements into an array and remove ^
                             $req_requirements = explode("^", $job_content["req_requirements"]);
 
                             // For every item inside of $requirements we print it's corresponding element within a list tag
@@ -378,6 +378,8 @@ $job_content = mysqli_fetch_assoc($content_result);
 
             <?php } else { ?>
 
+
+                <!-- If no jobs were found from search return no jobs found to the article -->
                 <article id="JobArticle">
                     <section id="JobTitle">
                         <h2>No jobs found</h2>
