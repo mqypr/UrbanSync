@@ -323,7 +323,6 @@ mysqli_close($conn);
     <main class="page-card">
 
         <img src="./images/logo.png" class="logo" alt="UrbanSync Logo">
-
         <h1>Application Submitted Successfully</h1>
 
         <p class="subtitle">

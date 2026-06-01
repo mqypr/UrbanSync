@@ -294,7 +294,6 @@ mysqli_stmt_close($stmt);
 <body class="s-body <?php echo (($_COOKIE['dark_mode'] ?? '0') === '1') ? 'dark-mode' : ''; ?>">
 
     <?php include "header.inc"; ?>
-
     <main class="account-main">
 
         <section class="apply-form-section apply-card">

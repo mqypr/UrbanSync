@@ -283,7 +283,6 @@ unset($_SESSION['old']);
 
         <!-- Skill List -->
         <fieldset>
-
           <legend>Skills:</legend>
 
           <div class="option-row">
