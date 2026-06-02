@@ -358,7 +358,7 @@ body:has(.menu-toggle-input:not(:checked)) .index-hero {
 }
 
 label.navbar-link-vert-item {
-  padding: none;
+  padding: 0;
 }
 
 #menu-toggle-label {
@@ -568,7 +568,7 @@ footer {
   border: none;
   color: white;
   background-color: var(--accent);
-  padding: rem 2rem;
+  padding: 0 2rem;
   font-size: 1.1rem;
   font-weight: 700;
   border-radius: 40px;
