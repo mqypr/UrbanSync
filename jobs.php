@@ -3,17 +3,63 @@ session_start();
 require_once './settings.php';
 
 
+// Search bar data
+$search = "";
+
+// If the user has searched for something, get the search value
+if (isset($_GET["search"])) {
+
+    // We trim the search so empty spaces at the start and end are removed
+    $search = trim($_GET["search"]);
+}
+
+
+// Search SQL data
+$search_sql = "";
+
+// If the search bar is not empty, filter the jobs table
+if ($search !== "") {
+
+    // We escape the search so special characters do not break the SQL query
+    $safe_search = mysqli_real_escape_string($conn, $search);
+
+        // We search through the main job columns for anything matching the search
+    $search_sql = " WHERE (
+                title LIKE '%$safe_search%'
+                OR short_description LIKE '%$safe_search%'
+                OR salary LIKE '%$safe_search%'
+                OR reporting_line LIKE '%$safe_search%'
+                OR responsobilities LIKE '%$safe_search%'
+                OR rec_requirements LIKE '%$safe_search%'
+                OR req_requirements LIKE '%$safe_search%'
+                OR CAST(reference_number AS CHAR) LIKE '%$safe_search%'
+            )";
+}
+
+
 // job content data
 if (isset($_GET["ref"])) {
 
-    // Get the superglobal variable "ref" and convert it into a int
     $selected_ref = intval($_GET["ref"]);
 
-    $content_sql = "SELECT * FROM opened_jobs
-                    WHERE reference_number = $selected_ref
-                    LIMIT 1";
+    // If a search is active, only allow showing the ref job if it matches the search too
+    if ($search_sql !== "") {
+        $content_sql = "SELECT * FROM opened_jobs
+                        $search_sql
+                        AND reference_number = $selected_ref
+                        LIMIT 1";
+    } else {
+        $content_sql = "SELECT * FROM opened_jobs
+                        WHERE reference_number = $selected_ref
+                        LIMIT 1";
+    }
+
 } else {
-    $content_sql = "SELECT * FROM opened_jobs LIMIT 1";
+
+    // If no job has been clicked, we load the first job from the search results
+    $content_sql = "SELECT * FROM opened_jobs
+                    $search_sql
+                    LIMIT 1";
 }
 
 // store the table data to $content_result
@@ -21,13 +67,19 @@ $content_result = mysqli_query($conn, $content_sql);
 
 
 // aside bar data
-$side_sql = "SELECT * FROM opened_jobs";
+// We use the search SQL here so the sidebar only shows jobs matching the search
+$side_sql = "SELECT * FROM opened_jobs
+             $search_sql";
+
+// store the sidebar table data to $side_result
 $side_result = mysqli_query($conn, $side_sql);
 
+// If either query fails, we stop the page and print the SQL error
 if (!$side_result || !$content_result) {
     die("Query Failed: " . mysqli_error($conn));
 }
 
+// We fetch the selected job content from the database
 $job_content = mysqli_fetch_assoc($content_result);
 
 ?>
@@ -41,15 +93,18 @@ $job_content = mysqli_fetch_assoc($content_result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <title>Job Application - UrbanSync</title>
     <link rel="icon" type="image/x-icon" href="./images/logo.ico">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
+    <meta name="description" content="UrbanSync, A B2B company specializing in infrastructure analytics and improvement.">
     <meta name="author" content="Reach Peng, Liron Willathgamuwa, Dylan Kelly, MD Areen ">
+    <style>
+        #JobNavHeader h1 {
+        color: white;
+        }
+
+    </style>
 
 </head>
 
@@ -69,29 +124,69 @@ $job_content = mysqli_fetch_assoc($content_result);
 
         <!-- Job Aside Navigation Box -->
         <aside id="JobNav">
-            
+
             <div id="JobNavHeader">
 
                 <h1 style="color:white;">Jobs</h1>
 
                 <!-- Aside bar collapse button -->
                 <label for="JobNavToggle" class="JobNavToggleButton">☰</label>
-                
+
             </div>
+
+
+            <!-- Job Search Bar -->
+            <form class="JobSearchForm" method="get" action="jobs.php">
+
+                <!-- Search bar label -->
+                <label for="JobSearch" class="JobSearchLabel">Search jobs</label>
+
+                <div class="JobSearchBar">
+
+                    <!-- Search input -->
+                    <input type="text" id="JobSearch" name="search" class="JobSearchInput" placeholder="Search by title, salary, reference..." value="<?php echo htmlspecialchars($search); ?>">
+
+                    <!-- Search submit button -->
+                    <button type="submit" class="JobSearchButton" aria-label="Search jobs">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+
+                <!-- If the user has searched for something, show a clear search link -->
+                <?php if ($search !== "") { ?>
+
+                    <a class="JobClearSearch" href="jobs.php">Clear search</a>
+
+                <?php } ?>
+
+            </form>
 
 
             <div class="JobContainer">
 
-                <!-- Loop through every row of the table and create sections  -->
+                <!-- Loop through every row of the table and create sections -->
                 <?php while ($jobrow = mysqli_fetch_assoc($side_result)) { ?>
 
 
+                    <?php
+
+                    // We create the link for each job using its reference number
+                    $job_link = "jobs.php?ref=" . urlencode($jobrow["reference_number"]);
+
+                    // If the user has searched for something, keep the search in the URL
+                    if ($search !== "") {
+                        $job_link .= "&search=" . urlencode($search);
+                    }
+
+                    ?>
+
                     <!-- Set ref for loading correct content when clicked -->
-                    <a href="jobs.php?ref=<?php echo htmlspecialchars($jobrow["reference_number"]); ?>">
+                    <a href="<?php echo htmlspecialchars($job_link); ?>">
 
                         <section class="JobSection">
 
-                            <!-- Title  -->
+                            <!-- Title -->
                             <h2>
 
                                 <?php
@@ -129,152 +224,186 @@ $job_content = mysqli_fetch_assoc($content_result);
 
                                 <?php
 
+                                // We echo the short description of the job
                                 echo htmlspecialchars($jobrow["short_description"]);
 
                                 ?>
 
-
                             </p>
 
                         </section>
-
 
                     </a>
 
                 <?php } ?>
 
             </div>
+
         </aside>
 
 
         <!-- Job Content -->
         <main id="JobContent">
 
-            <article id="JobArticle">
+            <?php if ($job_content) { ?>
 
-                <section id="JobTitle">
+                <article id="JobArticle">
 
-                    <!-- Title of the opened job -->
-                    <h2>
+                    <section id="JobTitle">
 
-                        <?php
-                        // We echo the title of the job
-                        echo htmlspecialchars($job_content["title"])
-                        ?>
+                        <!-- Title of the opened job -->
+                        <h2>
 
-                    </h2>
+                            <?php
+                            // We echo the title of the job
+                            echo htmlspecialchars($job_content["title"])
+                            ?>
 
-                    <!-- Reference number for the opened job -->
-                    <h3>
+                        </h2>
 
-                        <?php
+                        <!-- Reference number for the opened job -->
+                        <h3>
 
-                        // We echo the reference number of the job
-                        echo htmlspecialchars($job_content["reference_number"])
-                        ?>
+                            <?php
 
-                    </h3>
+                            // We echo the reference number of the job
+                            echo htmlspecialchars($job_content["reference_number"])
+                            ?>
 
-                    <!-- Listed salary for job title -->
-                    <p>
+                        </h3>
 
-                        <?php
+                        <!-- Listed salary for job title -->
+                        <p>
 
-                        // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
-                        $salary = explode("^", $job_content["salary"]);
+                            <?php
 
-                        // We echo the first element in $salary array
-                        echo ("$" . htmlspecialchars($salary[0]));
+                            // Because the varchar stored in salary is seperated by a ^, we split the salary into an array and remove ^
+                            $salary = explode("^", $job_content["salary"]);
 
-                        // If there is a second element within the array, echo this also
-                        if (isset($salary[1])) {
-                            echo ("  - $" . htmlspecialchars($salary[1]));
-                        }
+                            // We echo the first element in $salary array
+                            echo ("$" . htmlspecialchars($salary[0]));
 
-                        // If there is only 1 element, we will echo 1 number; example $60,000
-                        // If there are 2 elements however, we will echo both; example $60,000 - $70,000
+                            // If there is a second element within the array, echo this also
+                            if (isset($salary[1])) {
+                                echo ("  - $" . htmlspecialchars($salary[1]));
+                            }
 
-                        ?>
+                            // If there is only 1 element, we will echo 1 number; example $60,000
+                            // If there are 2 elements however, we will echo both; example $60,000 - $70,000
 
-                    </p>
+                            ?>
 
-                </section>
+                        </p>
 
-                <section id="JobInfo">
+                    </section>
 
-                    <!-- Job Title -->
-                    <h2>
+                    <section id="JobInfo">
 
-                        <?php
+                        <!-- Job Title -->
+                        <h2>
 
-                        // We echo job into the information content 
-                        echo htmlspecialchars($job_content["title"]);
+                            <?php
 
-                        ?>
+                            // We echo job into the information content 
+                            echo htmlspecialchars($job_content["title"]);
 
-                    </h2>
+                            ?>
 
-                    <!-- Key Reporting Line -->
-                    <h2>Key Reporting Line</h2>
-                    <ol id="JobReportingLine">
+                        </h2>
 
-                        <?php
+                        <!-- Key Reporting Line -->
+                        <h2>Key Reporting Line</h2>
+                        <ol id="JobReportingLine">
 
-                        // Because the varchar stored in reporting_line is seperated by a ^, we split the salary into an array and remove ^
-                        $reporting_line = explode("^", $job_content["reporting_line"]);
+                            <?php
 
-                        // For every item inside of $reporting_line we print it's corresponding element within a list tag
-                        foreach ($reporting_line as $rep) {
+                            // Because the varchar stored in reporting_line is seperated by a ^, we split the reporting line into an array and remove ^
+                            $reporting_line = explode("^", $job_content["reporting_line"]);
 
-                            //echo the item within $reporting_line within html list tags
-                            echo ("<li>" . htmlspecialchars($rep) . "</li>");
-                        }
+                            // For every item inside of $reporting_line we print it's corresponding element within a list tag
+                            foreach ($reporting_line as $rep) {
 
-                        ?>
+                                //echo the item within $reporting_line within html list tags
+                                echo ("<li>" . htmlspecialchars($rep) . "</li>");
+                            }
 
-                    </ol>
+                            ?>
 
-                    <h2>Key Responsibilities</h2>
-                    <ol id="JobResponsobilities">
+                        </ol>
 
-                        <?php
+                        <h2>Key Responsibilities</h2>
+                        <ol id="JobResponsobilities">
 
-                        // Because the varchar stored in responsobilities is seperated by a ^, we split the salary into an array and remove ^
-                        $responsobilities = explode("^", $job_content["responsobilities"]);
+                            <?php
 
-                        // For every item inside of $responsobilities we print it's corresponding element within a list tag
-                        foreach ($responsobilities as $res) {
+                            // Because the varchar stored in responsobilities is seperated by a ^, we split the salary into an array and remove ^
+                            $responsobilities = explode("^", $job_content["responsobilities"]);
 
-                            //echo the item within $responsobilities within html list tags
-                            echo ("<li>" . htmlspecialchars($res) . "</li>");
-                        }
+                            // For every item inside of $responsobilities we print it's corresponding element within a list tag
+                            foreach ($responsobilities as $res) {
 
-                        ?>
+                                //echo the item within $responsobilities within html list tags
+                                echo ("<li>" . htmlspecialchars($res) . "</li>");
+                            }
 
-                    </ol>
+                            ?>
 
-                    <h2>Personal Requirements</h2>
-                    <ul id="JobPersonalRequirements">
+                        </ol>
 
-                        <?php
+                        <h2>Recommended Requirements</h2>
+                        <ul id="JobRecommendedRequirements">
 
-                        // Because the varchar stored in requirements is seperated by a ^, we split the salary into an array and remove ^
-                        $requirements = explode("^", $job_content["requirements"]);
+                            <?php
 
-                        // For every item inside of $requirements we print it's corresponding element within a list tag
-                        foreach ($requirements as $req) {
+                            // Because the varchar stored in requirements is seperated by a ^, we split the recommended requirements into an array and remove ^
+                            $rec_requirements = explode("^", $job_content["rec_requirements"]);
 
-                            //echo the item within $requirements within html list tags
-                            echo ("<li>" . htmlspecialchars($req) . "</li>");
-                        }
+                            // For every item inside of $requirements we print it's corresponding element within a list tag
+                            foreach ($rec_requirements as $rceq) {
 
-                        ?>
+                                //echo the item within $requirements within html list tags
+                                echo ("<li>" . htmlspecialchars($rceq) . "</li>");
+                            }
 
-                    </ul>
+                            ?>
 
-                </section>
-            </article>
+                        </ul>
 
+                        <h2>Required Requirements</h2>
+                        <ul id="JobRequiredRequirements">
+
+                            <?php
+
+                            // Because the varchar stored in requirements is seperated by a ^, we split the required requirements into an array and remove ^
+                            $req_requirements = explode("^", $job_content["req_requirements"]);
+
+                            // For every item inside of $requirements we print it's corresponding element within a list tag
+                            foreach ($req_requirements as $rqeq) {
+
+                                //echo the item within $requirements within html list tags
+                                echo ("<li>" . htmlspecialchars($rqeq) . "</li>");
+                            }
+
+                            ?>
+
+                        </ul>
+
+                    </section>
+                </article>
+
+
+            <?php } else { ?>
+
+
+                <!-- If no jobs were found from search return no jobs found to the article -->
+                <article id="JobArticle">
+                    <section id="JobTitle">
+                        <h2>No jobs found</h2>
+                        <p>Try searching for another job title, reference number, or keyword.</p>
+                    </section>
+                </article>
+
+            <?php } ?>
 
         </main>
 

@@ -42,8 +42,29 @@ CREATE TABLE `about_contributions` (
 INSERT INTO `about_contributions` (`id`, `name`, `student_id`, `first_project`, `second_project`) VALUES
 (1, 'MD Areen Chowdhury', '105693861', 'Developed about.html page for Project 1', 'Converted about.html to about.php and loaded member contributions from the database'),
 (2, 'Reach Peng', '106382377', 'Developed index.html page for Project 1', 'Updated index page for Project 2\nBuilt the DB-driven projects carousel on the home page, loading project data dynamically from MySQL\nImplemented the project search feature on the home page using prepared statements to prevent SQL injection\nDesigned and implemented the dark/light mode toggle system persisted via cookies across all pages\nBuilt the user authentication system including login.php, signup.php, and account.php with password hashing\nImplemented the sticky search bar UI with result cards showing category, date, location, and description\nManaged and maintained the overall CSS design system including CSS variables, dark/light theming, responsive layout, and component styles\nSet up and structured the MySQL database including the projects table and users table\nWrote and maintained settings.php for centralised database connection handling\nHandled security across the site including htmlspecialchars output escaping and prepared statements throughout index.php\n'),
-(3, 'Liron Roshain Joanic Willathgamuwa', '105987496', 'Developed apply.html page for Project 1', 'Updated apply page for Project 2'),
-(4, 'Dylan Kelly', '105332711', 'Developed jobs.html page for Project 1', 'Updated jobs page for Project 2');
+(3, 'Liron Roshain Joanic Willathgamuwa', '105987496', 'Developed apply.html page for Project 1', 'Worked on the Project 2 database integration by creating and structuring the `eoi` MySQL table with all application form fields and status tracking using `New`, `Current`, and `Final` values. Developed `process_eoi.php` to securely handle form submissions, automatically create the table if it did not exist, validate and sanitise all user input on the server side, and insert validated records into the database while displaying the generated `EOInumber` on success. Updated the application form to submit using `POST` and added protection against direct URL access to `process_eoi.php`. Contributed to the manager system in `manage.php` by implementing features to list, search, sort, update, and delete Expression of Interest records. Assisted with maintaining the shared CSS design and responsive layout across the project while also improving site security through prepared statements, session handling, and `htmlspecialchars` escaping throughout the database-driven features.\n'),
+(4, 'Dylan Kelly', '105332711', 'Developed jobs.html page for Project 1', 'Removed deprecated method for rendering job information resulting in removing Job1 and Job2. Added opened_jobs table in urbansync_db, allowing for dynamic rendering of job information.\nAdded a search bar to jobs.php, allowing for users to search for jobs easily.\nAdded a collapsing function to the Jobs.php aside bar, allowing for the user to reduce the amount of screen realestate the aside bar takes up when needed.\nAdjusted the CSS of jobs.php to increase accessability for other devices, to address feedback from project 1 and to increase cohesiveness amongst the other web pages of the urbansync website.\nSplit requirements up into 2 pieces- Required Requirements and Recommended Requirements-as adviced from project 1 feedback.');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `about_contributions`
+--
+ALTER TABLE `about_contributions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `about_contributions`
+--
+ALTER TABLE `about_contributions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
 
 -- --------------------------------------------------------
 
@@ -108,19 +129,19 @@ CREATE TABLE `opened_jobs` (
   `salary` varchar(20) NOT NULL,
   `reporting_line` varchar(2000) NOT NULL,
   `responsobilities` varchar(2000) NOT NULL,
-  `requirements` varchar(2000) NOT NULL
+  `req_requirements` varchar(2000) NOT NULL,
+  `rec_requirements` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `opened_jobs`
 --
 
-INSERT INTO `opened_jobs` (`reference_number`, `title`, `short_description`, `salary`, `reporting_line`, `responsobilities`, `requirements`) VALUES
-(10056, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '73,000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics'),
-(12878, 'Frontend Web Developer', 'Build and maintain clean, responsive interfaces for company websites.', '70,000^85,000', 'Engineering Manager^Technical Lead^Product Manager', 'Building front end interfaces^Ensuring accessible and intuitive designs are implemented into the user experience', 'Effective communication for team collaboration^High adaptability to new technologies^A methodical approach to debugging and creating responsive, accessible websites'),
-(14332, 'IT Support Officer', 'Provide technical support and help staff resolve hardware and software issues.', '55,000^68,000', 'IT Manager^IT Support Manager^Service Desk Manager', 'Installing, configuring, and maintaining hardware (computers, printers, routers) and software systems^Troubleshooting technical issues to minimize downtime', 'Problem-solving mindset^Excellent communication abilities^Patience'),
-(33987, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '62000^74000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics');
-
+INSERT INTO `opened_jobs` (`reference_number`, `title`, `short_description`, `salary`, `reporting_line`, `responsobilities`, `req_requirements`, `rec_requirements`) VALUES
+(10056, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '73,000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics', 'Experience with data visualisation tools (Power BI/Tableau)^Understanding of basic statistics^Familiarity with Python or R^Comfort working with large datasets'),
+(12878, 'Frontend Web Developer', 'Build and maintain clean, responsive interfaces for company websites.', '70,000^85,000', 'Engineering Manager^Technical Lead^Product Manager', 'Building front end interfaces^Ensuring accessible and intuitive designs are implemented into the user experience', 'Effective communication for team collaboration^High adaptability to new technologies^A methodical approach to debugging and creating responsive, accessible websites', 'Experience with modern JS frameworks (React/Vue)^Knowledge of UI/UX fundamentals^Familiarity with Git and code reviews^Basic understanding of backend/API integration'),
+(14332, 'IT Support Officer', 'Provide technical support and help staff resolve hardware and software issues.', '55,000^68,000', 'IT Manager^IT Support Manager^Service Desk Manager', 'Installing, configuring, and maintaining hardware (computers, printers, routers) and software systems^Troubleshooting technical issues to minimize downtime', 'Problem-solving mindset^Excellent communication abilities^Patience', 'Experience with ticketing systems (Jira/ServiceNow)^Basic networking knowledge (DNS/DHCP/Wi-Fi)^Familiarity with Windows/Mac troubleshooting^Ability to document fixes and create simple guides'),
+(33987, 'Junior Data Analyst', 'Analyse infrastructure and transport data to help improve urban planning decisions.', '62000^74000', 'Analytics Manager^Senior Data Analyst^Project Coordinator', 'Clean and organise large datasets^Create reports and visualisations for internal teams^Identify trends in transport and infrastructure usage^Assist with maintaining dashboards and data tools', 'Basic knowledge of SQL and spreadsheets^Strong attention to detail^Ability to communicate findings clearly^Interest in urban planning, infrastructure, or data analytics', 'Experience with data visualisation tools (Power BI/Tableau)^Understanding of basic statistics^Familiarity with Python or R^Comfort working with large datasets');
 --
 -- Indexes for dumped tables
 --
