@@ -568,7 +568,7 @@ footer {
   border: none;
   color: white;
   background-color: var(--accent);
-  padding: 0.4rem;
+  padding: 1rem 0.4rem;
   font-size: 1.1rem;
   font-weight: 700;
   border-radius: 40px;
