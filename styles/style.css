@@ -801,7 +801,7 @@ footer {
 }
 
 /* Collapse the aside when the checkbox is checked */
-#JobNavToggle:checked + #JobNav {
+#JobNavToggle:checked+#JobNav {
   width: 4rem;
   min-width: 4rem;
   padding: 1rem 0.5rem;
@@ -809,14 +809,14 @@ footer {
 }
 
 /* Hide contents when collapsed */
-#JobNavToggle:checked + #JobNav .JobSearchForm,
-#JobNavToggle:checked + #JobNav .JobContainer,
-#JobNavToggle:checked + #JobNav h1 {
+#JobNavToggle:checked+#JobNav .JobSearchForm,
+#JobNavToggle:checked+#JobNav .JobContainer,
+#JobNavToggle:checked+#JobNav h1 {
   display: none !important;
 }
 
 /* Keep header and 3 line thing visible */
-#JobNavToggle:checked + #JobNav #JobNavHeader {
+#JobNavToggle:checked+#JobNav #JobNavHeader {
   display: flex;
   justify-content: center;
 }
@@ -966,18 +966,18 @@ footer {
     overflow-y: auto;
   }
 
-  .JobNavToggle:checked + #JobNav {
+  .JobNavToggle:checked+#JobNav {
     width: 100%;
     min-width: 0;
     padding: 1rem;
   }
 
-  .JobNavToggle:checked + #JobNav .JobContainer,
-  .JobNavToggle:checked + #JobNav .JobSearchForm {
-  display: none;
-}
+  .JobNavToggle:checked+#JobNav .JobContainer,
+  .JobNavToggle:checked+#JobNav .JobSearchForm {
+    display: none;
+  }
 
-  .JobNavToggle:checked + #JobNav h1 {
+  .JobNavToggle:checked+#JobNav h1 {
     display: block;
   }
 }
